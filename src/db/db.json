@@ -1,0 +1,18 @@
+{
+  "posts": [
+    {
+      "title": "Default post"
+    },
+    {
+      "title": "Un post"
+    }
+  ],
+  "products": [
+    {
+      "title": "Default product"
+    },
+    {
+      "title": "Un product"
+    }
+  ]
+}

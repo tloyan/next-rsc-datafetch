@@ -9,9 +9,10 @@
     "lint": "next lint",
     "format": "prettier . --check",
     "format:fix": "prettier . --write",
-    "json-server": "json-server --watch ./src/db/api-db.json --port 4000"
+    "json-server": "json-server --watch ./src/db/db.json --port 4000"
   },
   "dependencies": {
+    "lowdb": "^7.0.1",
     "next": "14.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

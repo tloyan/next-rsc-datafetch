@@ -21,10 +21,10 @@ export default function Page() {
           </li>
           <li>___</li>
           <li>
-            <Link href="/final/bo">BackOffice</Link>
+            <Link href="http://localhost:4000/posts">External API</Link>
           </li>
           <li>
-            <Link href="/final/bo/reports">BackOffice - Report</Link>
+            <Link href="/final/api/posts">API Next</Link>
           </li>
         </ul>
       </nav>
