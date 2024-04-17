@@ -36,6 +36,7 @@
     "unicorn/prefer-module": "off",
     "unicorn/filename-case": "off",
     "no-console": "off",
+    "i18n-text/no-en": "off",
     "no-unused-vars": "off",
     "promise/always-return": "error",
     "promise/no-return-wrap": "error",

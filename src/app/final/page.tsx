@@ -19,6 +19,12 @@ export default function Page() {
           <li>
             <Link href="/final/cgv">App - Cgv</Link>
           </li>
+          <li>
+            <Link href="/final/fetch">App - fetch</Link>
+          </li>
+          <li>
+            <Link href="/final/todos">App - todos</Link>
+          </li>
           <li>___</li>
           <li>
             <Link href="http://localhost:4000/posts">External API</Link>

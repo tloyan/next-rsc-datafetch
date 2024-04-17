@@ -1,3 +1,4 @@
+import {ModeToggle} from '@/components/theme-toggle'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -5,11 +6,11 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200  lg:p-4 dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:dark:bg-zinc-800/30">
+        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
           Web 3 SaaS&nbsp;
           <code className="font-mono font-bold">by Mike</code>
         </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white lg:static lg:h-auto lg:w-auto lg:bg-none dark:from-black dark:via-black">
+        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
           <Link
             className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
             href="/dashboard"
@@ -24,10 +25,11 @@ export default function Home() {
               priority
             />
           </Link>
+          <ModeToggle />
         </div>
       </div>
 
-      <div className="relative z-[-1] flex flex-col items-center justify-center from-sky-200 from-white via-blue-200 to-transparent before:absolute before:inset-0 before:rounded-full before:bg-gradient-radial before:blur-2xl before:content-[''] after:absolute after:inset-0 after:-z-20 after:bg-gradient-conic after:blur-2xl after:content-[''] sm:before:w-[480px] sm:after:w-[240px] lg:before:h-[360px] dark:before:bg-gradient-to-br dark:before:from-transparent dark:before:to-blue-700 dark:before:opacity-10 dark:after:from-sky-900 dark:after:via-[#0141ff] dark:after:opacity-40">
+      <div className="before:bg-gradient-radial after:bg-gradient-conic relative z-[-1] flex flex-col items-center justify-center from-sky-200 from-white via-blue-200 to-transparent before:absolute before:inset-0 before:rounded-full before:blur-2xl before:content-[''] after:absolute after:inset-0 after:-z-20 after:blur-2xl after:content-[''] dark:before:bg-gradient-to-br dark:before:from-transparent dark:before:to-blue-700 dark:before:opacity-10 dark:after:from-sky-900 dark:after:via-[#0141ff] dark:after:opacity-40 sm:before:w-[480px] sm:after:w-[240px] lg:before:h-[360px]">
         <p className="z-10 mt-4 bg-gradient-to-r from-indigo-600 to-fuchsia-500 bg-clip-text bg-clip-text text-6xl text-transparent text-transparent">
           Web 3 SaaS
         </p>

@@ -14,5 +14,55 @@
     {
       "title": "Un product"
     }
+  ],
+  "todos": [
+    {
+      "id": 1,
+      "title": "Default todo",
+      "isCompleted": false,
+      "createdAt": "2024-04-17T08:27:48.139Z"
+    },
+    {
+      "id": 2,
+      "title": "a",
+      "isCompleted": false,
+      "createdAt": "2024-04-17T08:28:39.947Z",
+      "updadtedAt": "2024-04-17T08:28:39.947Z"
+    },
+    {
+      "id": 3,
+      "title": "aaaa",
+      "isCompleted": false,
+      "createdAt": "2024-04-17T08:29:06.444Z",
+      "updadtedAt": "2024-04-17T08:29:06.444Z"
+    },
+    {
+      "id": 4,
+      "title": "zazeaz",
+      "isCompleted": false,
+      "createdAt": "2024-04-17T08:29:26.003Z",
+      "updadtedAt": "2024-04-17T08:29:26.003Z"
+    },
+    {
+      "id": 5,
+      "title": "qsdqsd",
+      "isCompleted": false,
+      "createdAt": "2024-04-17T08:29:29.173Z",
+      "updadtedAt": "2024-04-17T08:29:29.173Z"
+    },
+    {
+      "id": 6,
+      "title": "qsdqsds",
+      "isCompleted": false,
+      "createdAt": "2024-04-17T08:30:06.668Z",
+      "updadtedAt": "2024-04-17T08:30:06.668Z"
+    },
+    {
+      "id": 7,
+      "title": "ddfgdfg",
+      "isCompleted": false,
+      "createdAt": "2024-04-17T09:06:03.365Z",
+      "updadtedAt": "2024-04-17T09:06:03.365Z"
+    }
   ]
 }
