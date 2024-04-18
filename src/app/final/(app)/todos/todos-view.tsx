@@ -1,11 +1,12 @@
 'use client'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
-import {Checkbox} from '@/components/ui/checkbox'
-import {Todo, addTodo as addTodoAction} from '@/db/sgbd'
+
 import React, {useOptimistic, startTransition} from 'react'
 import {toast} from 'sonner'
 import TodoItem from './todo-item'
+import {Todo} from '@/db/sgbd'
+import {addTodo as addTodoAction} from '../../actions'
 interface TodosProps {
   todos: Todo[]
 }
@@ -17,18 +18,27 @@ export default function Todos({todos}: TodosProps) {
     todos,
     (state, newTodo: Todo) => [...state, newTodo]
   )
+  // console.log('todos -view', todos)
+  //console.log('optimisticTodos -view', optimisticTodos)
   //(state, newTodo: Todo) => [...state, newTodo]
   const handleClick = async () => {
-    const newTodo = {title: inputValue, isCompleted: false}
-
-    addOptimisticTodo({id: Math.random(), ...newTodo})
-    toast('Todo has been created.')
-
-    try {
-      await addTodoAction(newTodo)
-    } catch (error) {
-      toast.error(`Failed to create todo.${error}`)
+    const newTodo = {
+      id: optimisticTodos.length + 1,
+      title: inputValue,
+      isCompleted: false,
+      createdAt: new Date().toISOString(),
+      updadtedAt: new Date().toISOString(),
     }
+
+    startTransition(async () => {
+      addOptimisticTodo(newTodo)
+      toast('Todo has been created.')
+      try {
+        await addTodoAction(newTodo)
+      } catch (error) {
+        toast.error(`Failed to create todo.${error}`)
+      }
+    })
   }
 
   return (
@@ -45,12 +55,13 @@ export default function Todos({todos}: TodosProps) {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
-          <Button onClick={() => startTransition(() => handleClick())}>
-            Submit
-          </Button>
+          <Button onClick={handleClick}>Submit</Button>
         </div>
         <div className="grid gap-4">
           {optimisticTodos.map((todo) => (
+            // <div className="flex items-center gap-4" key={todo.id}>
+            //   {todo.title}
+            // </div>
             <TodoItem key={todo.id} todo={todo} />
             // <div className="flex items-center gap-4" key={todo.id}>
             //   <Checkbox

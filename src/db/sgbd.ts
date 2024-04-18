@@ -1,6 +1,4 @@
-'use server'
 import {JSONFilePreset} from 'lowdb/node'
-import {revalidatePath} from 'next/cache'
 
 export type Post = {
   title: string
@@ -22,8 +20,8 @@ export type Todo = {
   updadtedAt?: string
 }
 
-export type CreateTodo = Omit<Todo, 'id'>
-
+//export type CreateTodo = Omit<Todo, 'id'>
+export type AddTodo = Partial<Pick<Todo, 'id'>> & Omit<Todo, 'id'>
 type BddDataType = {
   posts?: Post[]
   products?: Product[]
@@ -43,6 +41,9 @@ const defaultData: BddDataType = {
   ],
 }
 
+export default async function db() {
+  return initDb()
+}
 // initialise db with default data and file creation
 async function initDb() {
   const _db = await JSONFilePreset('./src/db/db.json', defaultData)
@@ -56,10 +57,53 @@ async function initDb() {
   }
   return _db
 }
-export default async function db() {
-  return initDb()
+
+export async function getTodos() {
+  const _db = await db()
+  const {todos} = _db.data
+  return todos
 }
 
+export async function addTodo(todo: AddTodo) {
+  await new Promise((resolve) => setTimeout(resolve, 3000))
+  const _db = await db()
+  await _db.update(({todos}) => {
+    if (Math.random() > 0.5) {
+      throw new Error('Server error : failed to add todo')
+    }
+    todos?.push({
+      id: todo.id ?? todos.length + 1,
+      title: todo.title,
+      isCompleted: todo.isCompleted,
+      createdAt: todo.createdAt ?? new Date().toISOString(),
+      updadtedAt: todo.updadtedAt ?? new Date().toISOString(),
+    })
+  })
+}
+export async function updateTodo(_todo: Todo) {
+  await new Promise((resolve) => setTimeout(resolve, 3000))
+  const _db = await db()
+  if (Math.random() > 0.5) {
+    throw new Error('Server error : failed to add todo')
+  }
+  await _db.update(({todos}) => {
+    updateById(todos ?? [], _todo)
+  })
+}
+
+interface Identifiable {
+  id: number | string
+}
+
+// Fonction générique pour mettre à jour un élément dans un tableau
+function updateById<T extends Identifiable>(items: T[], updatedItem: T): void {
+  const index = items.findIndex((item) => item.id === updatedItem.id)
+  if (index !== -1) {
+    items[index] = updatedItem
+  }
+}
+
+// Utilisation de la fonction
 export async function getProducts() {
   const _db = await db()
   const {products} = _db.data
@@ -70,38 +114,4 @@ export async function getPosts() {
   const _db = await db()
   const {posts} = _db.data
   return posts
-}
-
-export async function getTodos() {
-  const _db = await db()
-  const {todos} = _db.data
-  return todos
-}
-export async function addTodo(todo: Omit<Todo, 'id'>) {
-  await new Promise((resolve) => setTimeout(resolve, 3000))
-  const _db = await db()
-  await _db.update(({todos}) => {
-    // if (Math.random() > 0.5) {
-    //   throw new Error('Server error : failed to add todo')
-    // }
-    todos?.push({
-      id: todos.length + 1,
-      title: todo.title,
-      isCompleted: todo.isCompleted,
-      createdAt: todo.createdAt ?? new Date().toISOString(),
-      updadtedAt: todo.updadtedAt ?? new Date().toISOString(),
-    })
-  })
-
-  //revalidatePath('/final/todos')
-}
-export async function updateTodo(_todo: Todo) {
-  const _db = await db()
-  //const {todos} = _db.data
-  //const findTodo = todos?.find((todo) => todo.id === 1) // Find by id
-  await _db.update(({todos}) => {
-    const updatedTodos = todos?.filter((todo) => todo.id !== _todo.id)
-    updatedTodos?.push(_todo)
-    return {todos: updatedTodos}
-  })
 }

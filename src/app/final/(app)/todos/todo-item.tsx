@@ -1,10 +1,12 @@
 import {Checkbox} from '@/components/ui/checkbox'
-import {Todo, updateTodo} from '@/db/sgbd'
+import {Todo} from '@/db/sgbd'
 import {cn} from '@/lib/utils'
-import clsx from 'clsx'
+import {toast} from 'sonner'
 import {startTransition, useOptimistic} from 'react'
+import {updateTodo as updateTodoAction} from '../../actions'
 
 export default function TodoItem({todo}: {todo: Todo}) {
+  //console.log('todo -item', todo)
   const [optimisticTodo, updateOptimisticTodo] = useOptimistic(
     todo,
     (
@@ -15,24 +17,36 @@ export default function TodoItem({todo}: {todo: Todo}) {
     }
   )
   const handleChange = async (isCompleted: boolean) => {
-    updateOptimisticTodo({isCompleted, updadtedAt: new Date().toISOString()})
-    await updateTodo({
-      ...todo,
-      isCompleted,
-      updadtedAt: new Date().toISOString(),
-    })
+    console.log('handleChange isCompleted', isCompleted)
+    const data = {isCompleted, updadtedAt: new Date().toISOString()}
+    updateOptimisticTodo(data)
+
+    try {
+      await updateTodoAction({
+        ...todo,
+        ...data,
+      })
+    } catch (error) {
+      toast.error(`Failed to update todo.${error}`)
+    }
   }
   return (
     <>
       <div className="flex items-center gap-4" key={optimisticTodo.id}>
         <Checkbox
+          checked={optimisticTodo.isCompleted}
           id={`${optimisticTodo.id}`}
           onCheckedChange={(checked) =>
             startTransition(() => handleChange(checked as boolean))
           }
+          // onCheckedChange={(checked: boolean) =>
+          //   handleChange(checked as boolean)
+          // }
         />
         <label
-          className="flex-1 text-sm font-medium"
+          className={cn('flex-1 text-sm font-medium', {
+            'line-through': optimisticTodo.isCompleted,
+          })}
           htmlFor={`${optimisticTodo.id}`}
         >
           {optimisticTodo.title}
@@ -44,7 +58,15 @@ export default function TodoItem({todo}: {todo: Todo}) {
             {'line-through': optimisticTodo.isCompleted} // Ajoute 'line-through' si isCompleted est vrai
           )}
         >
-          {new Date(todo.createdAt ?? new Date()).toLocaleDateString('fr-FR')}
+          {optimisticTodo.updadtedAt}
+          {/* {new Date(optimisticTodo.createdAt ?? new Date()).toLocaleDateString(
+            'fr-FR'
+          )}{' '}
+          (mise à jour{' '}
+          {new Date(optimisticTodo.updadtedAt ?? new Date()).toLocaleTimeString(
+            'fr-FR'
+          )}
+          ) */}
         </span>
       </div>
     </>
