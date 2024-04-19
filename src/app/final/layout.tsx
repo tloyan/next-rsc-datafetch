@@ -38,6 +38,12 @@ export default function AppLayout({children}: PropsWithChildren) {
                 </Link>
                 <Link
                   className="font-medium transition-colors hover:underline"
+                  href="/final/fetch"
+                >
+                  Fetch
+                </Link>
+                <Link
+                  className="font-medium transition-colors hover:underline"
                   href="/final/todos"
                 >
                   Todos

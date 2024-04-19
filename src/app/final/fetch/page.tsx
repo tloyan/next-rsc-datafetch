@@ -15,11 +15,13 @@ const Page = async () => {
   // const data: Post[] | undefined = await response.json()
   return (
     <div className="w-full">
-      <h1 className="text-2xl">FETCH </h1>
+      <h1 className="text-2xl">Fetch Posts </h1>
       {/* <Posts></Posts> */}
-      <ul className="list-disc pl-4">
-        {posts?.map((post: Post) => <li key={post.title}>{post.title}</li>)}
-      </ul>
+      <div className="flex h-screen flex-col text-left">
+        <ul className="list-disc pl-4">
+          {posts?.map((post: Post) => <li key={post.title}>{post.title}</li>)}
+        </ul>
+      </div>
     </div>
   )
 }

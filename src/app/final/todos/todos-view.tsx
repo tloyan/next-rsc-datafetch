@@ -6,7 +6,8 @@ import React, {useOptimistic, startTransition} from 'react'
 import {toast} from 'sonner'
 import TodoItem from './todo-item'
 import {Todo} from '@/db/sgbd'
-import {addTodo as addTodoAction} from '../../actions'
+import {addTodo as addTodoAction} from './actions'
+
 interface TodosProps {
   todos: Todo[]
 }
@@ -14,13 +15,11 @@ interface TodosProps {
 export default function Todos({todos}: TodosProps) {
   const [inputValue, setInputValue] = React.useState('')
 
-  const [optimisticTodos, addOptimisticTodo] = useOptimistic(
+  const [optimisticTodos, addOptimisticTodo] = useOptimistic<Todo[], Todo>(
     todos,
     (state, newTodo: Todo) => [...state, newTodo]
   )
-  // console.log('todos -view', todos)
-  //console.log('optimisticTodos -view', optimisticTodos)
-  //(state, newTodo: Todo) => [...state, newTodo]
+
   const handleClick = async () => {
     const newTodo = {
       id: optimisticTodos.length + 1,
@@ -42,7 +41,7 @@ export default function Todos({todos}: TodosProps) {
   }
 
   return (
-    <div className="fle h-screen flex-col text-left">
+    <div className="flex h-screen flex-col text-left">
       <div className="flex h-14 items-center border-b p-4">
         <h1 className="text-lg font-bold">Todos</h1>
       </div>
@@ -59,29 +58,7 @@ export default function Todos({todos}: TodosProps) {
         </div>
         <div className="grid gap-4">
           {optimisticTodos.map((todo) => (
-            // <div className="flex items-center gap-4" key={todo.id}>
-            //   {todo.title}
-            // </div>
             <TodoItem key={todo.id} todo={todo} />
-            // <div className="flex items-center gap-4" key={todo.id}>
-            //   <Checkbox
-            //     id={`${todo.id}`}
-            //     onCheckedChange={(checked) =>
-            //       startTransition(() => handleChange(checked as boolean))
-            //     }
-            //   />
-            //   <label
-            //     className="flex-1 text-sm font-medium"
-            //     htmlFor={`${todo.id}`}
-            //   >
-            //     {todo.title}
-            //   </label>
-            //   <span className="text-sm text-gray-500 dark:text-gray-400">
-            //     {new Date(todo.createdAt ?? new Date()).toLocaleDateString(
-            //       'fr-FR'
-            //     )}
-            //   </span>
-            // </div>
           ))}
         </div>
       </div>

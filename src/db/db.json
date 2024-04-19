@@ -10,9 +10,6 @@
   "products": [
     {
       "title": "Default product"
-    },
-    {
-      "title": "Un product"
     }
   ],
   "todos": [
@@ -20,63 +17,21 @@
       "id": 1,
       "title": "Default todo",
       "isCompleted": false,
-      "createdAt": "2024-04-18T07:43:56.709Z"
+      "createdAt": "2024-04-19T07:50:45.560Z"
     },
     {
-      "id": 27,
-      "title": "k",
-      "isCompleted": true,
-      "createdAt": "2024-04-18T07:56:36.848Z",
-      "updadtedAt": "2024-04-18T08:55:00.094Z"
+      "id": 2,
+      "title": "sdfsdf",
+      "isCompleted": false,
+      "createdAt": "2024-04-19T07:50:55.580Z",
+      "updadtedAt": "2024-04-19T08:43:07.546Z"
     },
     {
       "id": 3,
-      "title": "sdfsdfsdfsdfsdf",
-      "isCompleted": true,
-      "createdAt": "2024-04-18T07:56:58.138Z",
-      "updadtedAt": "2024-04-18T07:57:01.839Z"
-    },
-    {
-      "id": 4,
-      "title": "mike",
+      "title": "sdfsdfdfgdfg",
       "isCompleted": false,
-      "createdAt": "2024-04-18T07:58:15.080Z",
-      "updadtedAt": "2024-04-18T07:58:21.533Z"
-    },
-    {
-      "id": 5,
-      "title": "qsdqsd",
-      "isCompleted": true,
-      "createdAt": "2024-04-18T07:59:41.379Z",
-      "updadtedAt": "2024-04-18T07:59:47.689Z"
-    },
-    {
-      "id": 6,
-      "title": "llll",
-      "isCompleted": false,
-      "createdAt": "2024-04-18T08:57:00.572Z",
-      "updadtedAt": "2024-04-18T08:57:16.937Z"
-    },
-    {
-      "id": 7,
-      "title": "wxcwxcw",
-      "isCompleted": true,
-      "createdAt": "2024-04-18T08:59:26.679Z",
-      "updadtedAt": "2024-04-18T09:00:14.256Z"
-    },
-    {
-      "id": 8,
-      "title": "dddd",
-      "isCompleted": true,
-      "createdAt": "2024-04-18T09:00:48.471Z",
-      "updadtedAt": "2024-04-18T09:01:29.575Z"
-    },
-    {
-      "id": 9,
-      "title": "sdfsdf",
-      "isCompleted": true,
-      "createdAt": "2024-04-18T09:02:33.304Z",
-      "updadtedAt": "2024-04-18T09:03:37.551Z"
+      "createdAt": "2024-04-19T07:51:24.156Z",
+      "updadtedAt": "2024-04-19T08:43:01.846Z"
     }
   ]
 }

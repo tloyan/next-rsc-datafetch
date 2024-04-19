@@ -3,31 +3,35 @@ import {Todo} from '@/db/sgbd'
 import {cn} from '@/lib/utils'
 import {toast} from 'sonner'
 import {startTransition, useOptimistic} from 'react'
-import {updateTodo as updateTodoAction} from '../../actions'
+import {updateTodo as updateTodoAction} from './actions'
+//import React from 'react'
+
+type TodoOptimistic = Todo & {
+  sending?: boolean
+}
+
+type OptimisticFields = {isCompleted: boolean; sending: boolean}
 
 export default function TodoItem({todo}: {todo: Todo}) {
-  //console.log('todo -item', todo)
-  const [optimisticTodo, updateOptimisticTodo] = useOptimistic(
-    todo,
-    (
-      _todo,
-      {isCompleted, updadtedAt}: {isCompleted: boolean; updadtedAt: string}
-    ) => {
-      return {..._todo, isCompleted, updadtedAt}
-    }
-  )
-  const handleChange = async (isCompleted: boolean) => {
-    console.log('handleChange isCompleted', isCompleted)
-    const data = {isCompleted, updadtedAt: new Date().toISOString()}
-    updateOptimisticTodo(data)
+  //optimistic pattern
+  const [optimisticTodo, updateOptimisticTodo] = useOptimistic<
+    TodoOptimistic,
+    OptimisticFields
+  >(todo, (state, {isCompleted, sending}: OptimisticFields) => {
+    return {...state, isCompleted, sending}
+  })
 
+  const handleChange = async (isCompleted: boolean) => {
+    updateOptimisticTodo({isCompleted, sending: true})
     try {
       await updateTodoAction({
         ...todo,
-        ...data,
+        isCompleted,
       })
     } catch (error) {
       toast.error(`Failed to update todo.${error}`)
+    } finally {
+      updateOptimisticTodo({isCompleted, sending: false})
     }
   }
   return (
@@ -39,13 +43,11 @@ export default function TodoItem({todo}: {todo: Todo}) {
           onCheckedChange={(checked) =>
             startTransition(() => handleChange(checked as boolean))
           }
-          // onCheckedChange={(checked: boolean) =>
-          //   handleChange(checked as boolean)
-          // }
         />
         <label
           className={cn('flex-1 text-sm font-medium', {
             'line-through': optimisticTodo.isCompleted,
+            'animate-color-cycle': optimisticTodo.sending,
           })}
           htmlFor={`${optimisticTodo.id}`}
         >

@@ -1,5 +1,9 @@
 import {JSONFilePreset} from 'lowdb/node'
 
+const randomError = false
+const slowConnexion = false
+const serverResponseTime = 3000
+
 export type Post = {
   title: string
 }
@@ -20,7 +24,6 @@ export type Todo = {
   updadtedAt?: string
 }
 
-//export type CreateTodo = Omit<Todo, 'id'>
 export type AddTodo = Partial<Pick<Todo, 'id'>> & Omit<Todo, 'id'>
 type BddDataType = {
   posts?: Post[]
@@ -50,11 +53,7 @@ async function initDb() {
   if (_db.data.posts?.length === 1) {
     _db.update(({posts}: BddDataType) => posts?.push({title: 'Un post'}))
   }
-  if (_db.data.products?.length === 1) {
-    _db.update(({products}: BddDataType) =>
-      products?.push({title: 'Un product'})
-    )
-  }
+
   return _db
 }
 
@@ -65,12 +64,9 @@ export async function getTodos() {
 }
 
 export async function addTodo(todo: AddTodo) {
-  await new Promise((resolve) => setTimeout(resolve, 3000))
+  simulateUnstableServer()
   const _db = await db()
   await _db.update(({todos}) => {
-    if (Math.random() > 0.5) {
-      throw new Error('Server error : failed to add todo')
-    }
     todos?.push({
       id: todo.id ?? todos.length + 1,
       title: todo.title,
@@ -80,14 +76,12 @@ export async function addTodo(todo: AddTodo) {
     })
   })
 }
-export async function updateTodo(_todo: Todo) {
-  await new Promise((resolve) => setTimeout(resolve, 3000))
+export async function updateTodo(todo: Todo) {
+  simulateUnstableServer()
+  todo.updadtedAt = new Date().toISOString()
   const _db = await db()
-  if (Math.random() > 0.5) {
-    throw new Error('Server error : failed to add todo')
-  }
   await _db.update(({todos}) => {
-    updateById(todos ?? [], _todo)
+    updateById(todos ?? [], todo)
   })
 }
 
@@ -103,7 +97,6 @@ function updateById<T extends Identifiable>(items: T[], updatedItem: T): void {
   }
 }
 
-// Utilisation de la fonction
 export async function getProducts() {
   const _db = await db()
   const {products} = _db.data
@@ -114,4 +107,17 @@ export async function getPosts() {
   const _db = await db()
   const {posts} = _db.data
   return posts
+}
+
+async function simulateUnstableServer({
+  slow = slowConnexion,
+  random = randomError,
+  serverTime = serverResponseTime,
+}: {slow?: boolean; random?: boolean; serverTime?: number} = {}) {
+  if (slow) {
+    await new Promise((resolve) => setTimeout(resolve, serverTime))
+  }
+  if (Math.random() > 0.5 && random) {
+    throw new Error('Internal server error')
+  }
 }
