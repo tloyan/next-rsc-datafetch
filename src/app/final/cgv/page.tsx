@@ -1,5 +1,4 @@
 import {Metadata} from 'next'
-//import {terms} from '@/features/legal/terms'
 
 export const metadata: Metadata = {
   title: "Condition d'utilisation",
@@ -8,7 +7,9 @@ export const metadata: Metadata = {
 const Page = () => {
   return (
     <div className="mx-auto max-w-4xl p-6 text-lg">
-      <h1 className="mb-4 text-3xl font-bold">Conditions d&apos;Utilisation</h1>
+      <h1 className="mb-4 text-center text-3xl font-bold">
+        Conditions d&apos;Utilisation
+      </h1>
       {terms.map((term, index) => {
         return <Term key={term.title} {...term} index={index + 1} />
       })}

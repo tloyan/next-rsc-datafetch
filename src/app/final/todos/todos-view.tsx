@@ -41,8 +41,8 @@ export default function Todos({todos}: TodosProps) {
   }
 
   return (
-    <div className="flex h-screen flex-col text-left">
-      <div className="flex h-14 items-center border-b p-4">
+    <div className="flex  flex-col text-left">
+      <div className="flex h-14 items-center border-b p-4 ">
         <h1 className="text-lg font-bold">Todos</h1>
       </div>
       <div className="flex flex-1 flex-col justify-start gap-4 p-4">

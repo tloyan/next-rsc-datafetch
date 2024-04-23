@@ -48,6 +48,12 @@ export default function AppLayout({children}: PropsWithChildren) {
                 >
                   Todos
                 </Link>
+                <Link
+                  className="font-medium transition-colors hover:underline"
+                  href="/final/shop"
+                >
+                  Shop
+                </Link>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -74,21 +80,15 @@ export default function AppLayout({children}: PropsWithChildren) {
           </nav>
         </div>
       </header>
-      <main className="grid flex-1">
-        <div className="grid h-full items-center justify-center p-4 text-center">
-          <div className="space-y-4">
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-              Welcome to the App
-            </h1>
-            {children}
-          </div>
-        </div>
-      </main>
+
+      <main className="grid flex-1">{children}</main>
       <footer className="border-t">
         <div className="container flex h-14 items-center justify-center px-4 text-center sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl">
             © {new Date().getFullYear()} Super SaaS . All rights reserved.{' '}
-            <p className="text-sm">Rendu le {generateDate}</p>
+            <p className="animate-color-cycle text-sm">
+              Rendu le {generateDate}
+            </p>
           </div>
         </div>
       </footer>

@@ -14,14 +14,11 @@ const Page = async () => {
   // const response = await fetch('http://localhost:4000/posts')
   // const data: Post[] | undefined = await response.json()
   return (
-    <div className="w-full">
-      <h1 className="text-2xl">Fetch Posts </h1>
-      {/* <Posts></Posts> */}
-      <div className="flex h-screen flex-col text-left">
-        <ul className="list-disc pl-4">
-          {posts?.map((post: Post) => <li key={post.title}>{post.title}</li>)}
-        </ul>
-      </div>
+    <div className="mx-auto max-w-4xl p-6 text-lg">
+      <h1 className="mb-4 text-center text-3xl font-bold"> Fetch Posts</h1>
+      <ul className="list-disc p-4 pl-4">
+        {posts?.map((post: Post) => <li key={post.title}>{post.title}</li>)}
+      </ul>
     </div>
   )
 }
