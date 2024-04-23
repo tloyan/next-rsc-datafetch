@@ -54,6 +54,12 @@ export default function AppLayout({children}: PropsWithChildren) {
                 >
                   Shop
                 </Link>
+                <Link
+                  className="font-medium transition-colors hover:underline"
+                  href="/final/shop-admin"
+                >
+                  Admin
+                </Link>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -81,7 +87,7 @@ export default function AppLayout({children}: PropsWithChildren) {
         </div>
       </header>
 
-      <main className="grid flex-1">{children}</main>
+      <main className="w-full flex-1">{children}</main>
       <footer className="border-t">
         <div className="container flex h-14 items-center justify-center px-4 text-center sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl">

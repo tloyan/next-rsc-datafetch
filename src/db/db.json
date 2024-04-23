@@ -9,44 +9,138 @@
   ],
   "products": [
     {
-      "title": "Default product"
+      "id": 1,
+      "title": "Default product",
+      "price": 199,
+      "quantity": 19,
+      "category": "Lighting",
+      "createdAt": "2024-04-23T06:18:25.402Z",
+      "updadtedAt": "2024-04-23T06:18:25.402Z"
+    },
+    {
+      "id": 2,
+      "title": "IPhone",
+      "price": 1490,
+      "quantity": 4,
+      "category": "Lighting",
+      "createdAt": "2024-04-23T06:18:25.402Z",
+      "updadtedAt": "2024-04-23T06:18:25.402Z"
+    },
+    {
+      "id": 2,
+      "title": "IPhone",
+      "price": 1490,
+      "quantity": 4,
+      "category": "Lighting",
+      "createdAt": "2024-04-23T06:18:25.402Z",
+      "updadtedAt": "2024-04-23T06:18:25.402Z"
+    },
+    {
+      "id": 2,
+      "title": "IPhone",
+      "price": 1490,
+      "quantity": 4,
+      "category": "Lighting",
+      "createdAt": "2024-04-23T06:18:25.402Z",
+      "updadtedAt": "2024-04-23T06:18:25.402Z"
+    },
+    {
+      "id": 2,
+      "title": "IPhone",
+      "price": 1490,
+      "quantity": 4,
+      "category": "Lighting",
+      "createdAt": "2024-04-23T06:18:25.402Z",
+      "updadtedAt": "2024-04-23T06:18:25.402Z"
+    },
+    {
+      "id": 2,
+      "title": "IPhone",
+      "price": 1490,
+      "quantity": 4,
+      "category": "Lighting",
+      "createdAt": "2024-04-23T06:18:25.402Z",
+      "updadtedAt": "2024-04-23T06:18:25.402Z"
+    },
+    {
+      "id": 2,
+      "title": "IPhone",
+      "price": 1490,
+      "quantity": 4,
+      "category": "Lighting",
+      "createdAt": "2024-04-23T06:18:25.402Z",
+      "updadtedAt": "2024-04-23T06:18:25.402Z"
+    },
+    {
+      "id": 2,
+      "title": "IPhone",
+      "price": 1490,
+      "quantity": 4,
+      "category": "Lighting",
+      "createdAt": "2024-04-23T06:18:25.402Z",
+      "updadtedAt": "2024-04-23T06:18:25.402Z"
+    },
+    {
+      "id": 2,
+      "title": "IPhone",
+      "price": 1490,
+      "quantity": 4,
+      "category": "Lighting",
+      "createdAt": "2024-04-23T06:18:25.402Z",
+      "updadtedAt": "2024-04-23T06:18:25.402Z"
+    },
+    {
+      "id": 2,
+      "title": "IPhone",
+      "price": 1490,
+      "quantity": 4,
+      "category": "Lighting",
+      "createdAt": "2024-04-23T06:18:25.402Z",
+      "updadtedAt": "2024-04-23T06:18:25.402Z"
+    },
+    {
+      "id": 2,
+      "title": "IPhone",
+      "price": 1490,
+      "quantity": 4,
+      "category": "Lighting",
+      "createdAt": "2024-04-23T06:18:25.402Z",
+      "updadtedAt": "2024-04-23T06:18:25.402Z"
+    },
+    {
+      "id": 2,
+      "title": "IPhone",
+      "price": 1490,
+      "quantity": 4,
+      "category": "Lighting",
+      "createdAt": "2024-04-23T06:18:25.402Z",
+      "updadtedAt": "2024-04-23T06:18:25.402Z"
+    },
+    {
+      "id": 2,
+      "title": "IPhone",
+      "price": 1490,
+      "quantity": 4,
+      "category": "Lighting",
+      "createdAt": "2024-04-23T06:18:25.402Z",
+      "updadtedAt": "2024-04-23T06:18:25.402Z"
+    },
+    {
+      "id": 2,
+      "title": "IPhone",
+      "price": 1490,
+      "quantity": 4,
+      "category": "Lighting",
+      "createdAt": "2024-04-23T06:18:25.402Z",
+      "updadtedAt": "2024-04-23T06:18:25.402Z"
     }
   ],
   "todos": [
     {
       "id": 1,
       "title": "Default todo",
-      "isCompleted": true,
-      "createdAt": "2024-04-19T09:22:01.827Z",
-      "updadtedAt": "2024-04-23T02:42:35.446Z"
-    },
-    {
-      "id": 2,
-      "title": "ghjkhjkhjkhj",
-      "isCompleted": true,
-      "createdAt": "2024-04-19T09:31:20.857Z",
-      "updadtedAt": "2024-04-23T02:41:35.365Z"
-    },
-    {
-      "id": 3,
-      "title": "ghjkhjkhjkhjhkfhjkfjhkfhjkfhjkfhjkfhjkfhj",
-      "isCompleted": true,
-      "createdAt": "2024-04-19T09:31:23.884Z",
-      "updadtedAt": "2024-04-23T02:41:55.098Z"
-    },
-    {
-      "id": 4,
-      "title": "ghjkhjkhjkhjhkfhjkfjhkfhjkfhjkfhjkfhjkfhjsdfsdf",
-      "isCompleted": true,
-      "createdAt": "2024-04-19T09:32:03.292Z",
-      "updadtedAt": "2024-04-23T02:45:34.853Z"
-    },
-    {
-      "id": 5,
-      "title": "fsdfsd",
-      "isCompleted": true,
-      "createdAt": "2024-04-23T02:41:58.891Z",
-      "updadtedAt": "2024-04-23T02:43:20.815Z"
+      "isCompleted": false,
+      "createdAt": "2024-04-23T06:18:25.402Z"
     }
   ]
 }
