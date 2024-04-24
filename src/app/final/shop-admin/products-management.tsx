@@ -27,7 +27,7 @@ import {
   Table,
 } from '@/components/ui/table'
 import {Button} from '@/components/ui/button'
-import {ChevronsUpDown, Plus, X} from 'lucide-react'
+import {ChevronsUpDown} from 'lucide-react'
 import {CardTitle, CardHeader, CardContent, Card} from '@/components/ui/card'
 import {Input} from '@/components/ui/input'
 import {Textarea} from '@/components/ui/textarea'
@@ -56,6 +56,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
+import {addProduct, updatedProduct} from './actions'
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -84,6 +85,7 @@ export function ProductsManagement({products}: {products: Product[]}) {
 
   async function onSubmit(values: Product) {
     console.log(values)
+    await (values.id ? updatedProduct(values) : addProduct(values))
   }
   return (
     <div className="flex flex-col ">

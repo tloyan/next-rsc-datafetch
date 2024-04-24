@@ -14,8 +14,8 @@
       "price": 199,
       "quantity": 19,
       "category": "Lighting",
-      "createdAt": "2024-04-23T06:18:25.402Z",
-      "updadtedAt": "2024-04-23T06:18:25.402Z"
+      "createdAt": "2024-04-24T02:52:42.809Z",
+      "updadtedAt": "2024-04-24T02:52:42.809Z"
     },
     {
       "id": 2,
@@ -23,116 +23,44 @@
       "price": 1490,
       "quantity": 4,
       "category": "Lighting",
-      "createdAt": "2024-04-23T06:18:25.402Z",
-      "updadtedAt": "2024-04-23T06:18:25.402Z"
+      "createdAt": "2024-04-24T02:52:42.809Z",
+      "updadtedAt": "2024-04-24T02:52:42.809Z"
     },
     {
-      "id": 2,
-      "title": "IPhone",
-      "price": 1490,
-      "quantity": 4,
-      "category": "Lighting",
-      "createdAt": "2024-04-23T06:18:25.402Z",
-      "updadtedAt": "2024-04-23T06:18:25.402Z"
+      "id": 3,
+      "title": "new pro",
+      "createdAt": "2024-04-24T02:53:09.418Z",
+      "updadtedAt": "2024-04-24T02:53:09.418Z"
     },
     {
-      "id": 2,
-      "title": "IPhone",
-      "price": 1490,
-      "quantity": 4,
-      "category": "Lighting",
-      "createdAt": "2024-04-23T06:18:25.402Z",
-      "updadtedAt": "2024-04-23T06:18:25.402Z"
+      "id": 4,
+      "title": "new pro",
+      "createdAt": "2024-04-24T02:53:23.679Z",
+      "updadtedAt": "2024-04-24T02:53:23.679Z"
     },
     {
-      "id": 2,
-      "title": "IPhone",
-      "price": 1490,
-      "quantity": 4,
-      "category": "Lighting",
-      "createdAt": "2024-04-23T06:18:25.402Z",
-      "updadtedAt": "2024-04-23T06:18:25.402Z"
+      "id": 5,
+      "title": "new pro",
+      "createdAt": "2024-04-24T02:53:28.621Z",
+      "updadtedAt": "2024-04-24T02:53:28.621Z"
     },
     {
-      "id": 2,
-      "title": "IPhone",
-      "price": 1490,
-      "quantity": 4,
-      "category": "Lighting",
-      "createdAt": "2024-04-23T06:18:25.402Z",
-      "updadtedAt": "2024-04-23T06:18:25.402Z"
+      "id": 6,
+      "title": "new pro",
+      "createdAt": "2024-04-24T02:53:39.153Z",
+      "updadtedAt": "2024-04-24T02:53:39.153Z"
     },
     {
-      "id": 2,
-      "title": "IPhone",
-      "price": 1490,
-      "quantity": 4,
-      "category": "Lighting",
-      "createdAt": "2024-04-23T06:18:25.402Z",
-      "updadtedAt": "2024-04-23T06:18:25.402Z"
+      "id": 7,
+      "title": "new pro",
+      "createdAt": "2024-04-24T02:53:46.339Z",
+      "updadtedAt": "2024-04-24T02:53:46.339Z"
     },
     {
-      "id": 2,
-      "title": "IPhone",
-      "price": 1490,
-      "quantity": 4,
-      "category": "Lighting",
-      "createdAt": "2024-04-23T06:18:25.402Z",
-      "updadtedAt": "2024-04-23T06:18:25.402Z"
-    },
-    {
-      "id": 2,
-      "title": "IPhone",
-      "price": 1490,
-      "quantity": 4,
-      "category": "Lighting",
-      "createdAt": "2024-04-23T06:18:25.402Z",
-      "updadtedAt": "2024-04-23T06:18:25.402Z"
-    },
-    {
-      "id": 2,
-      "title": "IPhone",
-      "price": 1490,
-      "quantity": 4,
-      "category": "Lighting",
-      "createdAt": "2024-04-23T06:18:25.402Z",
-      "updadtedAt": "2024-04-23T06:18:25.402Z"
-    },
-    {
-      "id": 2,
-      "title": "IPhone",
-      "price": 1490,
-      "quantity": 4,
-      "category": "Lighting",
-      "createdAt": "2024-04-23T06:18:25.402Z",
-      "updadtedAt": "2024-04-23T06:18:25.402Z"
-    },
-    {
-      "id": 2,
-      "title": "IPhone",
-      "price": 1490,
-      "quantity": 4,
-      "category": "Lighting",
-      "createdAt": "2024-04-23T06:18:25.402Z",
-      "updadtedAt": "2024-04-23T06:18:25.402Z"
-    },
-    {
-      "id": 2,
-      "title": "IPhone",
-      "price": 1490,
-      "quantity": 4,
-      "category": "Lighting",
-      "createdAt": "2024-04-23T06:18:25.402Z",
-      "updadtedAt": "2024-04-23T06:18:25.402Z"
-    },
-    {
-      "id": 2,
-      "title": "IPhone",
-      "price": 1490,
-      "quantity": 4,
-      "category": "Lighting",
-      "createdAt": "2024-04-23T06:18:25.402Z",
-      "updadtedAt": "2024-04-23T06:18:25.402Z"
+      "id": 8,
+      "title": "new pro update",
+      "createdAt": "2024-04-24T02:57:59.999Z",
+      "updadtedAt": "2024-04-24T02:57:59.999Z"
     }
   ],
   "todos": [
@@ -140,7 +68,7 @@
       "id": 1,
       "title": "Default todo",
       "isCompleted": false,
-      "createdAt": "2024-04-23T06:18:25.402Z"
+      "createdAt": "2024-04-24T02:52:42.809Z"
     }
   ]
 }
