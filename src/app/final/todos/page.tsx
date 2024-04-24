@@ -1,8 +1,8 @@
-import db from '@/db/sgbd'
+import lowDb from '@/db/sgbd'
 import Todos from './todos-view'
 
 const Page = async () => {
-  const bdd = await db()
+  const bdd = await lowDb()
   const todos = bdd.data.todos ?? []
   console.log('Todos Page Reloaded')
   return (

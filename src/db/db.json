@@ -10,57 +10,44 @@
   "products": [
     {
       "id": 1,
-      "title": "Default product",
-      "price": 199,
+      "createdAt": "2024-04-24T05:56:06.593Z",
       "quantity": 19,
       "category": "Lighting",
-      "createdAt": "2024-04-24T02:52:42.809Z",
-      "updadtedAt": "2024-04-24T02:52:42.809Z"
+      "price": 199,
+      "title": "Default product UP2",
+      "description": "dfsdf",
+      "updadtedAt": "2024-04-24T07:31:37.297Z"
     },
     {
       "id": 2,
-      "title": "IPhone",
-      "price": 1490,
+      "createdAt": "2024-04-25T05:56:06.593Z",
       "quantity": 4,
       "category": "Lighting",
-      "createdAt": "2024-04-24T02:52:42.809Z",
-      "updadtedAt": "2024-04-24T02:52:42.809Z"
+      "price": 1490,
+      "title": "IPhone",
+      "description": "qsd",
+      "updadtedAt": "2024-04-24T06:55:04.447Z"
     },
     {
       "id": 3,
-      "title": "new pro",
-      "createdAt": "2024-04-24T02:53:09.418Z",
-      "updadtedAt": "2024-04-24T02:53:09.418Z"
+      "title": "IPhoneUP",
+      "description": "dfgdfg",
+      "createdAt": "2024-04-24T06:51:20.028Z",
+      "updadtedAt": "2024-04-24T06:51:20.028Z"
     },
     {
       "id": 4,
-      "title": "new pro",
-      "createdAt": "2024-04-24T02:53:23.679Z",
-      "updadtedAt": "2024-04-24T02:53:23.679Z"
+      "title": "IPhoneUP",
+      "description": "dfgdfg",
+      "createdAt": "2024-04-24T06:52:38.125Z",
+      "updadtedAt": "2024-04-24T06:52:38.125Z"
     },
     {
       "id": 5,
-      "title": "new pro",
-      "createdAt": "2024-04-24T02:53:28.621Z",
-      "updadtedAt": "2024-04-24T02:53:28.621Z"
-    },
-    {
-      "id": 6,
-      "title": "new pro",
-      "createdAt": "2024-04-24T02:53:39.153Z",
-      "updadtedAt": "2024-04-24T02:53:39.153Z"
-    },
-    {
-      "id": 7,
-      "title": "new pro",
-      "createdAt": "2024-04-24T02:53:46.339Z",
-      "updadtedAt": "2024-04-24T02:53:46.339Z"
-    },
-    {
-      "id": 8,
-      "title": "new pro update",
-      "createdAt": "2024-04-24T02:57:59.999Z",
-      "updadtedAt": "2024-04-24T02:57:59.999Z"
+      "title": "Default product",
+      "description": "lmù",
+      "createdAt": "2024-04-24T06:53:28.690Z",
+      "updadtedAt": "2024-04-24T06:53:28.690Z"
     }
   ],
   "todos": [
@@ -68,7 +55,7 @@
       "id": 1,
       "title": "Default todo",
       "isCompleted": false,
-      "createdAt": "2024-04-24T02:52:42.809Z"
+      "createdAt": "2024-04-24T06:21:06.336Z"
     }
   ]
 }

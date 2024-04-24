@@ -43,7 +43,7 @@ const defaultData: BddDataType = {
       price: 199,
       quantity: 19,
       category: 'Lighting',
-      createdAt: new Date().toISOString(),
+      createdAt: '2024-04-24T05:56:06.593Z',
       updadtedAt: new Date().toISOString(),
     },
     {
@@ -52,7 +52,7 @@ const defaultData: BddDataType = {
       price: 1490,
       quantity: 4,
       category: 'Lighting',
-      createdAt: new Date().toISOString(),
+      createdAt: '2024-04-25T05:56:06.593Z',
       updadtedAt: new Date().toISOString(),
     },
   ],
@@ -66,29 +66,29 @@ const defaultData: BddDataType = {
   ],
 }
 
-export default async function db() {
+export default async function lowDb() {
   return initDb()
 }
 // initialise db with default data and file creation
 async function initDb() {
-  const _db = await JSONFilePreset('./src/db/db.json', defaultData)
-  if (_db.data.posts?.length === 1) {
-    _db.update(({posts}: BddDataType) => posts?.push({title: 'Un post'}))
+  const db = await JSONFilePreset('./src/db/db.json', defaultData)
+  if (db.data.posts?.length === 1) {
+    db.update(({posts}: BddDataType) => posts?.push({title: 'Un post'}))
   }
 
-  return _db
+  return db
 }
 
 export async function getTodos() {
-  const _db = await db()
-  const {todos} = _db.data
+  const db = await lowDb()
+  const {todos} = db.data
   return todos
 }
 
 export async function addTodo(todo: AddTodo) {
   simulateUnstableServer()
-  const _db = await db()
-  await _db.update(({todos}) => {
+  const db = await lowDb()
+  await db.update(({todos}) => {
     todos?.push({
       id: todo.id ?? todos.length + 1,
       title: todo.title,
@@ -101,22 +101,23 @@ export async function addTodo(todo: AddTodo) {
 export async function updateTodo(todo: Todo) {
   simulateUnstableServer()
   todo.updadtedAt = new Date().toISOString()
-  const _db = await db()
-  await _db.update(({todos}) => {
+  const db = await lowDb()
+  await db.update(({todos}) => {
     updateById(todos ?? [], todo)
   })
 }
 //PRODUCTS
 export async function getProducts() {
-  const _db = await db()
-  const {products} = _db.data
-  return products
+  const db = await lowDb()
+  const {products} = db.data
+  return sortByDate(products, 'asc')
 }
 
 export async function addProduct(product: Product) {
+  console.log('addProduct', product)
   simulateUnstableServer()
-  const _db = await db()
-  await _db.update(({products}) => {
+  const db = await lowDb()
+  await db.update(({products}) => {
     products?.push({
       id: product.id ?? products.length + 1,
       title: product.title,
@@ -132,17 +133,19 @@ export async function addProduct(product: Product) {
 }
 
 export async function updateProduct(product: Product) {
+  console.log('updateProduct', product)
   simulateUnstableServer()
-  product.updadtedAt = new Date().toISOString()
-  const _db = await db()
-  await _db.update(({products}) => {
+  product.updadtedAt = product.updadtedAt ?? new Date().toISOString()
+  const db = await lowDb()
+  await db.update(({products}) => {
     updateById(products ?? [], product)
   })
 }
 
 export async function deleteProduct(id: number) {
-  const _db = await db()
-  await _db.update(({products}) => {
+  console.log('deleteProduct', id)
+  const db = await lowDb()
+  await db.update(({products}) => {
     deleteById(products ?? [], id)
   })
 }
@@ -154,7 +157,9 @@ interface Identifiable {
 // Fonction générique pour mettre à jour un élément dans un tableau
 function updateById<T extends Identifiable>(items: T[], updatedItem: T): void {
   const index = items.findIndex((item) => item.id === updatedItem.id)
-  if (index !== -1) {
+  if (index === -1) {
+    throw new Error(`Item with id ${updatedItem.id} not found`)
+  } else {
     items[index] = updatedItem
   }
 }
@@ -165,14 +170,38 @@ function deleteById<T extends Identifiable>(
   itemId: number | string
 ): void {
   const index = items.findIndex((item) => item.id === itemId)
-  if (index !== -1) {
+  if (index === -1) {
+    throw new Error(`Item with id ${itemId} not found`)
+  } else {
     items.splice(index, 1)
   }
 }
 
+interface Sortable {
+  createdAt?: string
+  updatedAt?: string
+}
+
+function sortByDate<T extends Sortable>(
+  items?: T[],
+  sortOrder: 'asc' | 'desc' = 'asc'
+): T[] {
+  if (!items) {
+    return []
+  }
+  return items.toSorted((a, b) => {
+    const dateA = a.createdAt ? new Date(a.createdAt) : new Date()
+    const dateB = b.createdAt ? new Date(b.createdAt) : new Date()
+    const result = dateA.getTime() - dateB.getTime()
+    return sortOrder === 'asc' ? result : -result
+  })
+}
+
+// Définition des types avec la contrainte Sortabl
+
 export async function getPosts() {
-  const _db = await db()
-  const {posts} = _db.data
+  const db = await lowDb()
+  const {posts} = db.data
   return posts
 }
 
