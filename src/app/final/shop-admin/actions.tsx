@@ -7,6 +7,8 @@ import {
   updateProduct as updateProductDao,
 } from '@/db/sgbd'
 
+import {revalidatePath} from 'next/cache'
+
 export const getProducts = async () => {
   const products = await getProductsDao()
   return products
@@ -23,4 +25,5 @@ export const updatedProduct = async (product: Product) => {
 }
 export const deleteProduct = async (product: Product) => {
   await deleteProductDao(product.id)
+  revalidatePath('/final/shop-admin')
 }

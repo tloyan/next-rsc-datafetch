@@ -26,9 +26,9 @@ import React from 'react'
 const formSchema = z.object({
   id: z.number(),
   createdAt: z.string(),
-  quantity: z.number(),
+  quantity: z.coerce.number(),
   category: z.string(),
-  price: z.number(),
+  price: z.coerce.number(),
   title: z.string().min(2, {
     message: 'Title must be at least 2 characters.',
   }),
@@ -46,7 +46,7 @@ export function ProductForm({
   console.log('product', product)
   const form = useForm<Product>({
     resolver: zodResolver(formSchema),
-    shouldUnregister: false,
+    //shouldUnregister: false,
     defaultValues: {
       id: product?.id ?? 0,
       createdAt: product?.createdAt ?? new Date().toISOString(),
@@ -95,7 +95,7 @@ export function ProductForm({
             <FormItem>
               <FormLabel>Product price</FormLabel>
               <FormControl>
-                <Input placeholder="Product price" {...field} />
+                <Input type="number" placeholder="199" {...field} />
               </FormControl>
 
               <FormMessage />
@@ -147,7 +147,11 @@ export function ProductForm({
             <FormItem>
               <FormLabel>Product quantity</FormLabel>
               <FormControl>
-                <Input placeholder="Product quantity" {...field} />
+                <Input
+                  type="number"
+                  placeholder="Product quantity"
+                  {...field}
+                />
               </FormControl>
 
               <FormMessage />
