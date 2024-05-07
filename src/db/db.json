@@ -9,21 +9,14 @@
   ],
   "products": [
     {
-      "id": 1,
-      "createdAt": "2024-04-24T05:56:06.593Z",
-      "quantity": 19,
-      "category": "Lighting",
-      "price": 199,
-      "title": "Default product UP4",
-      "description": "dfsdf",
-      "updadtedAt": "2024-04-26T06:24:43.306Z"
-    },
-    {
       "id": 3,
+      "createdAt": "2024-04-24T06:51:20.028Z",
+      "quantity": 0,
+      "category": "default",
+      "price": 0,
       "title": "IPhoneUP",
       "description": "dfgdfg",
-      "createdAt": "2024-04-24T06:51:20.028Z",
-      "updadtedAt": "2024-04-24T06:51:20.028Z"
+      "updadtedAt": "2024-05-07T03:31:26.753Z"
     },
     {
       "id": 4,
@@ -61,6 +54,46 @@
       "quantity": 0,
       "createdAt": "2024-04-26T06:11:44.051Z",
       "updadtedAt": "2024-04-26T06:11:52.719Z"
+    },
+    {
+      "id": 0,
+      "title": "NEW 33",
+      "price": 11,
+      "description": "sdfs",
+      "category": "default",
+      "quantity": 0,
+      "createdAt": "2024-05-07T03:43:34.671Z",
+      "updadtedAt": "2024-05-07T03:43:47.256Z"
+    },
+    {
+      "id": 0,
+      "title": "NEW 33",
+      "price": 11,
+      "description": "sdfs",
+      "category": "default",
+      "quantity": 0,
+      "createdAt": "2024-05-07T03:43:34.671Z",
+      "updadtedAt": "2024-05-07T03:43:47.432Z"
+    },
+    {
+      "id": 0,
+      "title": "NEW 33",
+      "price": 11,
+      "description": "sdfs",
+      "category": "default",
+      "quantity": 0,
+      "createdAt": "2024-05-07T03:43:34.671Z",
+      "updadtedAt": "2024-05-07T03:43:47.620Z"
+    },
+    {
+      "id": 0,
+      "title": "NEW 34",
+      "price": 5,
+      "description": "dfgdfgdfgdfg",
+      "category": "lighting",
+      "quantity": 1,
+      "createdAt": "2024-05-07T03:44:33.634Z",
+      "updadtedAt": "2024-05-07T03:45:15.150Z"
     }
   ],
   "todos": [

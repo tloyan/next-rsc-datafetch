@@ -82,7 +82,6 @@ export function ProductForm({
               <FormControl>
                 <Input placeholder="ex : Iphone" {...field} />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}

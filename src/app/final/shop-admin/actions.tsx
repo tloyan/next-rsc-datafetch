@@ -10,6 +10,7 @@ import {
 import {revalidatePath} from 'next/cache'
 
 export const getProducts = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 1000))
   const products = await getProductsDao()
   return products
 }

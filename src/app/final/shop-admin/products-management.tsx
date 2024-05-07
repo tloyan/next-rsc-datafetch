@@ -2,7 +2,7 @@
 import {Button} from '@/components/ui/button'
 import {ChevronsUpDown} from 'lucide-react'
 import {CardTitle, CardHeader, CardContent, Card} from '@/components/ui/card'
-
+import {toast} from 'sonner'
 import {JSX, SVGProps, useState} from 'react'
 import {Product} from '@/db/sgbd'
 
@@ -27,6 +27,7 @@ export function ProductsManagement({products}: {products: Product[]}) {
   const handleDeleteProduct = async (product: Product) => {
     console.log('delete', product)
     await deleteProduct(product)
+    toast('Product deleted')
   }
   async function onSubmit(values: Product) {
     console.log('submit', values)
