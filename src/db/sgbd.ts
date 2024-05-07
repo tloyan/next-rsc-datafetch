@@ -108,6 +108,7 @@ export async function updateTodo(todo: Todo) {
 }
 //PRODUCTS
 export async function getProducts() {
+  console.log('getProducts dao')
   const db = await lowDb()
   const {products} = db.data
   return sortByDate(products, 'asc')

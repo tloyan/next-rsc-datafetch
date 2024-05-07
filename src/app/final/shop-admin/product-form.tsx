@@ -62,7 +62,7 @@ export function ProductForm({
     form.reset({
       id: product?.id ?? 0,
       createdAt: product?.createdAt ?? new Date().toISOString(),
-      quantity: product?.quantity ?? 0,
+      quantity: product?.quantity ?? 10,
       category: product?.category ?? 'default',
       title: product?.title ?? '',
       description: product?.description ?? '',

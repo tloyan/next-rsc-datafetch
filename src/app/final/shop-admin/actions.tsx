@@ -21,8 +21,9 @@ export const addProduct = async (product: Product) => {
 }
 
 export const updatedProduct = async (product: Product) => {
-  const products = await updateProductDao(product)
-  return products
+  await updateProductDao(product)
+  revalidatePath('/final/shop-admin')
+  //return products
 }
 export const deleteProduct = async (product: Product) => {
   await deleteProductDao(product.id)
