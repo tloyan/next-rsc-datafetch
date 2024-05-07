@@ -120,7 +120,7 @@ export async function addProduct(product: Product) {
   const db = await lowDb()
   await db.update(({products}) => {
     products?.push({
-      id: product.id ?? products.length + 1,
+      id: products.length + 1,
       title: product.title,
       price: product.price,
       description: product.description,
@@ -149,6 +149,13 @@ export async function deleteProduct(id: number) {
   await db.update(({products}) => {
     deleteById(products ?? [], id)
   })
+}
+
+export async function getProductById(id: number) {
+  console.log('getProductById', id)
+  const db = await lowDb()
+  const {products} = db.data
+  return products?.find((product) => product.id === id)
 }
 
 interface Identifiable {

@@ -9,81 +9,32 @@
   ],
   "products": [
     {
+      "id": 1,
+      "title": "Default product",
+      "price": 199,
+      "quantity": 19,
+      "category": "Lighting",
+      "createdAt": "2024-04-24T05:56:06.593Z",
+      "updadtedAt": "2024-05-07T07:25:23.064Z"
+    },
+    {
+      "id": 2,
+      "title": "IPhone",
+      "price": 1490,
+      "quantity": 4,
+      "category": "Lighting",
+      "createdAt": "2024-04-25T05:56:06.593Z",
+      "updadtedAt": "2024-05-07T07:25:23.064Z"
+    },
+    {
       "id": 3,
-      "createdAt": "2024-04-24T06:51:20.028Z",
-      "quantity": 0,
-      "category": "default",
+      "title": "vbnvbn___",
       "price": 0,
-      "title": "IPhoneUP2d234",
-      "description": "dfgdfg",
-      "updadtedAt": "2024-05-07T06:15:13.255Z"
-    },
-    {
-      "id": 4,
-      "title": "IPhoneUP",
-      "description": "dfgdfg",
-      "createdAt": "2024-04-24T06:52:38.125Z",
-      "updadtedAt": "2024-04-24T06:52:38.125Z"
-    },
-    {
-      "id": 0,
-      "title": "NEW",
-      "price": 11,
-      "description": "xcvxcvxcv",
-      "category": "furniture",
-      "quantity": 0,
-      "createdAt": "2024-04-26T06:11:44.051Z",
-      "updadtedAt": "2024-04-26T06:11:52.719Z"
-    },
-    {
-      "id": 0,
-      "title": "NEW 33",
-      "price": 11,
-      "description": "sdfs",
-      "category": "default",
-      "quantity": 0,
-      "createdAt": "2024-05-07T03:43:34.671Z",
-      "updadtedAt": "2024-05-07T03:43:47.256Z"
-    },
-    {
-      "id": 0,
-      "title": "NEW 33",
-      "price": 11,
-      "description": "sdfs",
-      "category": "default",
-      "quantity": 0,
-      "createdAt": "2024-05-07T03:43:34.671Z",
-      "updadtedAt": "2024-05-07T03:43:47.432Z"
-    },
-    {
-      "id": 0,
-      "title": "NEW 33",
-      "price": 11,
-      "description": "sdfs",
-      "category": "default",
-      "quantity": 0,
-      "createdAt": "2024-05-07T03:43:34.671Z",
-      "updadtedAt": "2024-05-07T03:43:47.620Z"
-    },
-    {
-      "id": 0,
-      "title": "NEW 34",
-      "price": 5,
-      "description": "dfgdfgdfgdfg",
-      "category": "lighting",
-      "quantity": 1,
-      "createdAt": "2024-05-07T03:44:33.634Z",
-      "updadtedAt": "2024-05-07T03:45:15.150Z"
-    },
-    {
-      "id": 0,
-      "title": "toto",
-      "price": 0,
-      "description": "dd",
+      "description": "vbnvbn",
       "category": "default",
       "quantity": 10,
-      "createdAt": "2024-05-07T05:18:01.033Z",
-      "updadtedAt": "2024-05-07T05:18:13.547Z"
+      "createdAt": "2024-05-07T07:25:36.579Z",
+      "updadtedAt": "2024-05-07T07:25:41.737Z"
     }
   ],
   "todos": [
@@ -91,21 +42,7 @@
       "id": 1,
       "title": "Default todo",
       "isCompleted": false,
-      "createdAt": "2024-04-24T06:21:06.336Z"
-    },
-    {
-      "id": 2,
-      "title": "ok",
-      "isCompleted": false,
-      "createdAt": "2024-05-07T06:17:31.474Z",
-      "updadtedAt": "2024-05-07T06:17:31.474Z"
-    },
-    {
-      "id": 3,
-      "title": "okknln",
-      "isCompleted": false,
-      "createdAt": "2024-05-07T06:17:36.224Z",
-      "updadtedAt": "2024-05-07T06:17:46.729Z"
+      "createdAt": "2024-05-07T07:25:23.064Z"
     }
   ]
 }
