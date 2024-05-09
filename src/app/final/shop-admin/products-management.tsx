@@ -31,7 +31,9 @@ export function ProductsManagement({products}: {products: Product[]}) {
   }
   async function onSubmit(values: Product) {
     console.log('submit', values)
+    const isUpdate = values.id ? true : false
     await (values.id ? updatedProduct(values) : addProduct(values))
+    toast(isUpdate ? 'Product updated' : 'Product added')
   }
   return (
     <div className="flex flex-col ">

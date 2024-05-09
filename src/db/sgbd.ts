@@ -1,3 +1,4 @@
+import {CategoriesEnum} from '@/lib/type'
 import {JSONFilePreset} from 'lowdb/node'
 
 const randomError = false
@@ -13,7 +14,7 @@ export type Product = {
   price?: number
   description?: string
   image?: string
-  category?: string
+  category?: CategoriesEnum
   quantity?: number
   createdAt?: string
   updadtedAt?: string
@@ -42,7 +43,7 @@ const defaultData: BddDataType = {
       title: 'Default product',
       price: 199,
       quantity: 19,
-      category: 'Lighting',
+      category: CategoriesEnum.lighting,
       createdAt: '2024-04-24T05:56:06.593Z',
       updadtedAt: new Date().toISOString(),
     },
@@ -51,7 +52,7 @@ const defaultData: BddDataType = {
       title: 'IPhone',
       price: 1490,
       quantity: 4,
-      category: 'Lighting',
+      category: CategoriesEnum.furniture,
       createdAt: '2024-04-25T05:56:06.593Z',
       updadtedAt: new Date().toISOString(),
     },

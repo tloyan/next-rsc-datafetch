@@ -13,28 +13,18 @@
       "title": "Default product",
       "price": 199,
       "quantity": 19,
-      "category": "Lighting",
+      "category": "lighting",
       "createdAt": "2024-04-24T05:56:06.593Z",
-      "updadtedAt": "2024-05-07T07:25:23.064Z"
+      "updadtedAt": "2024-05-09T06:20:49.502Z"
     },
     {
       "id": 2,
       "title": "IPhone",
       "price": 1490,
       "quantity": 4,
-      "category": "Lighting",
+      "category": "furniture",
       "createdAt": "2024-04-25T05:56:06.593Z",
-      "updadtedAt": "2024-05-07T07:25:23.064Z"
-    },
-    {
-      "id": 3,
-      "title": "vbnvbn___",
-      "price": 0,
-      "description": "vbnvbn",
-      "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-05-07T07:25:36.579Z",
-      "updadtedAt": "2024-05-07T07:25:41.737Z"
+      "updadtedAt": "2024-05-09T06:20:49.502Z"
     }
   ],
   "todos": [
@@ -42,7 +32,7 @@
       "id": 1,
       "title": "Default todo",
       "isCompleted": false,
-      "createdAt": "2024-05-07T07:25:23.064Z"
+      "createdAt": "2024-05-09T06:20:49.502Z"
     }
   ]
 }

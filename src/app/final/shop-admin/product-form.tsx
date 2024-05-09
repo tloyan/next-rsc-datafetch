@@ -22,6 +22,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import React from 'react'
+import {CategoriesEnum} from '@/lib/type'
 
 const formSchema = z.object({
   id: z.number(),
@@ -51,7 +52,7 @@ export function ProductForm({
       id: product?.id ?? 0,
       createdAt: product?.createdAt ?? new Date().toISOString(),
       quantity: product?.quantity ?? 0,
-      category: product?.category ?? 'default',
+      category: product?.category ?? CategoriesEnum.default,
       title: product?.title ?? '',
       description: product?.description ?? '',
       price: product?.price ?? 0,
@@ -63,13 +64,16 @@ export function ProductForm({
       id: product?.id ?? 0,
       createdAt: product?.createdAt ?? new Date().toISOString(),
       quantity: product?.quantity ?? 10,
-      category: product?.category ?? 'default',
+      category: product?.category ?? CategoriesEnum.default,
       title: product?.title ?? '',
       description: product?.description ?? '',
       price: product?.price ?? 0,
     })
   }, [form, product]) //
 
+  const categories = Object.keys(CategoriesEnum).filter((key) =>
+    Number.isNaN(Number(key))
+  )
   return (
     <Form {...form}>
       <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
@@ -121,7 +125,11 @@ export function ProductForm({
           name="category"
           render={({field}) => (
             <FormItem>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+                value={field.value}
+              >
                 <FormLabel>Catégorie</FormLabel>
                 <FormControl>
                   <SelectTrigger>
@@ -129,9 +137,11 @@ export function ProductForm({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="lighting">Lighting</SelectItem>
-                  <SelectItem value="furniture">Furniture</SelectItem>
-                  <SelectItem value="bags">Bags</SelectItem>
+                  {categories.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormMessage />
