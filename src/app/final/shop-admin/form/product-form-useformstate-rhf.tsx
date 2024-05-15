@@ -10,7 +10,6 @@ import {
   Select,
 } from '@/components/ui/select'
 import {Product} from '@/db/sgbd'
-import {z} from 'zod'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {useForm} from 'react-hook-form'
 import {
@@ -23,28 +22,23 @@ import {
 } from '@/components/ui/form'
 import React from 'react'
 import {CategoriesEnum} from '@/lib/type'
+import {formSchema} from '../schema'
+import {useFormState} from 'react-dom'
+import {onSubmitProductAction} from '../actions'
 
-const formSchema = z.object({
-  id: z.number(),
-  createdAt: z.string(),
-  quantity: z.coerce.number(),
-  category: z.string(),
-  price: z.coerce.number(),
-  title: z.string().min(2, {
-    message: 'Title must be at least 2 characters.',
-  }),
-  description: z.string().min(2, {
-    message: 'Description must be at least 2 characters.',
-  }),
-})
-export function ProductForm({
+import {toast} from 'sonner'
+
+export default function ProductForm({
   product,
-  onSubmit,
+  // onSubmit,
 }: {
   product?: Product
-  onSubmit: (values: Product) => void
+  onSubmit?: (values: Product) => void
 }) {
-  console.log('product', product)
+  const [state, formAction] = useFormState(onSubmitProductAction, {
+    success: true,
+  })
+
   const form = useForm<Product>({
     resolver: zodResolver(formSchema),
     //shouldUnregister: false,
@@ -64,19 +58,54 @@ export function ProductForm({
       id: product?.id ?? 0,
       createdAt: product?.createdAt ?? new Date().toISOString(),
       quantity: product?.quantity ?? 10,
-      category: product?.category ?? CategoriesEnum.default,
+      category: product?.category ?? undefined,
       title: product?.title ?? '',
       description: product?.description ?? '',
       price: product?.price ?? 0,
     })
   }, [form, product]) //
 
+  React.useEffect(() => {
+    console.log('state useEffect', state)
+    if (state?.success) {
+      toast.success('Product saved')
+      form.reset({
+        id: 0,
+        createdAt: new Date().toISOString(),
+        quantity: 10,
+        category: undefined,
+        title: '',
+        description: '',
+        price: 0,
+      })
+    } else {
+      for (const error of state?.errors ?? []) {
+        form.setError(error.field, {type: 'manual', message: error.message})
+      }
+
+      toast.error(state.message ?? 'Error')
+    }
+  }, [form, state, state?.success])
+
   const categories = Object.keys(CategoriesEnum).filter((key) =>
     Number.isNaN(Number(key))
   )
+
+  const handleSubmitAction = (prod: Product) => {
+    const formData = new FormData()
+    for (const [key, value] of Object.entries(prod)) {
+      formData.append(key, value as string | Blob)
+    }
+    formAction(formData)
+  }
+
   return (
     <Form {...form}>
-      <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="grid gap-4"
+        //action={formAction}
+        onSubmit={form.handleSubmit(handleSubmitAction)}
+      >
         <FormField
           control={form.control}
           name="title"
@@ -90,7 +119,19 @@ export function ProductForm({
             </FormItem>
           )}
         />
-
+        {/* {!state?.success && <div className="text-red-500">erreur</div>}
+        {state?.errors && (
+          <div className="text-red-500">
+            <ul>
+              {state.errors.map((err) => (
+                <li key={err.field} className="flex gap-1">
+                  <X fill="red" />
+                  {err.field} {err.message}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )} */}
         <FormField
           control={form.control}
           name="price"
@@ -126,6 +167,7 @@ export function ProductForm({
           render={({field}) => (
             <FormItem>
               <Select
+                name="category"
                 onValueChange={field.onChange}
                 defaultValue={field.value}
                 value={field.value}

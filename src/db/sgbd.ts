@@ -9,7 +9,7 @@ export type Post = {
   title: string
 }
 export type Product = {
-  id: number
+  id: number | string
   title: string
   price?: number
   description?: string
@@ -132,6 +132,11 @@ export async function addProduct(product: Product) {
       updadtedAt: product.updadtedAt ?? new Date().toISOString(),
     })
   })
+}
+// const data = await (values.id ? updatedProduct(values) : addProduct(values))
+
+export async function persistProduct(product: Product) {
+  await (product.id ? updateProduct(product) : addProduct(product))
 }
 
 export async function updateProduct(product: Product) {

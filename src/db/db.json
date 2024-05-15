@@ -10,21 +10,73 @@
   "products": [
     {
       "id": 1,
-      "title": "Default product",
-      "price": 199,
+      "createdAt": "2024-04-24T05:56:06.593Z",
       "quantity": 19,
       "category": "lighting",
-      "createdAt": "2024-04-24T05:56:06.593Z",
-      "updadtedAt": "2024-05-09T06:20:49.502Z"
+      "price": 199,
+      "title": "dfgdfgdfgUP",
+      "description": "dfgdfgdfg",
+      "updadtedAt": "2024-05-15T06:01:01.401Z"
     },
     {
       "id": 2,
-      "title": "IPhone",
-      "price": 1490,
+      "createdAt": "2024-04-25T05:56:06.593Z",
       "quantity": 4,
       "category": "furniture",
-      "createdAt": "2024-04-25T05:56:06.593Z",
-      "updadtedAt": "2024-05-09T06:20:49.502Z"
+      "price": 1490,
+      "title": "IPhone",
+      "description": "sdfsdf",
+      "updadtedAt": "2024-05-15T05:41:45.583Z"
+    },
+    {
+      "id": 3,
+      "title": "sdfsdf",
+      "price": -1,
+      "description": "sdfsdf",
+      "category": "default",
+      "quantity": 10,
+      "createdAt": "2024-05-14T03:53:54.200Z",
+      "updadtedAt": "2024-05-14T03:57:57.021Z"
+    },
+    {
+      "id": 4,
+      "title": "sdfsdf",
+      "price": -1,
+      "description": "sdfsdf",
+      "category": "default",
+      "quantity": 10,
+      "createdAt": "2024-05-14T03:53:54.200Z",
+      "updadtedAt": "2024-05-14T03:59:49.441Z"
+    },
+    {
+      "id": 5,
+      "title": "sdfsdf",
+      "price": -1,
+      "description": "sdfsdf",
+      "category": "default",
+      "quantity": 10,
+      "createdAt": "2024-05-14T03:53:54.200Z",
+      "updadtedAt": "2024-05-14T04:02:36.324Z"
+    },
+    {
+      "id": 6,
+      "title": "sdf",
+      "price": 0,
+      "description": "sdf",
+      "category": "furniture",
+      "quantity": 10,
+      "createdAt": "2024-05-15T05:42:53.358Z",
+      "updadtedAt": "2024-05-15T05:43:01.100Z"
+    },
+    {
+      "id": 7,
+      "title": "sdfsdfsd",
+      "price": 0,
+      "description": "sdfsdf",
+      "category": "furniture",
+      "quantity": 10,
+      "createdAt": "2024-05-15T05:43:31.328Z",
+      "updadtedAt": "2024-05-15T05:43:34.791Z"
     }
   ],
   "todos": [
