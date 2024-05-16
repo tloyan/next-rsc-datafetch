@@ -16,7 +16,7 @@ import {
 //import {ProductForm} from './product-form-useformstate'
 import ProductForm from './form'
 import {ProductsTable} from './product-table'
-import {addProduct, deleteProduct, updateProduct} from './actions'
+import {deleteProduct, persistProduct} from './actions'
 
 export function ProductsManagement({products}: {products: Product[]}) {
   const [isCollapsibleOpen, setIsCollapsibleOpen] = useState(false)
@@ -35,8 +35,9 @@ export function ProductsManagement({products}: {products: Product[]}) {
   async function onSubmit(values: Product) {
     console.log('submit', values)
     const isUpdate = values.id ? true : false
-    const data = await (values.id ? updateProduct(values) : addProduct(values))
-    console.log('data', data)
+    persistProduct(values)
+    // const data = await (values.id ? updateProduct(values) : addProduct(values))
+    //console.log('data', data)
     toast(isUpdate ? 'Product updated' : 'Product added')
     setSelectedProduct(undefined)
   }

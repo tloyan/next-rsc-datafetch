@@ -23,10 +23,11 @@ import {
 import React from 'react'
 import {CategoriesEnum} from '@/lib/type'
 import {formSchema} from '../schema'
-import {useFormState} from 'react-dom'
+import {useFormState, useFormStatus} from 'react-dom'
 import {onSubmitProductAction} from '../actions'
 
 import {toast} from 'sonner'
+//import {X} from 'lucide-react'
 
 export default function ProductForm({
   product,
@@ -38,12 +39,13 @@ export default function ProductForm({
   const [state, formAction] = useFormState(onSubmitProductAction, {
     success: true,
   })
+  const [showMessage, setShowMessage] = React.useState(true)
 
   const form = useForm<Product>({
     resolver: zodResolver(formSchema),
     //shouldUnregister: false,
     defaultValues: {
-      id: product?.id ?? 0,
+      id: product?.id ?? '',
       createdAt: product?.createdAt ?? new Date().toISOString(),
       quantity: product?.quantity ?? 0,
       category: product?.category ?? CategoriesEnum.default,
@@ -55,7 +57,7 @@ export default function ProductForm({
 
   React.useEffect(() => {
     form.reset({
-      id: product?.id ?? 0,
+      id: product?.id ?? '',
       createdAt: product?.createdAt ?? new Date().toISOString(),
       quantity: product?.quantity ?? 10,
       category: product?.category ?? undefined,
@@ -63,14 +65,18 @@ export default function ProductForm({
       description: product?.description ?? '',
       price: product?.price ?? 0,
     })
+    setShowMessage(false)
   }, [form, product]) //
 
   React.useEffect(() => {
-    console.log('state useEffect', state)
+    setShowMessage(true)
+  }, [state])
+
+  React.useEffect(() => {
     if (state?.success) {
       toast.success('Product saved')
       form.reset({
-        id: 0,
+        id: '',
         createdAt: new Date().toISOString(),
         quantity: 10,
         category: undefined,
@@ -79,6 +85,7 @@ export default function ProductForm({
         price: 0,
       })
     } else {
+      //set rhf errors form the server errors
       for (const error of state?.errors ?? []) {
         form.setError(error.field, {type: 'manual', message: error.message})
       }
@@ -101,9 +108,28 @@ export default function ProductForm({
 
   return (
     <Form {...form}>
+      {showMessage && (
+        <>
+          {!state?.success && (
+            <div className="text-red-500">Erreur : {state.message}</div>
+          )}
+          {/* {state?.errors && (
+            <div className="text-red-500">
+              <ul>
+                {state.errors.map((err) => (
+                  <li key={err.field} className="flex gap-1">
+                    <X fill="red" />
+                    {err.field} {err.message}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )} */}
+        </>
+      )}
       <form
         className="grid gap-4"
-        //action={formAction}
+        action={formAction}
         onSubmit={form.handleSubmit(handleSubmitAction)}
       >
         <FormField
@@ -119,19 +145,7 @@ export default function ProductForm({
             </FormItem>
           )}
         />
-        {/* {!state?.success && <div className="text-red-500">erreur</div>}
-        {state?.errors && (
-          <div className="text-red-500">
-            <ul>
-              {state.errors.map((err) => (
-                <li key={err.field} className="flex gap-1">
-                  <X fill="red" />
-                  {err.field} {err.message}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )} */}
+
         <FormField
           control={form.control}
           name="price"
@@ -211,14 +225,25 @@ export default function ProductForm({
         />
 
         <div className="flex gap-2">
-          <Button size="sm" type="submit">
-            Save
-          </Button>
-          <Button size="sm" variant="outline">
-            Cancel
-          </Button>
+          <ButtonComponent />
         </div>
       </form>
     </Form>
+  )
+}
+
+const ButtonComponent = () => {
+  const status = useFormStatus()
+  //constate que status ne fonctionne pas
+  console.log('status', status)
+  return (
+    <>
+      <Button size="sm" type="submit" disabled={status.pending}>
+        Save
+      </Button>
+      <Button size="sm" variant="outline">
+        Cancel
+      </Button>
+    </>
   )
 }

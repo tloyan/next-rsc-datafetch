@@ -35,7 +35,7 @@ export default function ProductForm({
     resolver: zodResolver(formSchema),
     //shouldUnregister: false,
     defaultValues: {
-      id: product?.id ?? 0,
+      id: product?.id ?? '',
       createdAt: product?.createdAt ?? new Date().toISOString(),
       quantity: product?.quantity ?? 0,
       category: product?.category ?? CategoriesEnum.default,
@@ -47,7 +47,7 @@ export default function ProductForm({
 
   React.useEffect(() => {
     form.reset({
-      id: product?.id ?? 0,
+      id: product?.id ?? '',
       createdAt: product?.createdAt ?? new Date().toISOString(),
       quantity: product?.quantity ?? 10,
       category: product?.category ?? undefined,

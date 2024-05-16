@@ -11,7 +11,7 @@ export const getProducts = async () => {
   return products
 }
 
-export const getProductById = cache(async (id: number) => {
+export const getProductById = cache(async (id: string) => {
   const products = await getProductByIdDao(id)
   return products
 })

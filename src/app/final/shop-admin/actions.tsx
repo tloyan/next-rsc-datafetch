@@ -11,11 +11,12 @@ import {FormSchemaType, formSchema, formSchemaLight} from './schema'
 import {revalidatePath} from 'next/cache'
 
 export type FormStateSimple = {error: boolean; message: string}
+
 export async function onSubmitAction(
   prevState: FormStateSimple,
   data: FormData
 ): Promise<FormStateSimple> {
-  await new Promise((resolve) => setTimeout(resolve, 3000))
+  await new Promise((resolve) => setTimeout(resolve, 1000))
   const formData = Object.fromEntries(data)
   const parsed = formSchemaLight.safeParse(formData)
   if (!parsed.success) {
@@ -46,7 +47,6 @@ export async function onSubmitProductAction(
   data: FormData
 ): Promise<FormState> {
   const formData = Object.fromEntries(data)
-
   const parsed = formSchema.safeParse(formData)
 
   if (!parsed.success) {
@@ -74,15 +74,10 @@ export async function onSubmitProductAction(
       message: 'Server Error',
     }
   }
-  const serverError = Math.random() > 0.1
-  if (serverError) {
-    return {
-      success: false,
-      message: 'Unkown Server Error',
-    }
-  }
+
   try {
     await persistProductDao(parsed.data as Product)
+    revalidatePath('/final/shop-admin')
     return {
       success: true,
       message: 'Product Saved',
@@ -90,7 +85,7 @@ export async function onSubmitProductAction(
   } catch (error) {
     return {
       success: false,
-      message: `Unkown Server Error${error}`,
+      message: `Unkown Server Error ${error}`,
     }
   }
 }
@@ -112,6 +107,12 @@ export const updateProduct = async (product: Product) => {
   //return products
 }
 export const deleteProduct = async (product: Product) => {
-  await deleteProductDao(product.id as number)
+  await deleteProductDao(product.id)
   revalidatePath('/final/shop-admin')
+}
+
+export const persistProduct = async (product: Product) => {
+  await persistProductDao(product)
+  revalidatePath('/final/shop-admin')
+  return {ok: true, product}
 }

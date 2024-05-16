@@ -9,74 +9,124 @@
   ],
   "products": [
     {
-      "id": 1,
+      "id": "1",
       "createdAt": "2024-04-24T05:56:06.593Z",
       "quantity": 19,
       "category": "lighting",
       "price": 199,
-      "title": "dfgdfgdfgUP",
-      "description": "dfgdfgdfg",
-      "updadtedAt": "2024-05-15T06:01:01.401Z"
+      "title": "Defult product",
+      "description": "qsdqsd",
+      "updadtedAt": "2024-05-16T08:59:34.880Z"
     },
     {
-      "id": 2,
+      "id": "2",
       "createdAt": "2024-04-25T05:56:06.593Z",
       "quantity": 4,
       "category": "furniture",
       "price": 1490,
       "title": "IPhone",
-      "description": "sdfsdf",
-      "updadtedAt": "2024-05-15T05:41:45.583Z"
+      "description": "sdfsdfsd",
+      "updadtedAt": "2024-05-16T08:50:06.510Z"
     },
     {
-      "id": 3,
-      "title": "sdfsdf",
-      "price": -1,
-      "description": "sdfsdf",
-      "category": "default",
+      "id": "3",
+      "createdAt": "2024-05-16T08:10:48.923Z",
       "quantity": 10,
-      "createdAt": "2024-05-14T03:53:54.200Z",
-      "updadtedAt": "2024-05-14T03:57:57.021Z"
-    },
-    {
-      "id": 4,
-      "title": "sdfsdf",
-      "price": -1,
-      "description": "sdfsdf",
       "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-05-14T03:53:54.200Z",
-      "updadtedAt": "2024-05-14T03:59:49.441Z"
+      "price": 0,
+      "title": "NEWUP",
+      "description": "qsdqsd",
+      "updadtedAt": "2024-05-16T08:11:06.470Z"
     },
     {
-      "id": 5,
-      "title": "sdfsdf",
-      "price": -1,
-      "description": "sdfsdf",
+      "id": "4",
+      "createdAt": "2024-05-16T08:11:17.278Z",
+      "quantity": 10,
       "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-05-14T03:53:54.200Z",
-      "updadtedAt": "2024-05-14T04:02:36.324Z"
+      "price": 0,
+      "title": "NEW",
+      "description": "dfg",
+      "updadtedAt": "2024-05-16T08:11:47.060Z"
     },
     {
-      "id": 6,
+      "id": "5",
+      "createdAt": "2024-05-16T08:12:10.475Z",
+      "quantity": 10,
+      "category": "default",
+      "price": 0,
       "title": "sdf",
-      "price": 0,
-      "description": "sdf",
-      "category": "furniture",
-      "quantity": 10,
-      "createdAt": "2024-05-15T05:42:53.358Z",
-      "updadtedAt": "2024-05-15T05:43:01.100Z"
+      "description": "sdfsdf",
+      "updadtedAt": "2024-05-16T08:14:20.484Z"
     },
     {
-      "id": 7,
-      "title": "sdfsdfsd",
+      "id": "6",
+      "createdAt": "2024-05-16T08:34:37.139Z",
+      "quantity": 10,
+      "category": "default",
+      "price": 0,
+      "title": "sdfsdUP",
+      "description": "sdfsdf",
+      "updadtedAt": "2024-05-16T08:34:49.865Z"
+    },
+    {
+      "id": "7",
+      "title": "NEW",
+      "price": 0,
+      "description": "dfgdfg",
+      "category": "default",
+      "quantity": 10,
+      "createdAt": "2024-05-16T08:38:48.027Z",
+      "updadtedAt": "2024-05-16T08:38:48.027Z"
+    },
+    {
+      "id": "8",
+      "title": "NEW",
+      "price": 0,
+      "description": "ghjghj",
+      "category": "default",
+      "quantity": 10,
+      "createdAt": "2024-05-16T08:42:32.416Z",
+      "updadtedAt": "2024-05-16T08:42:32.416Z"
+    },
+    {
+      "id": "9",
+      "title": "NEW",
+      "price": 0,
+      "description": "dfgdfg",
+      "category": "default",
+      "quantity": 10,
+      "createdAt": "2024-05-16T08:43:25.068Z",
+      "updadtedAt": "2024-05-16T08:43:27.339Z"
+    },
+    {
+      "id": "10",
+      "title": "NEW",
       "price": 0,
       "description": "sdfsdf",
-      "category": "furniture",
+      "category": "default",
       "quantity": 10,
-      "createdAt": "2024-05-15T05:43:31.328Z",
-      "updadtedAt": "2024-05-15T05:43:34.791Z"
+      "createdAt": "2024-05-16T08:44:01.305Z",
+      "updadtedAt": "2024-05-16T08:44:04.277Z"
+    },
+    {
+      "id": "11",
+      "createdAt": "2024-05-16T08:44:07.614Z",
+      "quantity": 10,
+      "category": "default",
+      "price": 0,
+      "title": "NEW",
+      "description": "sdfsdfsdf",
+      "updadtedAt": "2024-05-16T08:44:33.391Z"
+    },
+    {
+      "id": "12",
+      "title": "NEW",
+      "price": 0,
+      "description": "qsdqsd",
+      "category": "default",
+      "quantity": 10,
+      "createdAt": "2024-05-16T08:58:04.527Z",
+      "updadtedAt": "2024-05-16T08:58:07.869Z"
     }
   ],
   "todos": [
@@ -84,7 +134,7 @@
       "id": 1,
       "title": "Default todo",
       "isCompleted": false,
-      "createdAt": "2024-05-09T06:20:49.502Z"
+      "createdAt": "2024-05-16T08:10:30.637Z"
     }
   ]
 }

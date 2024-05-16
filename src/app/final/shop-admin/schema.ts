@@ -1,7 +1,7 @@
 import z from 'zod'
 
 export const formSchema = z.object({
-  id: z.union([z.number(), z.string()]),
+  id: z.string(),
   createdAt: z.string(),
   quantity: z.coerce.number(),
   category: z.string(),

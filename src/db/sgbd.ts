@@ -9,7 +9,7 @@ export type Post = {
   title: string
 }
 export type Product = {
-  id: number | string
+  id: string
   title: string
   price?: number
   description?: string
@@ -39,7 +39,7 @@ const defaultData: BddDataType = {
   posts: [{title: 'Default post'}],
   products: [
     {
-      id: 1,
+      id: '1',
       title: 'Default product',
       price: 199,
       quantity: 19,
@@ -48,7 +48,7 @@ const defaultData: BddDataType = {
       updadtedAt: new Date().toISOString(),
     },
     {
-      id: 2,
+      id: '2',
       title: 'IPhone',
       price: 1490,
       quantity: 4,
@@ -117,11 +117,11 @@ export async function getProducts() {
 
 export async function addProduct(product: Product) {
   console.log('addProduct', product)
-  simulateUnstableServer()
+  simulateUnstableServer({slow: true})
   const db = await lowDb()
   await db.update(({products}) => {
     products?.push({
-      id: products.length + 1,
+      id: `${products.length + 1}`,
       title: product.title,
       price: product.price,
       description: product.description,
@@ -136,12 +136,13 @@ export async function addProduct(product: Product) {
 // const data = await (values.id ? updatedProduct(values) : addProduct(values))
 
 export async function persistProduct(product: Product) {
+  console.log(typeof product.id)
   await (product.id ? updateProduct(product) : addProduct(product))
 }
 
 export async function updateProduct(product: Product) {
   console.log('updateProduct', product)
-  simulateUnstableServer()
+  simulateUnstableServer({slow: true})
   product.updadtedAt = product.updadtedAt ?? new Date().toISOString()
   const db = await lowDb()
   await db.update(({products}) => {
@@ -149,7 +150,7 @@ export async function updateProduct(product: Product) {
   })
 }
 
-export async function deleteProduct(id: number) {
+export async function deleteProduct(id: string) {
   console.log('deleteProduct', id)
   const db = await lowDb()
   await db.update(({products}) => {
@@ -157,7 +158,7 @@ export async function deleteProduct(id: number) {
   })
 }
 
-export async function getProductById(id: number) {
+export async function getProductById(id: string) {
   console.log('getProductById', id)
   const db = await lowDb()
   const {products} = db.data

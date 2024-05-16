@@ -2,7 +2,7 @@
 import {fetchProduct, getProductById} from '../actions'
 
 export default async function Page({params}: {params: {id: string}}) {
-  const product = await getProductById(Number(params.id))
+  const product = await getProductById(params.id)
   // const product = await fetchProduct(params.id)
   // const product1 = await fetchProduct(params.id)
   // const produc2 = await fetchProduct(params.id)

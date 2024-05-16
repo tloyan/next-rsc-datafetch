@@ -20,11 +20,13 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+
 import React from 'react'
 import {CategoriesEnum} from '@/lib/type'
 
 import {useFormState, useFormStatus} from 'react-dom'
 import {onSubmitAction} from '../actions'
+import {toast} from 'sonner'
 
 export default function ProductForm({
   product,
@@ -37,13 +39,13 @@ export default function ProductForm({
     error: false,
     message: '',
   })
-  useFormStatus
-  console.log('state', state)
+  const [showMessage, setShowMessage] = React.useState(true)
+
   const form = useForm<Product>({
     // resolver: zodResolver(formSchema),
     //shouldUnregister: false,
     defaultValues: {
-      id: product?.id ?? 0,
+      id: product?.id ?? '',
       createdAt: product?.createdAt ?? new Date().toISOString(),
       quantity: product?.quantity ?? 0,
       category: product?.category ?? CategoriesEnum.default,
@@ -55,7 +57,7 @@ export default function ProductForm({
 
   React.useEffect(() => {
     form.reset({
-      id: product?.id ?? 0,
+      id: product?.id ?? '',
       createdAt: product?.createdAt ?? new Date().toISOString(),
       quantity: product?.quantity ?? 10,
       category: product?.category ?? undefined,
@@ -63,20 +65,42 @@ export default function ProductForm({
       description: product?.description ?? '',
       price: product?.price ?? 0,
     })
+    setShowMessage(false)
   }, [form, product]) //
+
+  React.useEffect(() => {
+    setShowMessage(true)
+    if (state.error) {
+      toast.error(state.message)
+    } else {
+      toast.success(state.message)
+    }
+  }, [state])
 
   const categories = Object.keys(CategoriesEnum).filter((key) =>
     Number.isNaN(Number(key))
   )
   return (
     <Form {...form}>
+      {showMessage && state.error && (
+        <div className="text-red-500">{state.message}</div>
+      )}
+      {showMessage && !state.error && (
+        <div className="text-green-500">{state.message}</div>
+      )}
       <form
         className="grid gap-4"
         action={formAction}
         // onSubmit={form.handleSubmit(onSubmit)}
       >
-        {state.error && <div className="text-red-500">{state.message}</div>}
-        {!state.error && <div className="text-green-500">{state.message}</div>}
+        <FormField
+          control={form.control}
+          name="id"
+          render={({field}) => (
+            <input type="hidden" name="id" value={field.value} />
+          )}
+        />
+
         <FormField
           control={form.control}
           name="title"
@@ -167,14 +191,24 @@ export default function ProductForm({
           )}
         />
         <div className="flex gap-2">
-          <Button size="sm" type="submit">
-            Save
-          </Button>
-          <Button size="sm" variant="outline">
-            Cancel
-          </Button>
+          <ButtonComponent />
         </div>
       </form>
     </Form>
+  )
+}
+
+const ButtonComponent = () => {
+  const status = useFormStatus()
+  console.log('status', status)
+  return (
+    <>
+      <Button size="sm" type="submit" disabled={status.pending}>
+        Save
+      </Button>
+      <Button size="sm" variant="outline">
+        Cancel
+      </Button>
+    </>
   )
 }
