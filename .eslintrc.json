@@ -36,6 +36,7 @@
     "unicorn/prefer-module": "off",
     "unicorn/filename-case": "off",
     "no-console": "off",
+    "i18n-text/no-en": "off",
     "no-unused-vars": "off",
     "promise/always-return": "error",
     "promise/no-return-wrap": "error",
@@ -49,7 +50,9 @@
     "promise/no-return-in-finally": "warn",
     "promise/valid-params": "warn",
     "promise/avoid-new": "off",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "error"
   },
   "ignorePatterns": ["src/**/*.js"]
 }
