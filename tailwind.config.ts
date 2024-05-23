@@ -1,4 +1,5 @@
 import type {Config} from 'tailwindcss'
+import {fontFamily} from 'tailwindcss/defaultTheme'
 
 const config = {
   darkMode: ['class'],
@@ -18,6 +19,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['var(--font-sans)', ...fontFamily.sans],
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -67,10 +71,27 @@ const config = {
           from: {height: 'var(--radix-accordion-content-height)'},
           to: {height: '0'},
         },
+        'text-strike': {
+          from: {'text-decoration': 'none'},
+          to: {'text-decoration': 'line-through'},
+        },
+        'color-change': {
+          '0%': {color: '#000000'}, // Noir
+          '25%': {color: '#374151'}, // Slate 700
+          '50%': {color: '#6B7280'}, // Slate 500
+          '75%': {color: '#9CA3AF'}, // Slate 300
+          '100%': {color: '#000000'}, // Retour à Noir
+          // '0%': {color: '#FF0000'}, // Rouge
+          // '25%': {color: '#00FF00'}, // Vert
+          // '50%': {color: '#0000FF'}, // Bleu
+          // '75%': {color: '#FFFF00'}, // Jaune
+          // '100%': {color: '#FF0000'}, // Retour à Rouge
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'color-cycle': 'color-change 2s infinite ease-in-out',
       },
     },
   },

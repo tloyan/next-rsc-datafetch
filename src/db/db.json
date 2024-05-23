@@ -1,0 +1,30 @@
+{
+  "posts": [
+    {
+      "title": "Default post"
+    },
+    {
+      "title": "Un post"
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "createdAt": "2024-04-24T05:56:06.593Z",
+      "quantity": 19,
+      "category": "lighting",
+      "price": 199,
+      "title": "Defult product",
+      "description": "qsdqsd",
+      "updadtedAt": "2024-05-16T08:59:34.880Z"
+    }
+  ],
+  "todos": [
+    {
+      "id": 1,
+      "title": "Default todo",
+      "isCompleted": false,
+      "createdAt": "2024-05-16T08:10:30.637Z"
+    }
+  ]
+}
