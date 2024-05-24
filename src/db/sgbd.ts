@@ -191,6 +191,11 @@ function sortByDate<T extends Sortable>(
 export async function getPosts() {
   const db = await lowDb()
   const {posts} = db.data
+  // experimental_taintObjectReference(
+  //   'Do not pass the entire user object to the client. ' +
+  //     'Instead, pick off the specific properties you need for this use case.',
+  //   posts as object
+  // )
   return posts
 }
 

@@ -1,6 +1,6 @@
-# Exposer des API REST (Route Handler)
+# Fetch dans un React Server Component
 
-### 💡 Exposer API dans Next
+### 💡 Fetch RSC
 
 ## 📝 Tes notes
 
@@ -8,77 +8,90 @@ Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeu
 
 ## Comprendre
 
-Les applications, sites, saas contiennent généralement 2 grosses parties. Un front-end et un back-end. Par exemple le client en React appelle un serveur (souvent développé avec d’autres Langages/Frameworks). Exemple React / Node Express ou Angular / Spring Boot. Avec Next il est également possible d’exposer du code serveur via des API REST pour avoir une application ou tout est gérer dans le même projet avec le même langage et framework. Pour cela il existe le principe de route handler. Pour cela il suffit de creer un fichier `route.ts`
+Un composant serveur dans React (React Server Component) est un type de composant qui s'exécute côté serveur. Il permet de rendre le contenu HTML à l'avance sur le serveur avant de l'envoyer au client. Cela améliore les performances et le SEO en permettant un rendu plus rapide des pages et une meilleure indexation par les moteurs de recherche. Les composants serveur peuvent accéder directement aux données du serveur, ce qui simplifie la gestion des données et réduit les requêtes client-serveur.
+
+De base dans Next tout les composant sont des React Serveur Composant, sauf s’il inclue la directive `“use client”`
+
+Le grand avantage des RSC (React Server Composant) c’est qu’il est possible de déclarer des composant `React` de manière asynchrone, ce qui simplifie la syntaxe
 
 ```tsx
-//app/items/route.ts
-export async function GET() {
-  const res = await fetch('https://data.mongodb-api.com/...', {
-    headers: {
-      'Content-Type': 'application/json',
-      'API-Key': process.env.DATA_API_KEY,
-    },
-  })
-  const data = await res.json()
-
-  return Response.json({ data })
-}
+const Page = async () => {
+		const data = await fetch('https/...')
+		return (
+			<>
+			{data.map() ...
+			</>
+		)
+	}
 ```
 
-📑 Le liens vers la doc [https://nextjs.org/docs/app/building-your-application/routing/route-handlers#convention](https://nextjs.org/docs/app/building-your-application/routing/route-handlers#convention)
+📑 Le liens vers la doc [https://react.dev/reference/rsc/server-components](https://react.dev/reference/rsc/server-components)
 
 ## Exercice
 
-**🐶** Dans cet exercice tu vas devoir remplacer l’`API REST` externe qui permet d’avoir une liste de `posts` par notre propre `API REST`. Nous allons créer un `endpoint` comme cela.
+Avant de faire un `fetch` dans un React Server Component nous allons voir comment nous pouvons utiliser l’api `use` de React 19
+
+📑 Le liens vers la doc [https://react.dev/reference/react/use](https://react.dev/reference/react/use)
 
 ```tsx
-http://localhost:3000/exercises/api/posts
+import { use } from 'react'
+
+function Component() {
+  const message = use(Promise)
 ```
 
-Les `posts` sont stockés coté backend dans une base de données light `lowdb`.
+**🐶 Dans cet exercice tu vas devoir convertir le code utilisant le `fetch` et `useEffect` en le simplifiant avec `use.`**
 
-**🤖** Pour simplifier l’exercice une fonction `getPosts` permet de récupérer les `posts` en bdd.
+Fichiers
+
+- `exercises/post/page.tsx`
+
+## Bonus
+
+### 1. 🚀 Transforme ce RCC en RSC
+
+**🐶** Supprime la directive `“use client”` du fichier pour transformer le RCC en RSC. Cela ne pose pas de problème car nous n’utilisons pas de Hook comme `useState` et `useEffect` . Regarde ou sont logué les data
+
+<aside>
+💡 exécute un CURL et constate qu’en client et server les données sont déjà la car use s’exécute des 2 cotés
+
+</aside>
+
+Fichiers
+
+- `exercises/post/page.tsx`
+
+### 2. 🚀 Fetch directement dans un RSC
+
+Les RSC permettent d’utiliser du code `async` dans les composants. Comme `use` n’est pas recommandé pour `fetch` des data dans un RSC, nous pouvons utiliser `fetch` directement dans les composants.
+
+[https://react.dev/reference/react/use](https://react.dev/reference/react/use)
+
+```tsx
+When fetching data in a Server Component, prefer async and await over use. async and await pick up rendering from the point where await was invoked, whereas use re-renders the component after the data is resolved.
+```
+
+🐶 Transforme le RSC en composant `async` pour pouvoir appeler `fetch` directement
+
+Fichiers
+
+- `exercise/about/page`
+
+### 3. 🚀 Appeler directement la base de données
+
+Pourquoi exposer une API REST faisant un appel à une base de données pour être consommé par un composant via fetch ?
+
+Alors que grâce au RSC on peut directement appeler la base de données ?
+
+🐶 Dans cet exercice supprime les appels `fetch` et appelle directement la base de données via la fonction `getPosts`
 
 ```tsx
 import {getPosts} from '@/db/sgbd'
 ```
 
-- Dans `route.ts` fait l’appel en base de donnée et retourne les données au format json
-- Dans `page.tsx` modifie l'url
-
-Fichiers
-
-- `exercise/api/posts/route.ts`
-- `exercise/post/page.tsx`
-
-## Bonus
-
-### 1. 🚀 Appeler des API externes depuis le route handler
-
-Il est également possible d’appeler des API externe depuis le route handler. Cela permet notamment de faire appel à différentes source de données (MongoDB, Prisma ou n’importe quel autre service )
-
-🐶 Dans cet exercice adapte l’appel de la bdd vers un appel de post externe
-
-```tsx
-**// ⛏️ n'appelle plus** getPosts
-**//**import {getPosts} from '@/db/sgbd'
-
-// mais
-fetch('https://jsonplaceholder.typicode.com/posts')
-```
-
-Fichiers
-
-- `exercise/api/posts/route.ts`
-
-<aside>
-💡 Constate via un CURL [http://localhost:3000/exercises/post](http://localhost:3000/exercises/post) que cela n’est toujours pas optimiser pour le SEO
-
-</aside>
-
 ## Aller plus loin
 
-📑 Le lien vers la doc [https://nextjs.org/docs/app/building-your-application/routing/route-handlers#convention](https://nextjs.org/docs/app/building-your-application/routing/route-handlers#convention)
+📑 Le lien vers la doc [https://react.dev/reference/rsc/server-components](https://react.dev/reference/rsc/server-components)
 
 ## Ils vont t’aider
 
@@ -90,4 +103,4 @@ Fichiers
 
 ## 🐜 Feedback
 
-Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=3.RSC%20Data%20fetch&entry.533578441=03%20route%20handler).
+Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=3.RSC%20Data%20fetch&entry.533578441=01%20Fetch%20RSC).
