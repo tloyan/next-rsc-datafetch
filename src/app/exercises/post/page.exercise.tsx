@@ -7,8 +7,9 @@ const Page = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        // ⛏️ remplace cette url par l'url de l'api next
-        const response = await fetch('http://localhost:4000/posts')
+        const response = await fetch(
+          'http://localhost:3000/exercises/api/posts'
+        )
         const data = await response.json()
         setPosts(data as Post[])
       } catch (error) {

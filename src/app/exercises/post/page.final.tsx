@@ -1,23 +1,17 @@
 'use client'
 import {Post} from '@/lib/type'
-import {useEffect, useState} from 'react'
+import {use} from 'react'
+
+const fetchPosts = async () => {
+  const response = await fetch('http://localhost:3000/exercises/api/posts')
+  const data = await response.json()
+  return data as Post[]
+}
 
 const Page = () => {
-  const [posts, setPosts] = useState<Post[]>([])
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch(
-          'http://localhost:3000/exercises/api/posts'
-        )
-        const data = await response.json()
-        setPosts(data as Post[])
-      } catch (error) {
-        console.error('Error fetching posts:', error)
-      }
-    }
-    fetchPosts()
-  }, [])
+  const posts = use(fetchPosts())
+  console.log('post', posts)
+
   return (
     <div className="mx-auto max-w-4xl p-6 text-lg">
       <h1 className="mb-4 text-center text-3xl font-bold"> Fetch Posts</h1>

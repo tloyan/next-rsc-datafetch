@@ -1,6 +1,6 @@
-//export * from './route.final'
+import {getPosts} from '@/db/sgbd'
 
-export * from './route.exercise'
-
-//🚀 Appeler des API externes depuis le route handler
-//export * from './route.bonus-1'
+export async function GET() {
+  const data = await getPosts()
+  return Response.json(data)
+}
