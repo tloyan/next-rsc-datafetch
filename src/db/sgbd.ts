@@ -110,7 +110,6 @@ export async function addProduct(product: Product) {
     })
   })
 }
-// const data = await (values.id ? updatedProduct(values) : addProduct(values))
 
 export async function persistProduct(product: Product) {
   console.log(typeof product.id)
@@ -188,8 +187,6 @@ function sortByDate<T extends Sortable>(
     return sortOrder === 'asc' ? result : -result
   })
 }
-
-// Définition des types avec la contrainte Sortabl
 
 export async function getPosts() {
   const db = await lowDb()

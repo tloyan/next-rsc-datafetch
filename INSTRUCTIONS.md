@@ -1,6 +1,6 @@
-# Rappel fetch dans un composant React (client)
+# Exposer des API REST (Route Handler)
 
-### 💡 Comment récupérer des données via fetch
+### 💡 Exposer API dans Next
 
 ## 📝 Tes notes
 
@@ -8,77 +8,77 @@ Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeu
 
 ## Comprendre
 
-Fetch (comme axios) permet de récupérer des données sur un serveur. Souvent via des API REST en JSON. exemple
+Les applications, sites, saas contiennent généralement 2 grosses parties. Un front-end et un back-end. Par exemple le client en React appelle un serveur (souvent développé avec d’autres Langages/Frameworks). Exemple React / Node Express ou Angular / Spring Boot. Avec Next il est également possible d’exposer du code serveur via des API REST pour avoir une application ou tout est gérer dans le même projet avec le même langage et framework. Pour cela il existe le principe de route handler. Pour cela il suffit de creer un fichier `route.ts`
 
-```jsx
-const response = await fetch('https://jsonplaceholder.typicode.com/posts')
-const data = await response.json()
+```tsx
+//app/items/route.ts
+export async function GET() {
+  const res = await fetch('https://data.mongodb-api.com/...', {
+    headers: {
+      'Content-Type': 'application/json',
+      'API-Key': process.env.DATA_API_KEY,
+    },
+  })
+  const data = await res.json()
+
+  return Response.json({ data })
+}
 ```
 
-Avec React cet appel est généralement fait dans un `useEffect` et les données sont ajoutées dans un `state`.
-
-```jsx
-const [posts, setPosts] = useState<Post[]>([])
-
-useEffect(() => {
-  const fetchPosts = async () => {
-    try {
-      const response = await fetch('https://jsonplaceholder.typicode.com/posts')
-      const data = await response.json()
-      setPosts(data as Post[])
-    } catch (error) {
-      console.error('Error fetching posts:', error)
-    }
-  }
-  fetchPosts()
-}, [])
-```
+📑 Le liens vers la doc [https://nextjs.org/docs/app/building-your-application/routing/route-handlers#convention](https://nextjs.org/docs/app/building-your-application/routing/route-handlers#convention)
 
 ## Exercice
 
-Dans cet exercice tu vas devoir appeler et afficher une liste de posts dans un composant client avec la manière classique.
+**🐶** Dans cet exercice tu vas devoir remplacer l’`API REST` externe qui permet d’avoir une liste de `posts` par notre propre `API REST`. Nous allons créer un `endpoint` comme cela.
 
-Constate le comportement client avec la commande CURL
-
-```jsx
-curl http://localhost:3000/exercises/post
+```tsx
+http://localhost:3000/exercises/api/posts
 ```
+
+Les `posts` sont stockés coté backend dans une base de données light `lowdb`.
+
+**🤖** Pour simplifier l’exercice une fonction `getPosts` permet de récupérer les `posts` en bdd.
+
+```tsx
+import {getPosts} from '@/db/sgbd'
+```
+
+- Dans `route.ts` fait l’appel en base de donnée et retourne les données au format json
+- Dans `page.tsx` modifie l'url
 
 Fichiers
 
-- `app/exercises/post/page`
+- `exercise/api/posts/route.ts`
+- `exercise/post/page.tsx`
 
 ## Bonus
 
-### 1. 🚀 JSON-SERVER
+### 1. 🚀 Appeler des API externes depuis le route handler
 
-Afin de ne pas être dépendant d’un service externe nous allons utiliser un petit utilitaire qui permet de démarrer simplement un server API REST a partir d’un simple fichier JSON. Pour simplifier l’exercice cet utilitaire est déjà préconfigurer dans `package.json`
+Il est également possible d’appeler des API externe depuis le route handler. Cela permet notamment de faire appel à différentes source de données (MongoDB, Prisma ou n’importe quel autre service )
 
-```jsx
- "json-server": "json-server --watch ./src/db/db.json --port 4000"
-```
+🐶 Dans cet exercice adapte l’appel de la bdd vers un appel de post externe
 
-Et pour plus de transparence il est automatiquement lancer lors d’un `npm dev`
+```tsx
+**// ⛏️ n'appelle plus** getPosts
+**//**import {getPosts} from '@/db/sgbd'
 
-```jsx
- "dev": "concurrently 'npm run json-server' 'next dev'",
-```
-
-Dans cet exercice bonus remplace l’appel du service
-
-```jsx
-https://jsonplaceholder.typicode.com/posts
-par
-http://localhost:4000/posts/
+// mais
+fetch('https://jsonplaceholder.typicode.com/posts')
 ```
 
 Fichiers
 
-- `app/exercises/post/page`
+- `exercise/api/posts/route.ts`
+
+<aside>
+💡 Constate via un CURL [http://localhost:3000/exercises/post](http://localhost:3000/exercises/post) que cela n’est toujours pas optimiser pour le SEO
+
+</aside>
 
 ## Aller plus loin
 
-📑 Le lien vers la doc [https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+📑 Le lien vers la doc [https://nextjs.org/docs/app/building-your-application/routing/route-handlers#convention](https://nextjs.org/docs/app/building-your-application/routing/route-handlers#convention)
 
 ## Ils vont t’aider
 
@@ -90,4 +90,4 @@ Fichiers
 
 ## 🐜 Feedback
 
-Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=3.RSC%20Data%20fetch&entry.533578441=02%20Fetch%20RCC).
+Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=3.RSC%20Data%20fetch&entry.533578441=03%20route%20handler).
