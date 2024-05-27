@@ -10,21 +10,37 @@
   "products": [
     {
       "id": "1",
-      "createdAt": "2024-04-24T05:56:06.593Z",
+      "title": "Default product",
+      "price": 199,
       "quantity": 19,
       "category": "lighting",
-      "price": 199,
-      "title": "Defult product",
-      "description": "qsdqsd",
-      "updadtedAt": "2024-05-16T08:59:34.880Z"
+      "createdAt": "2024-04-24T05:56:06.593Z",
+      "updadtedAt": "2024-05-27T02:41:21.112Z"
+    },
+    {
+      "id": "2",
+      "title": "IPhone",
+      "price": 1490,
+      "quantity": 4,
+      "category": "furniture",
+      "createdAt": "2024-04-25T05:56:06.593Z",
+      "updadtedAt": "2024-05-27T02:41:21.112Z"
     }
   ],
   "todos": [
     {
       "id": 1,
-      "title": "Default todo",
+      "title": "Apprendre React",
+      "isCompleted": true,
+      "createdAt": "2024-05-27T02:41:21.112Z",
+      "updadtedAt": "2024-05-27T02:41:21.112Z"
+    },
+    {
+      "id": 2,
+      "title": "Apprendre Next",
       "isCompleted": false,
-      "createdAt": "2024-05-16T08:10:30.637Z"
+      "createdAt": "2024-05-27T02:41:21.112Z",
+      "updadtedAt": "2024-05-27T02:41:21.112Z"
     }
   ]
 }

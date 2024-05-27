@@ -37,9 +37,17 @@ const defaultData: BddDataType = {
   todos: [
     {
       id: 1,
-      title: 'Default todo',
+      title: 'Apprendre React',
+      isCompleted: true,
+      createdAt: new Date().toISOString(),
+      updadtedAt: new Date().toISOString(),
+    },
+    {
+      id: 2,
+      title: 'Apprendre Next',
       isCompleted: false,
       createdAt: new Date().toISOString(),
+      updadtedAt: new Date().toISOString(),
     },
   ],
 }

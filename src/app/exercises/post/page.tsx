@@ -1,12 +1,17 @@
-//export {default} from './page.final' // final
+import {getPosts} from '@/db/sgbd'
+import {Post} from '@/lib/type'
 
-export {default} from './page.exercise' // exercise
+const Page = async () => {
+  const posts = await getPosts()
 
-//1. 🚀 Transforme ce RCC en RSC
-//export {default} from './page.bonus-1' // final
-
-//2. 🚀 Fetch directement dans un RSC
-//export {default} from './page.bonus-2' // final
-
-//3. 🚀 Appeler directement la base de données
-//export {default} from './page.bonus-3' // final
+  console.log('post', posts)
+  return (
+    <div className="mx-auto max-w-4xl p-6 text-lg">
+      <h1 className="mb-4 text-center text-3xl font-bold"> Fetch Posts</h1>
+      <ul className="list-disc p-4 pl-4">
+        {posts?.map((post: Post) => <li key={post.title}>{post.title}</li>)}
+      </ul>
+    </div>
+  )
+}
+export default Page
