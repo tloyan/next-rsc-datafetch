@@ -1,6 +1,6 @@
-# Fetch dans un React Server Component
+# Server Actions
 
-### 💡 Fetch RSC
+### 💡 Comprendre les server actions
 
 ## 📝 Tes notes
 
@@ -8,90 +8,222 @@ Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeu
 
 ## Comprendre
 
-Un composant serveur dans React (React Server Component) est un type de composant qui s'exécute côté serveur. Il permet de rendre le contenu HTML à l'avance sur le serveur avant de l'envoyer au client. Cela améliore les performances et le SEO en permettant un rendu plus rapide des pages et une meilleure indexation par les moteurs de recherche. Les composants serveur peuvent accéder directement aux données du serveur, ce qui simplifie la gestion des données et réduit les requêtes client-serveur.
+Dans les applications clients React, le client peut envoyer des données vers un server via des API REST par exemple. Cela nécessite de créer un `endpoint` http avec du code serveur pour exécuter l’action sur le serveur.
 
-De base dans Next tout les composant sont des React Serveur Composant, sauf s’il inclue la directive `“use client”`
+Avec l’arrivé des server actions il est possible d’interagir avec le backend plus facilement.
 
-Le grand avantage des RSC (React Server Composant) c’est qu’il est possible de déclarer des composant `React` de manière asynchrone, ce qui simplifie la syntaxe
+Les Server Actions sont des fonctions asynchrones exécutées sur le serveur. Elles peuvent être utilisées dans les composants côté serveur et côté client pour gérer les soumissions de formulaires et les mutations de données dans les applications Next.js.
+
+Il est possible d’appeler des server actions de puis de composant Server ou Client
+
+- Appel depuis un RSC : une fonction `async` avec la directive `“use server”`
 
 ```tsx
-const Page = async () => {
-		const data = await fetch('https/...')
-		return (
-			<>
-			{data.map() ...
-			</>
-		)
-	}
+// Server Component
+export default function Page() {
+  // Server Action
+  async function create() {
+    'use server'
+
+    // ...
+  }
+
+  return (
+    // ...
+  )
+}
 ```
 
-📑 Le liens vers la doc [https://react.dev/reference/rsc/server-components](https://react.dev/reference/rsc/server-components)
+- Appel depuis un RCC
+
+Il n’est pas possible d’inclure la directive `'use server'` dans un fichier client. Il faut donc créer les actions dans un fichier à part contenant la directive `'use server'` exemple
+
+```tsx
+//actions.ts
+'use server'
+
+export async function create() {
+  // ...
+}
+```
+
+```tsx
+import { create } from '@/app/actions'
+
+export function Button() {
+  return (
+    // ...
+  )
+}
+```
+
+📑 Le liens vers la doc [https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
 
 ## Exercice
 
-Avant de faire un `fetch` dans un React Server Component nous allons voir comment nous pouvons utiliser l’api `use` de React 19
-
-📑 Le liens vers la doc [https://react.dev/reference/react/use](https://react.dev/reference/react/use)
+Dans cet exercice nous avons un RSC qui appel `getTodos` une liste de taches venant de notre base de données.
 
 ```tsx
-import { use } from 'react'
-
-function Component() {
-  const message = use(Promise)
+//app/todos/page.tsx
+const Page = async () => {
+  const todos = await getTodos()
+  return (
+    <div className="mx-auto max-w-4xl p-6 text-lg">
+      <h1 className="mb-4 text-center text-3xl font-bold">Todo</h1>
+      <Todos todos={todos ?? []} />
+    </div>
+  )
+}
 ```
 
-**🐶 Dans cet exercice tu vas devoir convertir le code utilisant le `fetch` et `useEffect` en le simplifiant avec `use.`**
+👨‍✈️ Hugo le chef de projet te demande d’implémenter l’ajout de taches dans la base de données. Il te fournis une librairie contenant la fonction `addTodo` qui ajoute en base de données.
 
-Fichiers
+```tsx
+import {addTodo as addTodoDao} from '@/db/sgbd'
+//insertion
+addTodoDao(todo) //
 
-- `exercises/post/page.tsx`
+```
 
-## Bonus
+Pour simplifier l’exercice les vues sont déjà créées `todos-view` et `todo-item`.
 
-### 1. 🚀 Transforme ce RCC en RSC
-
-**🐶** Supprime la directive `“use client”` du fichier pour transformer le RCC en RSC. Cela ne pose pas de problème car nous n’utilisons pas de Hook comme `useState` et `useEffect` . Regarde ou sont logué les data
+- Dans un premier temps essaye d’implémenter `addTodoDao` dans `todos-view`.
+- Ensuite dans le fichier `action.ts`
 
 <aside>
-💡 exécute un CURL et constate qu’en client et server les données sont déjà la car use s’exécute des 2 cotés
+💡 Note : Pour simuler un temps server long nous avons configurer dans `sgbd.ts`
+
+</aside>
+
+```tsx
+const slowConnexion = true
+const serverResponseTime = 2000
+```
+
+<aside>
+💡 Note 2 . Il est possible de supprimer `/src/db/db.json` pour avoir une bdd fraiche
 
 </aside>
 
 Fichiers
 
-- `exercises/post/page.tsx`
+- `exercises/todos/todo-view.ts`
+- `exercises/todos/action.ts`
 
-### 2. 🚀 Fetch directement dans un RSC
+## Bonus
 
-Les RSC permettent d’utiliser du code `async` dans les composants. Comme `use` n’est pas recommandé pour `fetch` des data dans un RSC, nous pouvons utiliser `fetch` directement dans les composants.
+### 1. 🚀 Gérer les erreurs
 
-[https://react.dev/reference/react/use](https://react.dev/reference/react/use)
+Il est important de gérer correctement les erreurs coté serveur. Pour cela nous allons générer des erreurs aléatoirement grâce à
 
 ```tsx
-When fetching data in a Server Component, prefer async and await over use. async and await pick up rendering from the point where await was invoked, whereas use re-renders the component after the data is resolved.
+//src/db/sgbd.ts
+const randomError = true
 ```
 
-🐶 Transforme le RSC en composant `async` pour pouvoir appeler `fetch` directement
+Avec sonner il est possible d’afficher des toasts d’erreur grâce à
+
+```tsx
+ import {toast} from 'sonner'
+ //
+ toast.error(`Une erreur est survenue`)
+```
+
+🐶 Dans cette exercice tu vas devoir gérer 2 types d’erreurs.
+
+- Une erreur client si le taches est vide “Veuillez entrer un nom de tache”
+- Une erreur en cas de problème coté server action (utilise un try catch pour cela)
 
 Fichiers
 
-- `exercise/about/page`
+- `exercises/todos/todo-view.ts`
 
-### 3. 🚀 Appeler directement la base de données
+### 2. 🚀 Mise à jour d’une tache (update server action)
 
-Pourquoi exposer une API REST faisant un appel à une base de données pour être consommé par un composant via fetch ?
-
-Alors que grâce au RSC on peut directement appeler la base de données ?
-
-🐶 Dans cet exercice supprime les appels `fetch` et appelle directement la base de données via la fonction `getPosts`
+🐶 Dans cet exercice tu vas devoir implémenter la mise à jour de la tache (completed ou non). Pour cela tu vas a ta disposition un fonction `updateTodo` qui met à jour la base de données.
 
 ```tsx
-import {getPosts} from '@/db/sgbd'
+import {updateTodo as  updateTodoDao} from '@/db/sgbd'
+//mise à jour
+updateTodoDao(todo) //
 ```
+
+Tu as également à ta disposition `todo-item` un component qui contient une `Checkbox`
+
+```tsx
+   const handleChange = async (isCompleted: boolean) => {
+    console.log('isCompleted', isCompleted)
+  }
+
+ <Checkbox
+    checked={todo.isCompleted}
+    id={`${todo.id}`}
+    onCheckedChange={(checked) => handleChange(checked as boolean)}
+  />
+
+
+```
+
+- 🐶 Dans un premier temps créer le server action `updateTodo`
+- 🐶 Utilise le dans la vue en gérant également les possible erreur
+
+Fichiers
+
+- `exercises/todos/todo-item.ts`
+- `exercises/todos/action.ts`
+
+### 3. 🚀 Cache et revalidatePath
+
+En mode développement le comportement n’est pas identique à un build de production. Dans le cas de notre Todo App par exemple, lorsque l’on met à jour les données via un server action, le serveur rafraichie les données. Mais il faut faire attention car en production le fonctionnement est diffèrent. Il faut toujours vérifier les comportement avec un build de production
+
+```bash
+npm build
+npm start
+```
+
+En lançant notre projet en mode production on se rend compte que l’or de l’ajout /mise à jour de données en bdd, les données ne sont pas mise à jour à l’écran.
+
+Explication :
+
+- Lors du build de production, `next` va générer un fichier statique contenant le nombre de Todos en base de données dans le but de performance.
+- Lorsque des données sont modifier il faut spécifier à next de revalider (régénérer) une page à jour.
+
+Next propose une gestion très fine du cache via l’API cache et notamment `revalidatePath` qui permet de revalider un segment de route.
+
+📑 Le lien vers la doc [https://nextjs.org/docs/app/api-reference/functions/revalidatePath](https://nextjs.org/docs/app/api-reference/functions/revalidatePath)
+
+- 🐶 dans cet exercice tu vas devoir faire en sorte que les données soit revalider après chaque mise à jour. tout ce passe dans `action.ts`
+
+Fichiers
+
+- `exercises/todos/action.ts`
+
+### 4. 🚀 revalidate
+
+Les données en cache peuvent être revalider de 2 manières :
+
+- De manière manuelle (exercice précèdent `revalidatePath` ou `revalidateTag`)
+- De manière temporelle
+
+Prenons le cas ou notre bdd serait partager avec une autre application. Par exemple de nouvelle tache arrivent dans la liste.
+
+Il est possible de revalider les donnée tous les X secondes, minutes, heures. Pour cela il est possible de spécifier cela via `revalidate` (depuis une route handler)
+
+```tsx
+//page.tsx ou layout.tsx
+export const revalidate = 3600 // revalidate at most every hour
+```
+
+- 🐶 Dans cet exercice tu vas modifier manuellement le fichier `db.json.` Normalement (en production) les données ne devraient être visible dans la vue.
+- Ajoute une revalidation toutes les 10 secondes
+
+Fichiers
+
+- `exercises/todos/page.tsx`
 
 ## Aller plus loin
 
-📑 Le lien vers la doc [https://react.dev/reference/rsc/server-components](https://react.dev/reference/rsc/server-components)
+📑 Le lien vers la doc [https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating)
 
 ## Ils vont t’aider
 
@@ -103,4 +235,4 @@ import {getPosts} from '@/db/sgbd'
 
 ## 🐜 Feedback
 
-Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=3.RSC%20Data%20fetch&entry.533578441=01%20Fetch%20RSC).
+Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=3.RSC%20Data%20fetch&entry.533578441=04%20Server%20actions).

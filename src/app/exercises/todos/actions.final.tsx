@@ -1,17 +1,14 @@
 'use server'
 
-import {addTodo as addTodoDao, getTodos as getTodosDao} from '@/db/sgbd'
+import {addTodo as addTodoDao} from '@/db/sgbd'
 import {AddTodo} from '@/lib/type'
 
-export const getTodos = async () => {
-  return await getTodosDao()
-}
-
 export const addTodo = async (todo: AddTodo) => {
+  console.log('add todo action', todo)
   try {
     await addTodoDao(todo)
   } catch (error) {
-    console.error('Failed to update todo', error)
+    console.error('Failed to add todo', error)
     throw error
   }
 }

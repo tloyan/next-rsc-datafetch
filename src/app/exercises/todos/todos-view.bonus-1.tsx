@@ -16,12 +16,21 @@ export default function Todos({todos}: TodosProps) {
   const [inputValue, setInputValue] = React.useState('')
 
   const handleClick = async () => {
-    await AddTodoAction({
-      title: inputValue,
-      isCompleted: false,
-      updadtedAt: new Date().toISOString(),
-    })
-    toast('Todo has been created.')
+    if (inputValue === '') {
+      toast.error('Please enter a todo.')
+      return
+    }
+    try {
+      await AddTodoAction({
+        title: inputValue,
+        isCompleted: false,
+        updadtedAt: new Date().toISOString(),
+      })
+      toast('Todo has been created.')
+    } catch (error) {
+      console.error('Error creating todo:', error)
+      toast.error(`Failed to create todo.${error}`)
+    }
   }
 
   return (
