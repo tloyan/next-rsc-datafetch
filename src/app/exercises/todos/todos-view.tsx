@@ -2,5 +2,5 @@
 
 export {default} from './todos-view.exercise'
 
-//1. 🚀 Gérer les erreurs
+//1. 🚀 startTransition
 //export {default} from './todos-view.bonus-1'

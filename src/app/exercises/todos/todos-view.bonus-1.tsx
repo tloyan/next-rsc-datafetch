@@ -5,7 +5,7 @@ import {Button} from '@/components/ui/button'
 import TodoItem from './todo-item'
 import {toast} from 'sonner'
 import {Todo} from '@/lib/type'
-import React from 'react'
+import React, {startTransition, useOptimistic} from 'react'
 import {addTodo as AddTodoAction} from './actions'
 
 interface TodosProps {
@@ -15,22 +15,31 @@ interface TodosProps {
 export default function Todos({todos}: TodosProps) {
   const [inputValue, setInputValue] = React.useState('')
 
+  const [optimisticTodos, addOptimisticTodo] = useOptimistic<Todo[], Todo>(
+    todos,
+    (state, newTodo: Todo) => [...state, newTodo]
+  )
   const handleClick = async () => {
     if (inputValue === '') {
       toast.error('Please enter a todo.')
       return
     }
-    try {
-      await AddTodoAction({
-        title: inputValue,
-        isCompleted: false,
-        updadtedAt: new Date().toISOString(),
-      })
-      toast('Todo has been created.')
-    } catch (error) {
-      console.error('Error creating todo:', error)
-      toast.error(`Failed to create todo.${error}`)
+    const newTodo = {
+      id: optimisticTodos.length + 1,
+      title: inputValue,
+      isCompleted: false,
+      updadtedAt: new Date().toISOString(),
     }
+    startTransition(async () => {
+      addOptimisticTodo(newTodo)
+      toast('Todo has been created.')
+      try {
+        await AddTodoAction(newTodo)
+      } catch (error) {
+        console.error('Error creating todo:', error)
+        toast.error(`Failed to create todo.${error}`)
+      }
+    })
   }
 
   return (
@@ -50,7 +59,7 @@ export default function Todos({todos}: TodosProps) {
           <Button onClick={handleClick}>Submit</Button>
         </div>
         <div className="grid gap-4">
-          {todos.map((todo) => (
+          {optimisticTodos.map((todo) => (
             <TodoItem key={todo.id} todo={todo} />
           ))}
         </div>

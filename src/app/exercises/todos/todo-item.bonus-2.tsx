@@ -1,11 +1,24 @@
 import {Checkbox} from '@/components/ui/checkbox'
 import {cn} from '@/lib/utils'
 import {Todo} from '@/lib/type'
-import {updateTodo as updateTodoAction} from './actions.bonus-2'
+import {updateTodo as updateTodoAction} from './actions'
 import {toast} from 'sonner'
+import {startTransition, useOptimistic} from 'react'
+
+type TodoOptimistic = Todo & {
+  sending?: boolean
+}
+type OptimisticFields = {isCompleted: boolean; sending: boolean}
 
 export default function TodoItem({todo}: {todo: Todo}) {
+  const [optimisticTodo, updateOptimisticTodo] = useOptimistic<
+    TodoOptimistic,
+    OptimisticFields
+  >(todo, (state, {isCompleted, sending}) => {
+    return {...state, isCompleted, sending}
+  })
   const handleChange = async (isCompleted: boolean) => {
+    updateOptimisticTodo({isCompleted, sending: true})
     try {
       await updateTodoAction({
         ...todo,
@@ -13,31 +26,36 @@ export default function TodoItem({todo}: {todo: Todo}) {
       })
     } catch (error) {
       toast.error(`Failed to update todo.${error}`)
+    } finally {
+      updateOptimisticTodo({isCompleted, sending: false})
     }
   }
   return (
     <>
-      <div className="flex items-center gap-4" key={todo.id}>
+      <div className="flex items-center gap-4" key={optimisticTodo.id}>
         <Checkbox
-          checked={todo.isCompleted}
-          id={`${todo.id}`}
-          onCheckedChange={(checked) => handleChange(checked as boolean)}
+          checked={optimisticTodo.isCompleted}
+          id={`${optimisticTodo.id}`}
+          onCheckedChange={(checked) =>
+            startTransition(() => handleChange(checked as boolean))
+          }
         />
         <label
           className={cn('flex-1 text-sm font-medium', {
-            'line-through': todo.isCompleted,
+            'line-through': optimisticTodo.isCompleted,
+            'animate-color-cycle': optimisticTodo.sending,
           })}
-          htmlFor={`${todo.id}`}
+          htmlFor={`${optimisticTodo.id}`}
         >
-          {todo.title}
+          {optimisticTodo.title}
         </label>
 
         <span
           className={cn('text-sm text-gray-500 dark:text-gray-400 ', {
-            'line-through': todo.isCompleted,
+            'line-through': optimisticTodo.isCompleted,
           })}
         >
-          {todo.updadtedAt}
+          {optimisticTodo.updadtedAt}
         </span>
       </div>
     </>

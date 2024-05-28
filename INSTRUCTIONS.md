@@ -1,6 +1,6 @@
-# Server Actions
+# Optimistic UI
 
-### 💡 Comprendre les server actions
+### 💡 Comprendre les UI optimistes et le hook useOptimistic
 
 ## 📝 Tes notes
 
@@ -8,222 +8,157 @@ Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeu
 
 ## Comprendre
 
-Dans les applications clients React, le client peut envoyer des données vers un server via des API REST par exemple. Cela nécessite de créer un `endpoint` http avec du code serveur pour exécuter l’action sur le serveur.
+Lorsque nous faisons des appels vers le serveur (comme dans le cas des server actions) Il peut y avoir un certains délais. Ce délais rend l’expérience utilisateur non fluide. Pour gérer cela on peut ajouter des `progress bars`, `spinner` ou tout autre éléments indiquant qu’un chargement est en cours. Mais cela reste encore pas optimisé pour l’expérience utilisateur. Il existe un technique :
 
-Avec l’arrivé des server actions il est possible d’interagir avec le backend plus facilement.
+L'**Optimistic UI** (Interface Utilisateur Optimiste) est une technique de conception d'interfaces utilisateur où les changements d'état sont immédiatement reflétés dans l'interface, avant même que le serveur n'ait confirmé ces changements. Cette approche vise à améliorer l'expérience utilisateur en rendant l'application plus réactive et fluide, en réduisant la latence perçue.
 
-Les Server Actions sont des fonctions asynchrones exécutées sur le serveur. Elles peuvent être utilisées dans les composants côté serveur et côté client pour gérer les soumissions de formulaires et les mutations de données dans les applications Next.js.
+### **Principe de fonctionnement**
 
-Il est possible d’appeler des server actions de puis de composant Server ou Client
+1. **Action utilisateur** : Lorsqu'un utilisateur effectue une action (comme soumettre un formulaire ou cliquer sur un bouton), l'application met immédiatement à jour l'interface pour refléter cette action.
+2. **Requête au serveur** : Parallèlement, une requête est envoyée au serveur pour effectuer l'opération demandée.
+3. **Réponse du serveur** :
+   - **Succès** : Si la requête est réussie, l'interface reste telle quelle.
+   - **Échec** : Si la requête échoue, l'application doit gérer l'erreur en restaurant l'état précédent ou en affichant un message d'erreur.
 
-- Appel depuis un RSC : une fonction `async` avec la directive `“use server”`
-
-```tsx
-// Server Component
-export default function Page() {
-  // Server Action
-  async function create() {
-    'use server'
-
-    // ...
-  }
-
-  return (
-    // ...
-  )
-}
-```
-
-- Appel depuis un RCC
-
-Il n’est pas possible d’inclure la directive `'use server'` dans un fichier client. Il faut donc créer les actions dans un fichier à part contenant la directive `'use server'` exemple
+### React à introduit un Hook pour gérer cela **`useOptimistic`**
 
 ```tsx
-//actions.ts
-'use server'
+import { useOptimistic } from 'react';
 
-export async function create() {
-  // ...
-}
+function AppContainer() {
+  const [optimisticState, addOptimistic] = useOptimistic(
+    state,
+    // updateFn (un reducer)
+    (currentState, optimisticValue) => {
+      // merge and return new state
+      // with optimistic value
+    }
+  );
 ```
 
-```tsx
-import { create } from '@/app/actions'
-
-export function Button() {
-  return (
-    // ...
-  )
-}
-```
-
-📑 Le liens vers la doc [https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
+📑 Le liens vers la doc [https://react.dev/reference/react/useOptimistic](https://react.dev/reference/react/useOptimistic)
 
 ## Exercice
 
-Dans cet exercice nous avons un RSC qui appel `getTodos` une liste de taches venant de notre base de données.
+Dans la gestion coté backend des listes de taches il peut y avoir des ralentissement ou des erreurs (nous simulons cela avec la config de `sgbd.ts`)
 
 ```tsx
-//app/todos/page.tsx
-const Page = async () => {
-  const todos = await getTodos()
-  return (
-    <div className="mx-auto max-w-4xl p-6 text-lg">
-      <h1 className="mb-4 text-center text-3xl font-bold">Todo</h1>
-      <Todos todos={todos ?? []} />
-    </div>
-  )
-}
-```
-
-👨‍✈️ Hugo le chef de projet te demande d’implémenter l’ajout de taches dans la base de données. Il te fournis une librairie contenant la fonction `addTodo` qui ajoute en base de données.
-
-```tsx
-import {addTodo as addTodoDao} from '@/db/sgbd'
-//insertion
-addTodoDao(todo) //
-
-```
-
-Pour simplifier l’exercice les vues sont déjà créées `todos-view` et `todo-item`.
-
-- Dans un premier temps essaye d’implémenter `addTodoDao` dans `todos-view`.
-- Ensuite dans le fichier `action.ts`
-
-<aside>
-💡 Note : Pour simuler un temps server long nous avons configurer dans `sgbd.ts`
-
-</aside>
-
-```tsx
+const randomError = true
 const slowConnexion = true
 const serverResponseTime = 2000
 ```
 
-<aside>
-💡 Note 2 . Il est possible de supprimer `/src/db/db.json` pour avoir une bdd fraiche
+👨‍✈️ Hugo le chef de projet te demande d’implémenter une approche _optimistic UI_ pour la gestion des taches pour que l’interface soit réactive et gère les cas d’erreurs.
 
-</aside>
+Dans `todos-view` adapte le code en utilisant le hook `useOptimisic`.
 
 Fichiers
 
-- `exercises/todos/todo-view.ts`
-- `exercises/todos/action.ts`
+- `exercises/todos/todos-view.tsx`
 
 ## Bonus
 
-### 1. 🚀 Gérer les erreurs
+### 1. 🚀 API StartTransition
 
-Il est important de gérer correctement les erreurs coté serveur. Pour cela nous allons générer des erreurs aléatoirement grâce à
+Lorsque des actions longues sont exécutées l’UI est bloquante, c’est a dire que la mise à jour (render) n’est pas effectué tant que l’action longue n’est pas terminée. Il existe un Hook `useTransition` qui permet de gérer cela.
+
+- Exemple ici : [https://19.react.dev/reference/react/useTransition#examples](https://19.react.dev/reference/react/useTransition#examples)
+
+Il existe aussi l’API `startTransition`
+
+- 📑 documentation [https://19.react.dev/reference/react/startTransition](https://19.react.dev/reference/react/startTransition)
+
+Dans notre cas nous avons une action longue : l’appel au server action `await AddTodoAction(newTodo)`.
+
+Et nous changeons un `state` avec `addOptimisticTodo(newTodo)`. Du coup nous avons un warning
 
 ```tsx
-//src/db/sgbd.ts
-const randomError = true
+Warning: An optimistic state update occurred outside a transition or action. To fix, move the update to an action, or wrap with startTransition.
 ```
 
-Avec sonner il est possible d’afficher des toasts d’erreur grâce à
+👨‍✈️ Hugo le Chef de projet te demande de gérer correctement ce cas pour ne plus avoir de warning.
 
-```tsx
- import {toast} from 'sonner'
- //
- toast.error(`Une erreur est survenue`)
-```
-
-🐶 Dans cette exercice tu vas devoir gérer 2 types d’erreurs.
-
-- Une erreur client si le taches est vide “Veuillez entrer un nom de tache”
-- Une erreur en cas de problème coté server action (utilise un try catch pour cela)
+**🐶 Wrap le `addOptimisticTodo(newTodo)` et l’appel au server action dans un `startTransition`**
 
 Fichiers
 
-- `exercises/todos/todo-view.ts`
+- `exercises/todos/todos-view.tsx`
 
-### 2. 🚀 Mise à jour d’une tache (update server action)
+### 2. 🚀 useOptimistic with optimistic values
 
-🐶 Dans cet exercice tu vas devoir implémenter la mise à jour de la tache (completed ou non). Pour cela tu vas a ta disposition un fonction `updateTodo` qui met à jour la base de données.
+Dans cet exercice nous voulons gérer une mise à jour d’une tache (`isCompleted`) et nous souhaitons également avoir un indicateur de chargement (un léger effet animation sur le texte).
+
+Nous avons une classe `tailwind` pour cela `animate-color-cycle` voir `tailwind.config.ts 'color-cycle’`
 
 ```tsx
-import {updateTodo as  updateTodoDao} from '@/db/sgbd'
-//mise à jour
-updateTodoDao(todo) //
+<label
+  className={cn('flex-1 text-sm font-medium', {
+    'line-through': optimisticTodo.isCompleted, //ligne barrée
+    'animate-color-cycle': optimisticTodo.sending, //animation chargement
+  })}
+  htmlFor={`${optimisticTodo.id}`}
+>
 ```
 
-Tu as également à ta disposition `todo-item` un component qui contient une `Checkbox`
+Les valeurs `“optimitic”` dont nous aurons besoin sont
+
+- `isCompleted`
+- `sending`
+
+De telle manière que nous puissions utiliser
 
 ```tsx
-   const handleChange = async (isCompleted: boolean) => {
-    console.log('isCompleted', isCompleted)
+const handleChange = async (isCompleted: boolean) => {
+    updateOptimisticTodo({isCompleted, sending: true})
+    try {
+      await updateTodoAction({
+        ...todo,
+        isCompleted,
+      })
+    } catch (error) {
+      toast.error(`Failed to update todo.${error}`)
+    } finally {
+      updateOptimisticTodo({isCompleted, sending: false})
+    }
   }
-
- <Checkbox
-    checked={todo.isCompleted}
-    id={`${todo.id}`}
-    onCheckedChange={(checked) => handleChange(checked as boolean)}
-  />
-
-
 ```
 
-- 🐶 Dans un premier temps créer le server action `updateTodo`
-- 🐶 Utilise le dans la vue en gérant également les possible erreur
+Dans le cas précis nous n’utilisons par un Type `Todo` car nous avons un champs supplémentaire (`sending`) .
 
-Fichiers
+De plus contrairement à l’exemple précèdent ou `l’optimistic value` était un objet `Todo` à ajouter au state. Ici il s’agit de 2 propriété `{isCompleted, sending}`
 
-- `exercises/todos/todo-item.ts`
-- `exercises/todos/action.ts`
-
-### 3. 🚀 Cache et revalidatePath
-
-En mode développement le comportement n’est pas identique à un build de production. Dans le cas de notre Todo App par exemple, lorsque l’on met à jour les données via un server action, le serveur rafraichie les données. Mais il faut faire attention car en production le fonctionnement est diffèrent. Il faut toujours vérifier les comportement avec un build de production
-
-```bash
-npm build
-npm start
-```
-
-En lançant notre projet en mode production on se rend compte que l’or de l’ajout /mise à jour de données en bdd, les données ne sont pas mise à jour à l’écran.
-
-Explication :
-
-- Lors du build de production, `next` va générer un fichier statique contenant le nombre de Todos en base de données dans le but de performance.
-- Lorsque des données sont modifier il faut spécifier à next de revalider (régénérer) une page à jour.
-
-Next propose une gestion très fine du cache via l’API cache et notamment `revalidatePath` qui permet de revalider un segment de route.
-
-📑 Le lien vers la doc [https://nextjs.org/docs/app/api-reference/functions/revalidatePath](https://nextjs.org/docs/app/api-reference/functions/revalidatePath)
-
-- 🐶 dans cet exercice tu vas devoir faire en sorte que les données soit revalider après chaque mise à jour. tout ce passe dans `action.ts`
-
-Fichiers
-
-- `exercises/todos/action.ts`
-
-### 4. 🚀 revalidate
-
-Les données en cache peuvent être revalider de 2 manières :
-
-- De manière manuelle (exercice précèdent `revalidatePath` ou `revalidateTag`)
-- De manière temporelle
-
-Prenons le cas ou notre bdd serait partager avec une autre application. Par exemple de nouvelle tache arrivent dans la liste.
-
-Il est possible de revalider les donnée tous les X secondes, minutes, heures. Pour cela il est possible de spécifier cela via `revalidate` (depuis une route handler)
+Pour typer correctement le hook `useOptimistic<TypeDuState, TypeOptmisticValue>` tu peux utiliser ces 2 types dans le code
 
 ```tsx
-//page.tsx ou layout.tsx
-export const revalidate = 3600 // revalidate at most every hour
+type TodoOptimistic = Todo & {
+  sending?: boolean
+} //TypeDuState : un Todo + sending
+
+type OptimisticFields = {isCompleted: boolean; sending: boolean} //TypeOptmisticValue
+//car l'appel est
+//updateOptimisticTodo({isCompleted, sending: false})
 ```
 
-- 🐶 Dans cet exercice tu vas modifier manuellement le fichier `db.json.` Normalement (en production) les données ne devraient être visible dans la vue.
-- Ajoute une revalidation toutes les 10 secondes
+🐶 Dans cet exercice tu vas devoir :
+
+1. Dans un premier temps créer et typer correctement le hook `useOptimistic` en utilisant les 2 types ci-dessus.
+
+```tsx
+const [optimisticTodo, updateOptimisticTodo] = useOptimistic<...>
+```
+
+1. Appeler `updateOptimisticTodo({isCompleted, sending})` avant et après l’appel au server action
+2. Wrapper le tout dans `startTransition`
+3. Utiliser `optimisticTodo` partout (à la place de `todo`)
+4. Ajouter `'animate-color-cycle` sur le label
 
 Fichiers
 
-- `exercises/todos/page.tsx`
+- `exercises/todos/todo-item.tsx`
 
 ## Aller plus loin
 
-📑 Le lien vers la doc [https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating)
+📑 Le lien vers la doc [https://www.w3schools.com/html/html_css.asp](https://www.w3schools.com/html/html_css.asp)
 
 ## Ils vont t’aider
 
@@ -235,4 +170,4 @@ Fichiers
 
 ## 🐜 Feedback
 
-Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=3.RSC%20Data%20fetch&entry.533578441=04%20Server%20actions).
+Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=3.RSC%20Data%20fetch&entry.533578441=06%20Optimistic%20UI).

@@ -1,48 +1,51 @@
 'use client'
 import {Input} from '@/components/ui/input'
 import {Button} from '@/components/ui/button'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {addTodo as addTodoDao} from '@/db/sgbd'
+
 import TodoItem from './todo-item'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {toast} from 'sonner'
-import {AddTodo, Todo} from '@/lib/type'
+import {Todo} from '@/lib/type'
+// 🐶 Importe le hook useOptimistic
 import React from 'react'
+import {addTodo as AddTodoAction} from './actions'
 
-//🐶
-async function addTodo(todo: AddTodo) {
-  console.log('add todo action', todo)
-  // 🐶 Dans un premier temps essaye d'appler `addTodoDao`
-  // 🤖 await addTodoDao(todo)
-
-  // 🐶 Tu devrais voir apparaitre une erreur de compilation car c'est du code serveur et il
-  // n'est pas possible de l'appeler depuis le client
-  // 🐶 Ajoute la directive `use server` pour indiquer que c'est du code serveur.
-  // 🤖 'use server'
-
-  // 🐶 Tu devrais toujours constater le problème car nous sommes dans un composant client
-  // La solution est de créer l'action dans un fichier à part et de l'importer ici
-
-  // 🐶 Pour la suite de l'exercice s'effectura dans `actions.tsx` ou nous allons créer la fonction addTodo et l'importer ici
-
-  // 🤖 addTodoAction(todo)
-  // import {addTodo as AddTodoAction} from './actions'
-  // pour bien reconnaitre l'action, on peut la renommer 'AddTodoAction' mais cella est facultatif
-}
 interface TodosProps {
   todos: Todo[]
 }
+
 export default function Todos({todos}: TodosProps) {
   const [inputValue, setInputValue] = React.useState('')
 
+  // 🐶 Utilise le Hook 'useOptimistic' pour avoir
+  // 🤖 const [optimisticTodos, addOptimisticTodo] = ...
+
+  // 🐶 Le 1er paramètre de 'useOptimistic' est la liste de 'todos'
+  // 🐶 Le 2ème paramètre de 'useOptimistic' est une fonction (un reducer)
+  // 🐶 Cette fonction prend 2 paramètres: l'état actuel et la nouvelle todo
+  // 🤖 (state, newTodo: Todo) => [...state, newTodo]
+
   const handleClick = async () => {
-    await addTodo({
+    if (inputValue === '') {
+      toast.error('Please enter a todo.')
+      return
+    }
+    const newTodo = {
+      // 🐶 Ajoute 'id', il est necessaire pour le type 'Todo', meme si normalement la BDD le gère
+      // 🤖 id: optimisticTodos.length + 1,
       title: inputValue,
       isCompleted: false,
       updadtedAt: new Date().toISOString(),
-    })
-    // 🐶 Affiche un toast avec Sonner
-    // 🤖 toast('Todo has been created.')
+    }
+    // 🐶 Appelle 'addOptimisticTodo' avec la nouvelle todo avant d'appler le server Action
+    try {
+      await AddTodoAction(newTodo)
+      // 🐶 deplace le 'toast' pour l'avoir directement après 'addOptimisticTodo', on ne veut pas attendre
+      // on veut une interface reactive
+      toast('Todo has been created.')
+    } catch (error) {
+      console.error('Error creating todo:', error)
+      toast.error(`Failed to create todo.${error}`)
+    }
   }
 
   return (
@@ -62,6 +65,7 @@ export default function Todos({todos}: TodosProps) {
           <Button onClick={handleClick}>Submit</Button>
         </div>
         <div className="grid gap-4">
+          {/* ⛏️ supprime 'todos' et remplace le par 'optimisticTodos'  */}
           {todos.map((todo) => (
             <TodoItem key={todo.id} todo={todo} />
           ))}

@@ -1,9 +1,28 @@
-//export * from './actions.final'
+'use server'
 
-export * from './actions.exercise'
+import {addTodo as addTodoDao, updateTodo as updateTodoDao} from '@/db/sgbd'
+import {AddTodo, Todo} from '@/lib/type'
+import {revalidatePath} from 'next/cache'
 
-//2. 🚀 Mise à jour d’une tache (update server action)
-//export * from './actions.bonus-2'
+export const addTodo = async (todo: AddTodo) => {
+  console.log('add todo action', todo)
+  try {
+    await addTodoDao(todo)
+  } catch (error) {
+    console.error('Failed to add todo', error)
+    throw error
+  } finally {
+    revalidatePath('/exercises/todos')
+  }
+}
 
-//3. 🚀 Cache et revalidatePath
-//export * from './actions.bonus-3'
+export const updateTodo = async (todo: Todo) => {
+  try {
+    await updateTodoDao(todo)
+  } catch (error) {
+    console.error('Failed to update todo', error)
+    throw error
+  } finally {
+    revalidatePath('/exercises/todos')
+  }
+}
