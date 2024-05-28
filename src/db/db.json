@@ -9,15 +9,6 @@
   ],
   "products": [
     {
-      "id": "1",
-      "title": "Default product",
-      "price": 199,
-      "quantity": 19,
-      "category": "lighting",
-      "createdAt": "2024-04-24T05:56:06.593Z",
-      "updadtedAt": "2024-05-28T05:37:47.329Z"
-    },
-    {
       "id": "2",
       "title": "IPhone",
       "price": 1490,
@@ -25,6 +16,26 @@
       "category": "furniture",
       "createdAt": "2024-04-25T05:56:06.593Z",
       "updadtedAt": "2024-05-28T05:37:47.329Z"
+    },
+    {
+      "id": "5",
+      "title": "sdfsdfsdfsd",
+      "price": 0,
+      "description": "sdfsdf",
+      "category": "default",
+      "quantity": 10,
+      "createdAt": "2024-05-28T06:49:53.174Z",
+      "updadtedAt": "2024-05-28T06:50:23.306Z"
+    },
+    {
+      "id": "6",
+      "title": "",
+      "price": 0,
+      "description": "",
+      "category": "default",
+      "quantity": 10,
+      "createdAt": "2024-05-28T06:51:21.198Z",
+      "updadtedAt": "2024-05-28T06:51:25.086Z"
     }
   ],
   "todos": [

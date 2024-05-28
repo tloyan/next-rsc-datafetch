@@ -36,6 +36,12 @@ export default function AppLayout({children}: PropsWithChildren) {
                 >
                   Todos
                 </Link>
+                <Link
+                  className="font-medium transition-colors hover:underline"
+                  href="/exercises/shop-admin"
+                >
+                  Shop Admin
+                </Link>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -50,6 +56,12 @@ export default function AppLayout({children}: PropsWithChildren) {
                 href="/exercises/post"
               >
                 Posts
+              </Link>
+              <Link
+                className="text-sm font-semibold underline sm:hidden"
+                href="/exercises/shop-admin"
+              >
+                Shop admin
               </Link>
               <Link
                 className="flex items-center space-x-2 font-medium"
