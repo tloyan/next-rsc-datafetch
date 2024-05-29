@@ -9,84 +9,22 @@
   ],
   "products": [
     {
+      "id": "1",
+      "title": "Default product",
+      "price": 199,
+      "quantity": 19,
+      "category": "lighting",
+      "createdAt": "2024-04-24T05:56:06.593Z",
+      "updadtedAt": "2024-05-29T10:23:28.407Z"
+    },
+    {
       "id": "2",
-      "createdAt": "2024-04-25T05:56:06.593Z",
+      "title": "IPhone",
+      "price": 1490,
       "quantity": 4,
       "category": "furniture",
-      "price": 1490,
-      "title": "IPhoneUP",
-      "description": "sdfsdf",
-      "updadtedAt": "2024-05-29T07:17:46.959Z"
-    },
-    {
-      "id": "5",
-      "title": "sdfsdfsdfsd",
-      "price": 0,
-      "description": "sdfsdf",
-      "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-05-28T06:49:53.174Z",
-      "updadtedAt": "2024-05-28T06:50:23.306Z"
-    },
-    {
-      "id": "6",
-      "title": "",
-      "price": 0,
-      "description": "",
-      "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-05-28T06:51:21.198Z",
-      "updadtedAt": "2024-05-28T06:51:25.086Z"
-    },
-    {
-      "id": "4",
-      "title": "qds",
-      "price": 0,
-      "description": "qsd",
-      "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-05-29T02:53:00.791Z",
-      "updadtedAt": "2024-05-29T02:53:08.305Z"
-    },
-    {
-      "id": "5",
-      "title": "qds",
-      "price": 0,
-      "description": "qsd",
-      "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-05-29T02:53:00.791Z",
-      "updadtedAt": "2024-05-29T02:53:16.233Z"
-    },
-    {
-      "id": "6",
-      "title": "qds",
-      "price": 0,
-      "description": "qsd",
-      "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-05-29T02:53:00.791Z",
-      "updadtedAt": "2024-05-29T02:53:20.083Z"
-    },
-    {
-      "id": "7",
-      "title": "bb",
-      "price": 0,
-      "description": "dfgdf",
-      "category": "bags",
-      "quantity": 10,
-      "createdAt": "2024-05-29T04:48:27.406Z",
-      "updadtedAt": "2024-05-29T04:48:41.996Z"
-    },
-    {
-      "id": "8",
-      "title": "bb",
-      "price": 0,
-      "description": "dfgdf",
-      "category": "bags",
-      "quantity": 10,
-      "createdAt": "2024-05-29T04:48:27.406Z",
-      "updadtedAt": "2024-05-29T07:17:05.437Z"
+      "createdAt": "2024-04-25T05:56:06.593Z",
+      "updadtedAt": "2024-05-29T10:23:28.407Z"
     }
   ],
   "todos": [
@@ -94,15 +32,15 @@
       "id": 1,
       "title": "Apprendre React",
       "isCompleted": true,
-      "createdAt": "2024-05-28T05:37:47.329Z",
-      "updadtedAt": "2024-05-28T05:37:47.329Z"
+      "createdAt": "2024-05-29T10:23:28.407Z",
+      "updadtedAt": "2024-05-29T10:23:28.407Z"
     },
     {
       "id": 2,
       "title": "Apprendre Next",
       "isCompleted": false,
-      "createdAt": "2024-05-28T05:37:47.329Z",
-      "updadtedAt": "2024-05-28T05:37:47.329Z"
+      "createdAt": "2024-05-29T10:23:28.407Z",
+      "updadtedAt": "2024-05-29T10:23:28.407Z"
     }
   ]
 }
