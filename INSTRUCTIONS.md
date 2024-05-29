@@ -1,6 +1,6 @@
-# Optimistic UI
+# Formulaire, validation (client)
 
-### 💡 Comprendre les UI optimistes et le hook useOptimistic
+### 💡 Formulaire et Validation
 
 ## 📝 Tes notes
 
@@ -8,157 +8,94 @@ Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeu
 
 ## Comprendre
 
-Lorsque nous faisons des appels vers le serveur (comme dans le cas des server actions) Il peut y avoir un certains délais. Ce délais rend l’expérience utilisateur non fluide. Pour gérer cela on peut ajouter des `progress bars`, `spinner` ou tout autre éléments indiquant qu’un chargement est en cours. Mais cela reste encore pas optimisé pour l’expérience utilisateur. Il existe un technique :
+`React Hook Form` est un librairie très repandu pour gerer les formulaires en React. Elle offre une manière simple, performante et extensible de gérer les formulaires dans les applications React. React Hook Form exploite les hooks de React pour fournir une API intuitive qui facilite la gestion des formulaires, la validation des champs, et le contrôle des données soumises, tout en optimisant les performances grâce à une réduction du nombre de rendus inutiles.
 
-L'**Optimistic UI** (Interface Utilisateur Optimiste) est une technique de conception d'interfaces utilisateur où les changements d'état sont immédiatement reflétés dans l'interface, avant même que le serveur n'ait confirmé ces changements. Cette approche vise à améliorer l'expérience utilisateur en rendant l'application plus réactive et fluide, en réduisant la latence perçue.
+### **Avantages de React Hook Form**
 
-### **Principe de fonctionnement**
+1. **Performance** : React Hook Form minimise les rendus inutiles, garantissant des performances optimales même pour les formulaires complexes.
+2. **Facilité d'utilisation** : Avec son API intuitive et ses hooks, la mise en place et la gestion des formulaires deviennent simples et déclaratives.
+3. **Validation flexible** : Elle prend en charge la validation native du navigateur et s'intègre facilement avec des bibliothèques tierces comme `Yup et Zod.`
+4. **Gestion des erreurs** : La bibliothèque fournit des outils pour gérer les erreurs et offrir des retours immédiats aux utilisateurs.
+5. **Support des formulaires complexes** : React Hook Form gère efficacement les formulaires dynamiques, imbriqués et répétitifs avec des hooks comme **`useFieldArray`**.
 
-1. **Action utilisateur** : Lorsqu'un utilisateur effectue une action (comme soumettre un formulaire ou cliquer sur un bouton), l'application met immédiatement à jour l'interface pour refléter cette action.
-2. **Requête au serveur** : Parallèlement, une requête est envoyée au serveur pour effectuer l'opération demandée.
-3. **Réponse du serveur** :
-   - **Succès** : Si la requête est réussie, l'interface reste telle quelle.
-   - **Échec** : Si la requête échoue, l'application doit gérer l'erreur en restaurant l'état précédent ou en affichant un message d'erreur.
+`React Hook Form` s’intègre parfaitement avec `zod`
 
-### React à introduit un Hook pour gérer cela **`useOptimistic`**
+- [https://react-hook-form.com/docs/useform](https://react-hook-form.com/docs/useform)
+
+`Shadcn` propose un composant `<Form>` préconfigurer avec React Hook Form.
+
+- [https://ui.shadcn.com/docs/components/form](https://ui.shadcn.com/docs/components/form)
 
 ```tsx
-import { useOptimistic } from 'react';
+import { z } from "zod"
 
-function AppContainer() {
-  const [optimisticState, addOptimistic] = useOptimistic(
-    state,
-    // updateFn (un reducer)
-    (currentState, optimisticValue) => {
-      // merge and return new state
-      // with optimistic value
-    }
-  );
+const formSchema = z.object({
+  username: z.string().min(2).max(50),
+})
+
+ const form = useForm<Product>({
+     resolver: zodResolver(formSchema),
+     ...
 ```
 
-📑 Le liens vers la doc [https://react.dev/reference/react/useOptimistic](https://react.dev/reference/react/useOptimistic)
+📑 Le liens vers la doc [https://www.react-hook-form.com/api/](https://www.react-hook-form.com/api/)
+
+<aside>
+💡 Cette validation est faite coté client
+
+</aside>
 
 ## Exercice
 
-Dans la gestion coté backend des listes de taches il peut y avoir des ralentissement ou des erreurs (nous simulons cela avec la config de `sgbd.ts`)
+Dans cet exercice nous avons préparé le terrain dans le dossier `exercise/shop-admin`.
 
-```tsx
-const randomError = true
-const slowConnexion = true
-const serverResponseTime = 2000
-```
+Il a y une liste de produits qui s’affiche dans un tableau `shadcn` et un formulaire
 
-👨‍✈️ Hugo le chef de projet te demande d’implémenter une approche _optimistic UI_ pour la gestion des taches pour que l’interface soit réactive et gère les cas d’erreurs.
-
-Dans `todos-view` adapte le code en utilisant le hook `useOptimisic`.
-
-Fichiers
-
-- `exercises/todos/todos-view.tsx`
-
-## Bonus
-
-### 1. 🚀 API StartTransition
-
-Lorsque des actions longues sont exécutées l’UI est bloquante, c’est a dire que la mise à jour (render) n’est pas effectué tant que l’action longue n’est pas terminée. Il existe un Hook `useTransition` qui permet de gérer cela.
-
-- Exemple ici : [https://19.react.dev/reference/react/useTransition#examples](https://19.react.dev/reference/react/useTransition#examples)
-
-Il existe aussi l’API `startTransition`
-
-- 📑 documentation [https://19.react.dev/reference/react/startTransition](https://19.react.dev/reference/react/startTransition)
-
-Dans notre cas nous avons une action longue : l’appel au server action `await AddTodoAction(newTodo)`.
-
-Et nous changeons un `state` avec `addOptimisticTodo(newTodo)`. Du coup nous avons un warning
-
-```tsx
-Warning: An optimistic state update occurred outside a transition or action. To fix, move the update to an action, or wrap with startTransition.
-```
-
-👨‍✈️ Hugo le Chef de projet te demande de gérer correctement ce cas pour ne plus avoir de warning.
-
-**🐶 Wrap le `addOptimisticTodo(newTodo)` et l’appel au server action dans un `startTransition`**
-
-Fichiers
-
-- `exercises/todos/todos-view.tsx`
-
-### 2. 🚀 useOptimistic with optimistic values
-
-Dans cet exercice nous voulons gérer une mise à jour d’une tache (`isCompleted`) et nous souhaitons également avoir un indicateur de chargement (un léger effet animation sur le texte).
-
-Nous avons une classe `tailwind` pour cela `animate-color-cycle` voir `tailwind.config.ts 'color-cycle’`
-
-```tsx
-<label
-  className={cn('flex-1 text-sm font-medium', {
-    'line-through': optimisticTodo.isCompleted, //ligne barrée
-    'animate-color-cycle': optimisticTodo.sending, //animation chargement
-  })}
-  htmlFor={`${optimisticTodo.id}`}
->
-```
-
-Les valeurs `“optimitic”` dont nous aurons besoin sont
-
-- `isCompleted`
-- `sending`
-
-De telle manière que nous puissions utiliser
-
-```tsx
-const handleChange = async (isCompleted: boolean) => {
-    updateOptimisticTodo({isCompleted, sending: true})
-    try {
-      await updateTodoAction({
-        ...todo,
-        isCompleted,
-      })
-    } catch (error) {
-      toast.error(`Failed to update todo.${error}`)
-    } finally {
-      updateOptimisticTodo({isCompleted, sending: false})
-    }
-  }
-```
-
-Dans le cas précis nous n’utilisons par un Type `Todo` car nous avons un champs supplémentaire (`sending`) .
-
-De plus contrairement à l’exemple précèdent ou `l’optimistic value` était un objet `Todo` à ajouter au state. Ici il s’agit de 2 propriété `{isCompleted, sending}`
-
-Pour typer correctement le hook `useOptimistic<TypeDuState, TypeOptmisticValue>` tu peux utiliser ces 2 types dans le code
-
-```tsx
-type TodoOptimistic = Todo & {
-  sending?: boolean
-} //TypeDuState : un Todo + sending
-
-type OptimisticFields = {isCompleted: boolean; sending: boolean} //TypeOptmisticValue
-//car l'appel est
-//updateOptimisticTodo({isCompleted, sending: false})
-```
+- page → products-management → react-hook-form → action
 
 🐶 Dans cet exercice tu vas devoir :
 
-1. Dans un premier temps créer et typer correctement le hook `useOptimistic` en utilisant les 2 types ci-dessus.
-
-```tsx
-const [optimisticTodo, updateOptimisticTodo] = useOptimistic<...>
-```
-
-1. Appeler `updateOptimisticTodo({isCompleted, sending})` avant et après l’appel au server action
-2. Wrapper le tout dans `startTransition`
-3. Utiliser `optimisticTodo` partout (à la place de `todo`)
-4. Ajouter `'animate-color-cycle` sur le label
+- créer un `schéma Zod` pour valider le formulaire, afficher des messages d’erreur avec React Hook form.
+- Soumettre le formulaire en appelant le serveur Action `await persistProduct(product)`
 
 Fichiers
 
-- `exercises/todos/todo-item.tsx`
+- `exercise/shop-admin/form/react-hook-form.tsx`
+
+## Bonus
+
+### 1. 🚀 z.infer
+
+Dans notre cas nous avons un Type TS `Product` qui permet de typer le formulaire et un schéma zod.
+
+```tsx
+useForm<Product>
+resolver: zodResolver(formSchema)
+```
+
+Nous avons donc 2 définitions de données. Si nous avons besoin de renommer le champ `title` en `product_name` par exemple, il faut modifier 2 définitions de données.
+
+- Heureusement `Zod` fournis un utilitaire permettant de convertir un schéma en type,
+
+```tsx
+const A = z.string();
+type A = z.infer<typeof A>; // string
+
+const u: A = 12; // TypeError
+const u: A = "asdf"; // compiles
+```
+
+- [https://zod.dev/?id=type-inference](https://zod.dev/?id=type-inference)
+
+Dans cet exercice tu vas devoir supprimer le Type `Product` du formulaire et utiliser `z.infer` pour créer une type `FormSchemaType` qui sera utiliseé dans le formulaire
+
+Fichiers
+
+- `exercise/shop-admin/form/react-hook-form.tsx`
 
 ## Aller plus loin
 
-📑 Le lien vers la doc [https://www.w3schools.com/html/html_css.asp](https://www.w3schools.com/html/html_css.asp)
+📑 Le lien vers la doc [https://zod.dev/](https://zod.dev/)
 
 ## Ils vont t’aider
 
@@ -170,4 +107,4 @@ Fichiers
 
 ## 🐜 Feedback
 
-Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=3.RSC%20Data%20fetch&entry.533578441=06%20Optimistic%20UI).
+Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-react-avis).

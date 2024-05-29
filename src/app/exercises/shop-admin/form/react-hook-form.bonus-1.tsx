@@ -10,7 +10,7 @@ import {
   Select,
 } from '@/components/ui/select'
 
-//import {zodResolver} from '@hookform/resolvers/zod'
+import {zodResolver} from '@hookform/resolvers/zod'
 import {useForm} from 'react-hook-form'
 import {
   Form,
@@ -20,81 +20,71 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-
+import React from 'react'
 import {CategoriesEnum, Product} from '@/lib/type'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {persistProduct as persistProductAction} from '../actions'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+import {persistProduct} from '../actions'
 import {toast} from 'sonner'
-import z from 'zod'
+import {z} from 'zod'
 
-// 🐶 Créé un shéma zod definissant les champs du formulaire
 export const formSchema = z.object({
-  // id: // 🐶 string,
-  // createdAt: // 🐶 string
-  // quantity: // 🐶 force la convertion en number avec `coerce`
-  // category: // 🐶 utilise 🤖 `z.nativeEnum`
-  // price: // 🐶 force la convertion en number avec coerce
-  // 🐶  defini title en string min 2 avec un message d'erreur custom
-  // 🤖
-  // title: z.string().min(2, {
-  //   message: 'Title must be at least 2 characters.',
-  // }),
-  // description: z.string().min(2, {
-  //   message: 'Description must be at least 2 characters.',
-  // }),
+  id: z.string(),
+  createdAt: z.string(),
+  quantity: z.coerce.number(),
+  category: z.nativeEnum(CategoriesEnum),
+  price: z.coerce.number(),
+  title: z.string().min(2, {
+    message: 'Title must be at least 2 characters.',
+  }),
+  description: z.string().min(2, {
+    message: 'Description must be at least 2 characters.',
+  }),
 })
+export type FormSchemaType = z.infer<typeof formSchema>
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function ProductForm({product}: {product?: Product}) {
-  const form = useForm<Product>({
-    // 🐶 Applique le ZodResolver
-    // resolver: zodResolver(formSchema),
-    // 🐶 defini les valeurs par default de Product
-    // defaultValues: {
-    //   id: product?.id ?? '',
-    //   createdAt: product?.createdAt ?? new Date().toISOString(),
-    //   quantity: product?.quantity ?? 0,
-    //   category: product?.category ?? CategoriesEnum.default,
-    //   title: product?.title ?? '',
-    //   description: product?.description ?? '',
-    //   price: product?.price ?? 0,
-    // },
+  const form = useForm<FormSchemaType>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      id: product?.id ?? '',
+      createdAt: product?.createdAt ?? new Date().toISOString(),
+      quantity: product?.quantity ?? 0,
+      category: product?.category ?? CategoriesEnum.default,
+      title: product?.title ?? '',
+      description: product?.description ?? '',
+      price: product?.price ?? 0,
+    },
   })
 
-  // 🐶 utilise 'useEffect' pour mettre en jour product en cas de nouveau prop product
-  // React.useEffect(() => {
-  //   form.reset({
-  //     id: product?.id ?? '',
-  //     createdAt: product?.createdAt ?? new Date().toISOString(),
-  //     quantity: product?.quantity ?? 10,
-  //     category: product?.category ?? CategoriesEnum.default,
-  //     title: product?.title ?? '',
-  //     description: product?.description ?? '',
-  //     price: product?.price ?? 0,
-  //   })
-  // }, [form, product]) //
+  React.useEffect(() => {
+    form.reset({
+      id: product?.id ?? '',
+      createdAt: product?.createdAt ?? new Date().toISOString(),
+      quantity: product?.quantity ?? 10,
+      category: product?.category ?? CategoriesEnum.default,
+      title: product?.title ?? '',
+      description: product?.description ?? '',
+      price: product?.price ?? 0,
+    })
+  }, [form, product]) //
 
   const categories = Object.keys(CategoriesEnum).filter((key) =>
     Number.isNaN(Number(key))
   )
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async function onSubmit(values: Product) {
-    // 🐶 Appelle 'persistProductAction' le server action qui ADD/UPDATE un produit
-    // const isUpdate = values.id ? true : false
-    // persistProductAction(values)
-    // toast(isUpdate ? 'Product updated' : 'Product added')
-    // 🐶 uitilise 'try' 'catch' pour gerer les erreurs
+  async function onSubmit(values: FormSchemaType) {
+    const isUpdate = values.id ? true : false
+    try {
+      await persistProduct(values)
+      toast(isUpdate ? 'Product updated' : 'Product added')
+    } catch (error) {
+      console.error(error)
+      toast.error('Error while saving product')
+    }
   }
   return (
-    // 🐶 Utilise le composant Form pour englober le formulaire
-    // 🐶 Form, FormField, FormItem, FormControl, FormMessage sont des composants ShadCn pret à etre utiliser avec React Hook Form
-    // 📑 https://ui.shadcn.com/docs/components/form
     <Form {...form}>
-      {/*  🐶 Ajoute la soumission du <form>
-           🤖 onSubmit={form.handleSubmit(onSubmit)} */}
-      <form className="grid gap-4">
+      <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="title"
@@ -118,7 +108,6 @@ export default function ProductForm({product}: {product?: Product}) {
               <FormControl>
                 <Input type="number" placeholder="199" {...field} />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}

@@ -22,9 +22,24 @@ import {
 } from '@/components/ui/form'
 import React from 'react'
 import {CategoriesEnum, Product} from '@/lib/type'
-import {formSchema} from '../schema'
+
 import {persistProduct} from '../actions'
 import {toast} from 'sonner'
+import {z} from 'zod'
+
+export const formSchema = z.object({
+  id: z.string(),
+  createdAt: z.string(),
+  quantity: z.coerce.number(),
+  category: z.nativeEnum(CategoriesEnum),
+  price: z.coerce.number(),
+  title: z.string().min(2, {
+    message: 'Title must be at least 2 characters.',
+  }),
+  description: z.string().min(2, {
+    message: 'Description must be at least 2 characters.',
+  }),
+})
 
 export default function ProductForm({product}: {product?: Product}) {
   const form = useForm<Product>({
@@ -45,7 +60,7 @@ export default function ProductForm({product}: {product?: Product}) {
       id: product?.id ?? '',
       createdAt: product?.createdAt ?? new Date().toISOString(),
       quantity: product?.quantity ?? 10,
-      category: product?.category ?? undefined,
+      category: product?.category ?? CategoriesEnum.default,
       title: product?.title ?? '',
       description: product?.description ?? '',
       price: product?.price ?? 0,
@@ -58,8 +73,13 @@ export default function ProductForm({product}: {product?: Product}) {
 
   async function onSubmit(values: Product) {
     const isUpdate = values.id ? true : false
-    persistProduct(values)
-    toast(isUpdate ? 'Product updated' : 'Product added')
+    try {
+      await persistProduct(values)
+      toast(isUpdate ? 'Product updated' : 'Product added')
+    } catch (error) {
+      console.error(error)
+      toast.error('Error while saving product')
+    }
   }
   return (
     <Form {...form}>
@@ -87,7 +107,6 @@ export default function ProductForm({product}: {product?: Product}) {
               <FormControl>
                 <Input type="number" placeholder="199" {...field} />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
@@ -101,7 +120,6 @@ export default function ProductForm({product}: {product?: Product}) {
               <FormControl>
                 <Textarea placeholder="Product description" {...field} />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
