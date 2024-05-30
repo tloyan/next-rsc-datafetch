@@ -31,8 +31,8 @@ export default function ProductForm({product}: {product?: Product}) {
       toast.error(state.message)
     } else {
       toast.success(state.message)
+      handleReset()
     }
-    handleReset()
   }, [state])
 
   const categories = Object.keys(CategoriesEnum).filter((key) =>

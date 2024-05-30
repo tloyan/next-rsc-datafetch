@@ -9,7 +9,7 @@ import {revalidatePath} from 'next/cache'
 import {Product} from '@/lib/type'
 import {formSchema} from './schema'
 
-export type FormStateSimple = {error: boolean; message: string}
+type FormStateSimple = {error: boolean; message: string}
 
 export async function onSubmitAction(
   prevState: FormStateSimple,

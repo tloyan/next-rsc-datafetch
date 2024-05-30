@@ -15,8 +15,3 @@ export const formSchema = z.object({
   }),
 })
 export type FormSchemaType = z.infer<typeof formSchema>
-
-export const formSchemaLight = formSchema.partial({
-  id: true,
-  createdAt: true,
-})

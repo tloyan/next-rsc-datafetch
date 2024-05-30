@@ -7,9 +7,14 @@ import {
 
 import {revalidatePath} from 'next/cache'
 import {Product} from '@/lib/type'
-import {formSchemaLight} from './schema'
+import {formSchema} from './schema'
 
-export type FormStateSimple = {error: boolean; message: string}
+const formSchemaLight = formSchema.partial({
+  id: true,
+  createdAt: true,
+})
+
+type FormStateSimple = {error: boolean; message: string}
 
 export async function onSubmitAction(
   prevState: FormStateSimple,
@@ -19,10 +24,8 @@ export async function onSubmitAction(
   const formData = Object.fromEntries(data)
   const parsed = formSchemaLight.safeParse(formData)
   if (!parsed.success) {
-    const errorMessages = parsed.error.errors
-      .map((err) => err.message)
-      .join(', ')
-    return {error: true, message: `erreur(s) de validation : ${errorMessages}`}
+    logZodError(data)
+    return {error: true, message: `erreur(s) de validation`}
   }
   try {
     await persistProductDao(parsed.data as Product)
@@ -30,6 +33,15 @@ export async function onSubmitAction(
   } catch (error) {
     return {error: true, message: `Server Error ${error}`}
   }
+}
+
+function logZodError(data: FormData) {
+  const formData = Object.fromEntries(data)
+  const parsed = formSchemaLight.safeParse(formData)
+  const errorMessages = parsed?.error?.errors
+    .map((err) => `${err.path} ${err.message}`)
+    .join(', ')
+  console.error('Zod errorMessages', errorMessages)
 }
 
 export const getProducts = async () => {

@@ -9,7 +9,7 @@ import {revalidatePath} from 'next/cache'
 import {Product} from '@/lib/type'
 import {formSchema} from './schema'
 
-export type FormStateSimple = {error: boolean; message: string}
+type FormStateSimple = {error: boolean; message: string}
 
 // 🐶 Rappel : Avec 'useActionState' l'action server doit avoir 2 paramètres (state et FormData)
 export async function onSubmitAction(
@@ -24,7 +24,7 @@ export async function onSubmitAction(
   // const formData = Object.fromEntries(data)
   // const parsed = formSchema.safeParse(formData)
 
-  // 🐶 Si les données ne sont pas valides (if (!parsed.success)), retourn un object de type FormStateSimple
+  // 🐶 Si les données ne sont pas valides (if (!parsed.success)), retourne un object de type FormStateSimple
   // 🤖 aide toi de 'logZodError(data)' pour afficher les erreurs
 
   // 🐶 Appel la BDD dans un try catch avec :

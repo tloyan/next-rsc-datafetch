@@ -1,6 +1,6 @@
-# Formulaire, validation (client)
+# useActionState : Validation Serveur
 
-### 💡 Formulaire et Validation
+### 💡 Comprendre useActionState et la validation Serveur
 
 ## 📝 Tes notes
 
@@ -8,94 +8,161 @@ Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeu
 
 ## Comprendre
 
-`React Hook Form` est un librairie très repandu pour gerer les formulaires en React. Elle offre une manière simple, performante et extensible de gérer les formulaires dans les applications React. React Hook Form exploite les hooks de React pour fournir une API intuitive qui facilite la gestion des formulaires, la validation des champs, et le contrôle des données soumises, tout en optimisant les performances grâce à une réduction du nombre de rendus inutiles.
+Comme il est courant d’utiliser les serveurs action avec un formulaire, il y a un nouveau Hook React assez utile pour gérer l’état du formulaire : **`useActionState`**
 
-### **Avantages de React Hook Form**
-
-1. **Performance** : React Hook Form minimise les rendus inutiles, garantissant des performances optimales même pour les formulaires complexes.
-2. **Facilité d'utilisation** : Avec son API intuitive et ses hooks, la mise en place et la gestion des formulaires deviennent simples et déclaratives.
-3. **Validation flexible** : Elle prend en charge la validation native du navigateur et s'intègre facilement avec des bibliothèques tierces comme `Yup et Zod.`
-4. **Gestion des erreurs** : La bibliothèque fournit des outils pour gérer les erreurs et offrir des retours immédiats aux utilisateurs.
-5. **Support des formulaires complexes** : React Hook Form gère efficacement les formulaires dynamiques, imbriqués et répétitifs avec des hooks comme **`useFieldArray`**.
-
-`React Hook Form` s’intègre parfaitement avec `zod`
-
-- [https://react-hook-form.com/docs/useform](https://react-hook-form.com/docs/useform)
-
-`Shadcn` propose un composant `<Form>` préconfigurer avec React Hook Form.
-
-- [https://ui.shadcn.com/docs/components/form](https://ui.shadcn.com/docs/components/form)
+**`useActionState`** est un Hook qui vous permet de mettre à jour l'état en fonction du résultat d'une action de formulaire.
 
 ```tsx
-import { z } from "zod"
+import { useActionState } from 'react';
+import { action } from './actions.js';
 
-const formSchema = z.object({
-  username: z.string().min(2).max(50),
-})
-
- const form = useForm<Product>({
-     resolver: zodResolver(formSchema),
-     ...
+function MyComponent() {
+  const [state, formAction] = useActionState(action, null);
+  // ...
+  return (
+    <form action={formAction}>
+      {/* ... */}
+    </form>
+  );
+}
 ```
 
-📑 Le liens vers la doc [https://www.react-hook-form.com/api/](https://www.react-hook-form.com/api/)
+Note : l’action prend 2 paramètres : un `state` et le `FormData`
 
-<aside>
-💡 Cette validation est faite coté client
+Ce Hook va de paire avec `useformStatus` qui permet d’obtenir le status du formulaire
 
-</aside>
+```tsx
+//SI
+type ActionStateType = {success: boolean}
+const [state, formAction] = useActionState(action, {success: false} )
+
+//ALORS action aura 2 paramètres
+export async function onSubmitAction(
+  prevState: ActionStateType ,
+  data: FormData
+  ...
+```
+
+```tsx
+function Submit() {
+  const status = useFormStatus();
+  return <button disabled={status.pending}>Submit</button>
+}
+
+export default function App() {
+  return (
+    <form action={action}>
+      <Submit />
+    </form>
+  );
+}
+```
+
+📑 Le liens vers la doc [https://react.dev/reference/react/useActionState#usage](https://react.dev/reference/react/useActionState#usage)
 
 ## Exercice
 
-Dans cet exercice nous avons préparé le terrain dans le dossier `exercise/shop-admin`.
+Dans les exercices précédents, `React Hook Form` s'occupait de gérer l’état et soumettre le formulaire à l’action. Nous voulons maintenant profiter de `useActionState` et `useformStatus` de React nativement.
 
-Il a y une liste de produits qui s’affiche dans un tableau `shadcn` et un formulaire
+👨‍✈️ Hugo le Chef de projet te demande de désactiver la validation `Zod` client car non Safe et de l’ajouter coté server action.
 
-- page → products-management → react-hook-form → action
+Nous avons supprimer tous les liens à `React Hook Form` pour simplifier l’exercice pour revenir a un formulaire non contrôlé.
 
-🐶 Dans cet exercice tu vas devoir :
+```tsx
+<form  ref={formRef} className="gap-2 space-y-4">
+  <Label>Product title</Label>
+  <Input placeholder="ex : Iphone" name="title" />
+  <Label>Product title</Label>
+  <Input type="number" placeholder="199" name="price" />
+  <Label>Product title</Label>
+  <Textarea placeholder="Product description" name="description" />
+  <Label>Product title</Label>
+  <Select name="category">
+    <SelectTrigger>
+      <SelectValue placeholder="Choisir une catégorie" />
+    </SelectTrigger>
 
-- créer un `schéma Zod` pour valider le formulaire, afficher des messages d’erreur avec React Hook form.
-- Soumettre le formulaire en appelant le serveur Action `await persistProduct(product)`
+    <SelectContent>
+      {categories.map((category) => (
+        <SelectItem key={category} value={category}>
+          {category}
+        </SelectItem>
+      ))}
+    </SelectContent>
+  </Select>
+  <Label>Product title</Label>
+  <Input type="number" placeholder="Product quantity" name="quantity" />
+  <div className="flex gap-2">
+    <Button size="sm" type="submit">
+      Save
+    </Button>
+    <Button size="sm" variant="outline">
+      Cancel
+    </Button>
+  </div>
+</form>
+```
+
+**🐶** Dans cet exercice tu vas devoir adapter le formulaire en soumettant via `useActionState.`
+
+🐶 Tu vas également devoir faire une validation coté server avec `Zod` et afficher un message d’erreur (toast) dans le `form`
+
+Pense à reset le formulaire après ajout
 
 Fichiers
 
-- `exercise/shop-admin/form/react-hook-form.tsx`
+- `exercises/shop-admin/form/use-action-state.tsx`
+- `exercises/shop-admin/actions.tsx`
 
 ## Bonus
 
-### 1. 🚀 z.infer
+### 1. 🚀 Supprimer des champs de la validation Zod
 
-Dans notre cas nous avons un Type TS `Product` qui permet de typer le formulaire et un schéma zod.
-
-```tsx
-useForm<Product>
-resolver: zodResolver(formSchema)
-```
-
-Nous avons donc 2 définitions de données. Si nous avons besoin de renommer le champ `title` en `product_name` par exemple, il faut modifier 2 définitions de données.
-
-- Heureusement `Zod` fournis un utilitaire permettant de convertir un schéma en type,
+Nous envoyons bien les données du formulaires au server action, cependant la validation est trop strict, beaucoup de champs ne sont pas dans le `FormData` comme l’`id`, `updatedAt` etc … Il pourrait être ajouté en champs `hidden` mais nous ne voulons pas à avoir à gérer cela dans le form.
 
 ```tsx
-const A = z.string();
-type A = z.infer<typeof A>; // string
-
-const u: A = 12; // TypeError
-const u: A = "asdf"; // compiles
+<form action={formAction} ref={formRef} className="gap-2 space-y-4">
+      <input type="hidden" name="id" value={product?.id} />
 ```
 
-- [https://zod.dev/?id=type-inference](https://zod.dev/?id=type-inference)
+Nous allons rendre optionnel certains champs de la validation (sans changer le le schéma original `formSchema`) pour cela nous allons utiliser `zod.partial`
 
-Dans cet exercice tu vas devoir supprimer le Type `Product` du formulaire et utiliser `z.infer` pour créer une type `FormSchemaType` qui sera utiliseé dans le formulaire
+📑 [https://zod.dev/?id=partial](https://zod.dev/?id=partial)
+
+Exemple qui rend `email` optionnel sur un type `user`
+
+```tsx
+const optionalEmail = user.partial({
+  email: true,
+});
+
+```
+
+🐶 Dans cet exercice tu vas devoir créer un nouveau type `formSchemaLight` à partir de `formSchema` qui rend les champs `id` et `createdAt` optionnel.
 
 Fichiers
 
-- `exercise/shop-admin/form/react-hook-form.tsx`
+- `exercises/shop-admin/actions.tsx`
+
+### 2. 🚀 useFormStatus
+
+👨‍✈️ Hugo le chef de projet demande de désactiver le bouton `Save` lors que le soumission du formulaire.
+
+🐶 Utilise le Hook `useFormStatus` pour gérer le statu `pending` du formulaire
+
+**🤖** `const status = useFormStatus()`
+
+Note : `useFormStatus` fonctionne dans un composant `Children` ou ce situe le `useActionState.`
+
+- Créé un composant `<Buttons />` contentant les 2 boutons et gérant le status
+
+Fichiers
+
+- `exercises/shop-admin/form/use-action-state.tsx`
 
 ## Aller plus loin
 
-📑 Le lien vers la doc [https://zod.dev/](https://zod.dev/)
+📑 Le lien vers la doc [https://www.w3schools.com/html/html_css.asp](https://www.w3schools.com/html/html_css.asp)
 
 ## Ils vont t’aider
 
@@ -107,4 +174,4 @@ Fichiers
 
 ## 🐜 Feedback
 
-Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-react-avis).
+Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=3.RSC%20Data%20fetch&entry.533578441=08%20useActionState%20Server%20validation).
