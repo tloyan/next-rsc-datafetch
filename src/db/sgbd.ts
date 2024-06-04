@@ -149,6 +149,16 @@ export async function getProductById(id: string) {
   return products?.find((product) => product.id === id)
 }
 
+export async function getProductByName(name: string) {
+  console.log('getProductByName', name)
+  const db = await lowDb()
+  const {products} = db.data
+  const lowerCaseName = name.toLowerCase()
+  return products?.find(
+    (product) => product.title.toLowerCase() === lowerCaseName
+  )
+}
+
 interface Identifiable {
   id: number | string
 }

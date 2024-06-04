@@ -7,31 +7,54 @@ import {
 
 import {revalidatePath} from 'next/cache'
 import {Product} from '@/lib/type'
-import {formSchema} from './schema'
+import {FormSchemaType, formSchema} from './schema'
 
-type FormStateSimple = {error: boolean; message: string}
+type ValidationError = {
+  field: keyof FormSchemaType
+  message: string
+}
+
+export type FormState = {
+  success: boolean
+  errors?: ValidationError[]
+  message?: string
+}
 
 export async function onSubmitAction(
-  prevState: FormStateSimple,
+  prevState: FormState,
   data: FormData
-): Promise<FormStateSimple> {
-  //simulate slow server
+): Promise<FormState> {
   await new Promise((resolve) => setTimeout(resolve, 1000))
-
   const formData = Object.fromEntries(data)
   const parsed = formSchema.safeParse(formData)
+
   if (!parsed.success) {
     logZodError(data)
+    const validationErrors: ValidationError[] = parsed.error.errors.map(
+      (err) => ({
+        field: err.path[0] as keyof FormSchemaType,
+        message: `zod server error ${err.message}`,
+      })
+    )
     return {
-      error: true,
-      message: `erreur(s) de validation serveur`,
+      success: false,
+      errors: validationErrors,
+      message: 'Server Error',
     }
   }
+
   try {
-    await persistProductDao(parsed.data)
-    return {error: false, message: 'Success'}
+    await persistProductDao(parsed.data as Product)
+    revalidatePath('/exercises/shop-admin')
+    return {
+      success: true,
+      message: 'Product Saved',
+    }
   } catch (error) {
-    return {error: true, message: `Server Error ${error}`}
+    return {
+      success: false,
+      message: `Unkown Server Error ${error}`,
+    }
   }
 }
 

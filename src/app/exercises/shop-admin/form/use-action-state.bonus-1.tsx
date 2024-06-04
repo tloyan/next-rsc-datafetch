@@ -33,6 +33,7 @@ export default function ProductForm({product}: {product?: Product}) {
   const [state, formAction] = useActionState(onSubmitAction, {
     success: true,
   })
+  const [isPending, setIsPending] = React.useState(false)
 
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
@@ -60,12 +61,14 @@ export default function ProductForm({product}: {product?: Product}) {
         price: 0,
       })
     } else {
+      //set rhf errors form the server errors
       for (const error of state?.errors ?? []) {
         form.setError(error.field, {type: 'manual', message: error.message})
       }
 
       toast.error(state.message ?? 'Error')
     }
+    setIsPending(false)
   }, [form, state, state?.success])
 
   React.useEffect(() => {
@@ -85,6 +88,7 @@ export default function ProductForm({product}: {product?: Product}) {
   )
 
   const handleSubmitAction = async (prod: FormSchemaType) => {
+    setIsPending(true)
     const formData = new FormData()
     for (const [key, value] of Object.entries(prod)) {
       formData.append(key, value as string | Blob)
@@ -188,16 +192,18 @@ export default function ProductForm({product}: {product?: Product}) {
         />
 
         <div className="flex gap-2">
-          <Buttons />
+          <Buttons isSubmitting={isPending} />
         </div>
       </form>
     </Form>
   )
 }
-const Buttons = () => {
+const Buttons = ({isSubmitting}: {isSubmitting: boolean}) => {
+  //const status = useFormStatus()
+
   return (
     <>
-      <Button size="sm" type="submit">
+      <Button size="sm" type="submit" disabled={isSubmitting}>
         Save
       </Button>
       <Button size="sm" variant="outline">

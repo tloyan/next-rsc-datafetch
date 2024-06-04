@@ -1,6 +1,6 @@
-# useActionState : Validation Serveur
+# Form : Validation Client / Serveur
 
-### 💡 Comprendre useActionState et la validation Serveur
+### 💡 Comprendre la validation Client Serveur avec RHF
 
 ## 📝 Tes notes
 
@@ -8,161 +8,139 @@ Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeu
 
 ## Comprendre
 
-Comme il est courant d’utiliser les serveurs action avec un formulaire, il y a un nouveau Hook React assez utile pour gérer l’état du formulaire : **`useActionState`**
+Nous avons vu la validation des champs coté client avec React Hook Form et Zod. Cela fonctionne bien mais en désactivant JavaScript dans le navigateur, quelq’un pourrait soumettre n’importe quelle donnée. Voilà pourquoi il est impératif d’avoir une validation coté serveur. C’est aussi ce que nous avons fait avec un formulaire et `useActionState`. Mais la validation serveur prend du temps ce qui rends l’expérience utilisateur moins agréable.
 
-**`useActionState`** est un Hook qui vous permet de mettre à jour l'état en fonction du résultat d'une action de formulaire.
+Nous allons ici combiner les 2 approches.
+
+- `React Hook Form` / `Zod` pour la validation client.
+- `useActionState` / Validation Zod server.
+- Et nous allons implémenter des règles spécifiques et gérer des erreurs coté server.
+
+Avec RHF il est possible de spécifier manuellement les erreurs comme cela. exemple sur le champs `title`
 
 ```tsx
-import { useActionState } from 'react';
-import { action } from './actions.js';
-
-function MyComponent() {
-  const [state, formAction] = useActionState(action, null);
-  // ...
-  return (
-    <form action={formAction}>
-      {/* ... */}
-    </form>
-  );
-}
+form.setError('title', {type: 'manual', message: 'le titre nest pas bon'})
 ```
 
-Note : l’action prend 2 paramètres : un `state` et le `FormData`
+Nous allons donc retourner devoir retourner 2 types d’erreurs.
 
-Ce Hook va de paire avec `useformStatus` qui permet d’obtenir le status du formulaire
+- Les erreurs liées aux champs : Une liste d’erreurs avec message du serveur action.
+- Les erreurs non liées aux champs
 
 ```tsx
-//SI
-type ActionStateType = {success: boolean}
-const [state, formAction] = useActionState(action, {success: false} )
+type ValidationError = {
+  field: keyof FormSchemaType
+  message: string
+}
 
-//ALORS action aura 2 paramètres
+export type FormState = {
+  success: boolean
+  errors?: ValidationError[]
+  message?: string
+}
 export async function onSubmitAction(
-  prevState: ActionStateType ,
+  prevState: FormState,
   data: FormData
-  ...
 ```
-
-```tsx
-function Submit() {
-  const status = useFormStatus();
-  return <button disabled={status.pending}>Submit</button>
-}
-
-export default function App() {
-  return (
-    <form action={action}>
-      <Submit />
-    </form>
-  );
-}
-```
-
-📑 Le liens vers la doc [https://react.dev/reference/react/useActionState#usage](https://react.dev/reference/react/useActionState#usage)
 
 ## Exercice
 
-Dans les exercices précédents, `React Hook Form` s'occupait de gérer l’état et soumettre le formulaire à l’action. Nous voulons maintenant profiter de `useActionState` et `useformStatus` de React nativement.
-
-👨‍✈️ Hugo le Chef de projet te demande de désactiver la validation `Zod` client car non Safe et de l’ajouter coté server action.
-
-Nous avons supprimer tous les liens à `React Hook Form` pour simplifier l’exercice pour revenir a un formulaire non contrôlé.
+Le point de départ de l’exercice est le formulaire `React Hook Form` avec la validation client de l’exercice précèdent, avec un appel server action `persistProduct`.
 
 ```tsx
-<form  ref={formRef} className="gap-2 space-y-4">
-  <Label>Product title</Label>
-  <Input placeholder="ex : Iphone" name="title" />
-  <Label>Product title</Label>
-  <Input type="number" placeholder="199" name="price" />
-  <Label>Product title</Label>
-  <Textarea placeholder="Product description" name="description" />
-  <Label>Product title</Label>
-  <Select name="category">
-    <SelectTrigger>
-      <SelectValue placeholder="Choisir une catégorie" />
-    </SelectTrigger>
+//rappel de la signature de l'action
+type FormStateSimple = {error: boolean; message: string}
 
-    <SelectContent>
-      {categories.map((category) => (
-        <SelectItem key={category} value={category}>
-          {category}
-        </SelectItem>
-      ))}
-    </SelectContent>
-  </Select>
-  <Label>Product title</Label>
-  <Input type="number" placeholder="Product quantity" name="quantity" />
-  <div className="flex gap-2">
-    <Button size="sm" type="submit">
-      Save
-    </Button>
-    <Button size="sm" variant="outline">
-      Cancel
-    </Button>
-  </div>
-</form>
+export async function onSubmitAction(
+  prevState: FormStateSimple,
+  data: FormData
 ```
 
-**🐶** Dans cet exercice tu vas devoir adapter le formulaire en soumettant via `useActionState.`
+**🐶** Dans un premier adapte l’action en utilisant les nouveaux types `ValidationError` et `FormState` dans l’action. Retourne toutes les erreurs zod grace à
 
-🐶 Tu vas également devoir faire une validation coté server avec `Zod` et afficher un message d’erreur (toast) dans le `form`
+```tsx
+if (!parsed.success) {
+parsed.error.errors.map(....
+```
 
-Pense à reset le formulaire après ajout
+🐶 Dans un second adapte le formulaire pour gerer ces erreurs
 
 Fichiers
 
-- `exercises/shop-admin/form/use-action-state.tsx`
-- `exercises/shop-admin/actions.tsx`
+- `exercise/shop-admin/form/use-action-state.tsx`
+- `exercise/shop-admin/action.tsx`
 
 ## Bonus
 
-### 1. 🚀 Supprimer des champs de la validation Zod
+### 1. 🚀 Gestion du isPending (useFormStatus)
 
-Nous envoyons bien les données du formulaires au server action, cependant la validation est trop strict, beaucoup de champs ne sont pas dans le `FormData` comme l’`id`, `updatedAt` etc … Il pourrait être ajouté en champs `hidden` mais nous ne voulons pas à avoir à gérer cela dans le form.
-
-```tsx
-<form action={formAction} ref={formRef} className="gap-2 space-y-4">
-      <input type="hidden" name="id" value={product?.id} />
-```
-
-Nous allons rendre optionnel certains champs de la validation (sans changer le le schéma original `formSchema`) pour cela nous allons utiliser `zod.partial`
-
-📑 [https://zod.dev/?id=partial](https://zod.dev/?id=partial)
-
-Exemple qui rend `email` optionnel sur un type `user`
+Dans les exercice précèdent nous avons vue que `useActionState` peux s’utiliser de pair avec `useFormStatus`. Cela nous permettait de désactiver le bouton durant la soumission
 
 ```tsx
-const optionalEmail = user.partial({
-  email: true,
-});
-
+const Buttons = () => {
+  const status = useFormStatus()
+  return (
+    <>
+      <Button size="sm" type="submit" disabled={status.pending}>
+        Save
+      </Button>
+      <Button size="sm" variant="outline">
+        Cancel
+      </Button>
+    </>
+  )
+}
 ```
 
-🐶 Dans cet exercice tu vas devoir créer un nouveau type `formSchemaLight` à partir de `formSchema` qui rend les champs `id` et `createdAt` optionnel.
+Essaye d’utiliser cette méthode et constate que cela ne fonctionne pas. Cela est du en fait que le formulaire n’est pas gérer de manière non contrôlé avec un `action` (comme exercice précèdent)
+
+```tsx
+<form
+  action={formAction}
+>
+```
+
+**🐶** Dans cet exercice tu vas devoir gérer l’état de soumission avec un state `isPending`
+
+```tsx
+const [isPending, setIsPending] = React.useState(false)
+```
+
+- Lors de la soumission : `setIsPending(true)`
+- Lors de la mise a jour du state de `useActionForm` → `setIsPending(false)`
+- Utilise ce state pour `disable` le buton
 
 Fichiers
 
-- `exercises/shop-admin/actions.tsx`
+- `exercise/shop-admin/form/use-action-state.tsx`
 
-### 2. 🚀 useFormStatus
+### 2. 🚀 Gérer des erreurs custom server
 
-👨‍✈️ Hugo le chef de projet demande de désactiver le bouton `Save` lors que le soumission du formulaire.
+👨‍✈️ Hugo le chef de projet te demande maintenant de gérer 2 nouvelles erreurs custom.
 
-🐶 Utilise le Hook `useFormStatus` pour gérer le statu `pending` du formulaire
+1. Hugo te demande de valider que le champs `‘title’` ne contient pas 2 espaces
 
-**🤖** `const status = useFormStatus()`
+   🤖 Utilise le code ci dessous
 
-Note : `useFormStatus` fonctionne dans un composant `Children` ou ce situe le `useActionState.`
+   ```tsx
+   data.get('title')?.toString().includes('  ')
+   ```
 
-- Créé un composant `<Buttons />` contentant les 2 boutons et gérant le status
+2. Hugo te demande d’interdit l’insertion en double des données en base de données. Pour cela il te fournis un fonction `getProductByName` qui récupère un produit en fonction de son nom
+
+```tsx
+const prod = await getProductByName(data.get('title')?.toString() ?? '')
+if (prod) { ...
+```
+
+- 🐶 Si le nom du produit contient 2 espaces, retourne un message d’erreur sur le champs ‘title’ `‘Custom server error : Title must not contain 2 spaces’`
+- 🐶 Si le produit existe déjà retourne un message d’erreur sur le champs title `‘Product allready exists’`
 
 Fichiers
 
-- `exercises/shop-admin/form/use-action-state.tsx`
+- `exercise/shop-admin/action.tsx`
 
 ## Aller plus loin
-
-📑 Le lien vers la doc [https://www.w3schools.com/html/html_css.asp](https://www.w3schools.com/html/html_css.asp)
 
 ## Ils vont t’aider
 
@@ -174,4 +152,4 @@ Fichiers
 
 ## 🐜 Feedback
 
-Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=3.RSC%20Data%20fetch&entry.533578441=08%20useActionState%20Server%20validation).
+Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=3.RSC%20Data%20fetch&entry.533578441=09%20Validation%20Client%20Server).

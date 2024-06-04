@@ -1,27 +1,25 @@
 'use server'
 import {
   deleteProduct as deleteProductDao,
+  getProductByName,
   getProducts as getProductsDao,
   persistProduct as persistProductDao,
 } from '@/db/sgbd'
 
 import {revalidatePath} from 'next/cache'
 import {Product} from '@/lib/type'
-import {formSchema} from './schema'
+import {FormSchemaType, formSchema} from './schema'
 
-// 🐶 Modifie le type FormState  de 'onSubmitAction'
-type FormState = {error: boolean; message: string}
-// 🤖
-// type ValidationError = {
-//   field: keyof FormSchemaType
-//   message: string
-// }
+type ValidationError = {
+  field: keyof FormSchemaType
+  message: string
+}
 
-// export type FormState = {
-//   success: boolean
-//   errors?: ValidationError[]
-//   message?: string
-// }
+export type FormState = {
+  success: boolean
+  errors?: ValidationError[]
+  message?: string
+}
 
 export async function onSubmitAction(
   prevState: FormState,
@@ -30,34 +28,59 @@ export async function onSubmitAction(
   await new Promise((resolve) => setTimeout(resolve, 1000))
   const formData = Object.fromEntries(data)
   const parsed = formSchema.safeParse(formData)
+
   if (!parsed.success) {
     logZodError(data)
-    // 🐶 Tu vas devoir ici récuperer toutes les erreurs de Zod,
-    // C'est à dire les champs et les message d'erreurs
-
-    // 🐶 Créé 'validationErrors' de type 'ValidationError[]'
-    // 🤖 const validationErrors: ValidationError[] = ...
-    // 🐶 Utilise parsed.error.errors.map((err) =>  pour parcourir les erreurs
-    // 🐶 Utilise 🤖 `field: err.path[0] as keyof FormSchemaType` pour récuperer le champs
-    // 🐶 Utilise 🤖 `message: `zod server error ${err.message}` pour le message
-
-    // 🐶 Retourne ensuite
-    // 🤖
-    // return {
-    //   success: false,
-    //   errors: validationErrors,
-    //   message: 'Server Error',
-    // }
-    return {error: true, message: `erreur(s) de validation`}
+    const validationErrors: ValidationError[] = parsed.error.errors.map(
+      (err) => ({
+        field: err.path[0] as keyof FormSchemaType,
+        message: `zod server error ${err.message}`,
+      })
+    )
+    return {
+      success: false,
+      errors: validationErrors,
+      message: 'Server Error',
+    }
   }
+  if (data.get('title')?.toString().includes('  ')) {
+    return {
+      success: false,
+      errors: [
+        {
+          field: 'title',
+          message: 'Custom server error : Title must not contain 2 spaces',
+        },
+      ],
+      message: 'Server Error',
+    }
+  }
+  const prod = await getProductByName(data.get('title')?.toString() ?? '')
+  if (prod) {
+    return {
+      success: false,
+      errors: [
+        {
+          field: 'title',
+          message: 'Product allready exists',
+        },
+      ],
+      message: 'Server Error',
+    }
+  }
+
   try {
     await persistProductDao(parsed.data as Product)
     revalidatePath('/exercises/shop-admin')
-    // 🐶 Retourne le bon type
-    return {error: false, message: 'Success'}
+    return {
+      success: true,
+      message: 'Product Saved',
+    }
   } catch (error) {
-    // 🐶 Retourne le bon type
-    return {error: true, message: `Server Error ${error}`}
+    return {
+      success: false,
+      message: `Unkown Server Error ${error}`,
+    }
   }
 }
 
