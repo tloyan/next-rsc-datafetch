@@ -198,7 +198,76 @@ Fichiers
 
 - `exercises/todos/action.ts`
 
-### 4. 🚀 revalidate
+### 4. 🚀 Sérialisation
+
+🐶 Hugo le Chef de projet te demande de valider le `title` de la Tache avec une Regex
+
+- Le titre doit commencer par une lettre majuscule.
+- Le titre peut contenir des lettres, des chiffres, des espaces, des tirets (-) ou des underscores (\_).
+- Le titre doit avoir une longueur minimale de 3 caractères et maximale de 50 caractères.
+
+Il te fournis la Regex suivante
+
+```tsx
+const titlePattern = /^[A-Z][A-Za-z0-9 _-]{2,49}$/;
+const titlePattern = new RegExp(titlePattern);
+!pattern.test(todo.title)
+```
+
+Il souhaite que la Regex puis être passé depuis le client et executé depuis le server.
+
+- 🐶 Implémente le code suivant
+
+```tsx
+//CLIENT CODE
+const handleChange = async (isCompleted: boolean) => {
+    const pattern = /^[A-Z][\w -]{2,49}$/
+    const regex = new RegExp(pattern)
+    try {
+      await updateTodoAction(
+        {
+          ...todo,
+          isCompleted,
+        },
+        regex
+      )
+    } catch (error) {
+      toast.error(`Failed to update todo.${error}`)
+    }
+  }
+//SERVER ACTION
+export const updateTodo = async (todo: Todo, reg: RegExp) => {
+  if (!reg.test(todo.title)) {
+    throw new Error("Le titre de la tâche n'est pas valide.")
+  }
+  try {
+    await updateTodoDao(todo)
+  } catch (error) {
+    console.error('Failed to update todo', error)
+    throw error
+  } finally {
+    revalidatePath('/exercises/todos')
+  }
+}
+```
+
+Comme tu peux le constater tu obtiens un message
+
+```tsx
+Failed to update todo.Error: Only plain objects, and a few built-ins, can be passed to Server Actions. Classes or null prototypes are not supported
+```
+
+Ce qui est normal car les paramètres ne peut être que des valeurs `sérialisable`
+
+📑 doc [https://react.dev/reference/rsc/use-server#serializable-parameters-and-return-values](https://react.dev/reference/rsc/use-server#serializable-parameters-and-return-values)
+
+🐶 Adapte le code en ne passant que cela en paramètre du server action
+
+**🤖** `const pattern = /^[A-Z][\w -]{2,49}$/`
+
+Et en instanciant la `RegEx` coté server
+
+### 5. 🚀 revalidate
 
 Les données en cache peuvent être revalider de 2 manières :
 

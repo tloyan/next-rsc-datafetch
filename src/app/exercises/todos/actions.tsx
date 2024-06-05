@@ -7,3 +7,6 @@ export * from './actions.exercise'
 
 //3. 🚀 Cache et revalidatePath
 //export * from './actions.bonus-3'
+
+//4. 🚀 Sérialisation
+//export * from './actions.bonus-4'
