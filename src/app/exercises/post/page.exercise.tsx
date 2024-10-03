@@ -1,16 +1,16 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {Post} from '@/lib/type'
-// 🐶 importe useEffect et useState car ils seront util pour recuperer les data
+// 🐶 Importe `useEffect` et `useState` car ils seront utiles pour récupérer les datas
 // 🤖 import {useEffect, useState} from 'react'
 
-// 🐶 une erreur devrait apparaitre,  corrige la car nous sommes dans un composant client
+// 🐶 Une erreur devrait apparaître, corrige la car nous sommes dans un composant client
 
 const Page = () => {
-  // 🐶 creer un state pour les posts
+  // 🐶 Crée un state pour les posts
   //const [posts, setPosts] = useState<Post[]>([])
 
-  // 🐶 creer un effet pour recuperer les posts
-  // 🤖 utilise le code ci-dessous
+  // 🐶 Crée un effet pour récupérer les posts
+  // 🤖 Utilise le code ci-dessous
 
   // useEffect(() => {
   //   const fetchPosts = async () => {
