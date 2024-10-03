@@ -11,7 +11,7 @@ import {formSchema} from './schema'
 
 type FormStateSimple = {error: boolean; message: string}
 
-// 🐶 Rappel : Avec 'useActionState' l'action server doit avoir 2 paramètres (state et FormData)
+// 🐶 Rappel : Avec `useActionState` l'action server doit avoir 2 paramètres (`state` et `FormData`)
 export async function onSubmitAction(
   prevState: FormStateSimple,
   data: FormData
@@ -19,15 +19,15 @@ export async function onSubmitAction(
   //simulate slow server
   await new Promise((resolve) => setTimeout(resolve, 1000))
   console.log('data', data)
-  // 🐶 Valide les données avec 'Zod'
+  // 🐶 Valide les données avec `Zod`
   // 🤖
   // const formData = Object.fromEntries(data)
   // const parsed = formSchema.safeParse(formData)
 
-  // 🐶 Si les données ne sont pas valides (if (!parsed.success)), retourne un object de type FormStateSimple
-  // 🤖 aide toi de 'logZodError(data)' pour afficher les erreurs
+  // 🐶 Si les données ne sont pas valides (`if (!parsed.success)`), retourne un objet de type `FormStateSimple`
+  // 🤖 Aide toi de `logZodError(data)` pour afficher les erreurs
 
-  // 🐶 Appel la BDD dans un try catch avec :
+  // 🐶 Appelle la BDD dans un `try` `catch` avec :
   // 🤖 await persistProductDao(parsed.data)
 
   return {error: false, message: 'Success'}

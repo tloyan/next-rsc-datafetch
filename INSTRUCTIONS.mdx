@@ -1,35 +1,31 @@
 # useActionState : Validation Serveur
 
-### 💡 Comprendre useActionState et la validation Serveur
+### 💡 Comprendre `useActionState` et la validation Serveur
 
 ## 📝 Tes notes
 
-Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeur.com/course-notes-template)
+Détaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeur.com/course-notes-template)
 
 ## Comprendre
 
-Comme il est courant d’utiliser les serveurs action avec un formulaire, il y a un nouveau Hook React assez utile pour gérer l’état du formulaire : **`useActionState`**
+Comme il est courant d’utiliser les serveurs action avec un formulaire, il y a un nouveau `Hook React` assez utile pour gérer l’état du formulaire : **`useActionState`**
 
 **`useActionState`** est un Hook qui vous permet de mettre à jour l'état en fonction du résultat d'une action de formulaire.
 
 ```tsx
-import { useActionState } from 'react';
-import { action } from './actions.js';
+import {useActionState} from 'react'
+import {action} from './actions.js'
 
 function MyComponent() {
-  const [state, formAction] = useActionState(action, null);
+  const [state, formAction] = useActionState(action, null)
   // ...
-  return (
-    <form action={formAction}>
-      {/* ... */}
-    </form>
-  );
+  return <form action={formAction}>{/* ... */}</form>
 }
 ```
 
 Note : l’action prend 2 paramètres : un `state` et le `FormData`
 
-Ce Hook va de paire avec `useformStatus` qui permet d’obtenir le status du formulaire
+Ce Hook va de pair avec `useformStatus` qui permet d’obtenir le statut du formulaire.
 
 ```tsx
 //SI
@@ -45,7 +41,7 @@ export async function onSubmitAction(
 
 ```tsx
 function Submit() {
-  const status = useFormStatus();
+  const status = useFormStatus()
   return <button disabled={status.pending}>Submit</button>
 }
 
@@ -54,22 +50,22 @@ export default function App() {
     <form action={action}>
       <Submit />
     </form>
-  );
+  )
 }
 ```
 
-📑 Le liens vers la doc [https://react.dev/reference/react/useActionState#usage](https://react.dev/reference/react/useActionState#usage)
+📑 Le lien vers la doc [https://react.dev/reference/react/useActionState#usage](https://react.dev/reference/react/useActionState#usage)
 
 ## Exercice
 
-Dans les exercices précédents, `React Hook Form` s'occupait de gérer l’état et soumettre le formulaire à l’action. Nous voulons maintenant profiter de `useActionState` et `useformStatus` de React nativement.
+Dans les exercices précédents, `React Hook Form` s'occupait de gérer l’état et soumettre le formulaire à l’action. Nous voulons maintenant profiter de `useActionState` et `useFormStatus` de React nativement.
 
-👨‍✈️ Hugo le Chef de projet te demande de désactiver la validation `Zod` client car non Safe et de l’ajouter coté server action.
+👨‍✈️ Hugo, le Chef de projet, te demande de désactiver la validation `Zod` client car non Safe et de l’ajouter côté server action.
 
-Nous avons supprimer tous les liens à `React Hook Form` pour simplifier l’exercice pour revenir a un formulaire non contrôlé.
+Nous avons supprimé tous les liens à `React Hook Form` pour simplifier l’exercice pour revenir à un formulaire non contrôlé.
 
 ```tsx
-<form  ref={formRef} className="gap-2 space-y-4">
+<form ref={formRef} className="gap-2 space-y-4">
   <Label>Product title</Label>
   <Input placeholder="ex : Iphone" name="title" />
   <Label>Product title</Label>
@@ -103,11 +99,11 @@ Nous avons supprimer tous les liens à `React Hook Form` pour simplifier l’exe
 </form>
 ```
 
-**🐶** Dans cet exercice tu vas devoir adapter le formulaire en soumettant via `useActionState.`
+**🐶** Dans cet exercice, tu vas devoir adapter le formulaire en soumettant via `useActionState` .
 
-🐶 Tu vas également devoir faire une validation coté server avec `Zod` et afficher un message d’erreur (toast) dans le `form`
+🐶 Tu vas également devoir faire une validation côté serveur avec `Zod` et afficher un message d’erreur (`toast`) dans le `form`
 
-Pense à reset le formulaire après ajout
+Pense à reset le formulaire après ajout.
 
 Fichiers
 
@@ -118,14 +114,14 @@ Fichiers
 
 ### 1. 🚀 Supprimer des champs de la validation Zod
 
-Nous envoyons bien les données du formulaires au server action, cependant la validation est trop strict, beaucoup de champs ne sont pas dans le `FormData` comme l’`id`, `updatedAt` etc … Il pourrait être ajouté en champs `hidden` mais nous ne voulons pas à avoir à gérer cela dans le form.
+Nous envoyons bien les données du formulaire au server action, cependant, la validation est trop stricte. Beaucoup de champs ne sont pas dans le `FormData` comme l’`id`, `updatedAt` etc … Ils pourraient être ajoutés en champs `hidden` mais nous ne voulons pas avoir à gérer cela dans le `form`.
 
 ```tsx
 <form action={formAction} ref={formRef} className="gap-2 space-y-4">
       <input type="hidden" name="id" value={product?.id} />
 ```
 
-Nous allons rendre optionnel certains champs de la validation (sans changer le le schéma original `formSchema`) pour cela nous allons utiliser `zod.partial`
+Nous allons rendre optionnels certains champs de la validation (sans changer le schéma original `formSchema`). Pour cela, nous allons utiliser `zod.partial`
 
 📑 [https://zod.dev/?id=partial](https://zod.dev/?id=partial)
 
@@ -134,11 +130,10 @@ Exemple qui rend `email` optionnel sur un type `user`
 ```tsx
 const optionalEmail = user.partial({
   email: true,
-});
-
+})
 ```
 
-🐶 Dans cet exercice tu vas devoir créer un nouveau type `formSchemaLight` à partir de `formSchema` qui rend les champs `id` et `createdAt` optionnel.
+🐶 Dans cet exercice, tu vas devoir créer un nouveau type `formSchemaLight` à partir de `formSchema` qui rend les champs `id` et `createdAt` optionnels.
 
 Fichiers
 
@@ -146,15 +141,15 @@ Fichiers
 
 ### 2. 🚀 useFormStatus
 
-👨‍✈️ Hugo le chef de projet demande de désactiver le bouton `Save` lors que le soumission du formulaire.
+👨‍✈️ Hugo, le chef de projet, demande de désactiver le bouton `Save` lors que le soumission du formulaire.
 
-🐶 Utilise le Hook `useFormStatus` pour gérer le statu `pending` du formulaire
+🐶 Utilise le Hook `useFormStatus` pour gérer le statut `pending` du formulaire.
 
 **🤖** `const status = useFormStatus()`
 
-Note : `useFormStatus` fonctionne dans un composant `Children` ou ce situe le `useActionState.`
+Note : `useFormStatus` fonctionne dans un composant `Children` où se situe le `useActionState` .
 
-- Créé un composant `<Buttons />` contentant les 2 boutons et gérant le status
+- Crée un composant `<Buttons />` contentant les 2 boutons et gérant le statut.
 
 Fichiers
 
@@ -174,4 +169,4 @@ Fichiers
 
 ## 🐜 Feedback
 
-Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=3.RSC%20Data%20fetch&entry.533578441=08%20useActionState%20Server%20validation).
+Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=03.RSC%20Data%20fetch&entry.533578441=08%20useActionState%20Server%20validation).

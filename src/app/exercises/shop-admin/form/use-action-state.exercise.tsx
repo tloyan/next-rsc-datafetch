@@ -12,23 +12,23 @@ import {
 
 import {useRef} from 'react'
 import {CategoriesEnum, Product} from '@/lib/type'
-// 🐶 importe 'onSubmitAction' notre action server
+// 🐶 Importe `onSubmitAction` notre action server
 //import {onSubmitAction} from '../actions'
 
-// 🐶 importe 'useActionState' notre hook custom
+// 🐶 Importe `useActionState` notre `hook custom`
 //import {useFormState as useActionState} from 'react-dom' //todo migrate React 19
 import {Label} from '@/components/ui/label'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function ProductForm({product}: {product?: Product}) {
-  // 🐶 utilise le hook 'useActionState' pour gérer l'état de notre formulaire
+  // 🐶 Utilise le hook `useActionState` pour gérer l'état de notre formulaire
   // const [state, formAction] = useActionState
-  // 🐶 passe 'onSubmitAction' en premier argument et
+  // 🐶 Passe `onSubmitAction` en premier argument et
   // {error: false, message: ''} en deuxième argument le state initial
 
   const formRef = useRef<HTMLFormElement>(null)
 
-  // 🐶 utilise 'React.useEffect' pour afficher un message en fonction de l'état de notre formulaire et reset le form
+  // 🐶 Utilise `React.useEffect` pour afficher un message en fonction de l'état de notre formulaire et reset le `form`
   // 🤖 toast.error(state.message) ou toast.success(state.message)
   // 🤖 handleReset() pour réinitialiser le formulaire
 
@@ -42,7 +42,7 @@ export default function ProductForm({product}: {product?: Product}) {
   )
 
   return (
-    // 🐶 ajoute le prop action={formAction}
+    // 🐶 Ajoute le prop `action={formAction}`
     <form ref={formRef} className="gap-2 space-y-4">
       <Label>Product title</Label>
       <Input placeholder="ex : Iphone" name="title" />
