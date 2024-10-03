@@ -9,7 +9,7 @@ import {revalidatePath} from 'next/cache'
 import {Product} from '@/lib/type'
 import {formSchema} from './schema'
 
-// 🐶 Modifie le type FormState  de 'onSubmitAction'
+// 🐶 Modifie le type `FormState`  de `onSubmitAction`
 type FormState = {error: boolean; message: string}
 // 🤖
 // type ValidationError = {
@@ -32,14 +32,14 @@ export async function onSubmitAction(
   const parsed = formSchema.safeParse(formData)
   if (!parsed.success) {
     logZodError(data)
-    // 🐶 Tu vas devoir ici récuperer toutes les erreurs de Zod,
-    // C'est à dire les champs et les message d'erreurs
+    // 🐶 Tu vas devoir ici récupérer toutes les erreurs de `Zod`,
+    // C'est à dire les champs et les messages d'erreurs
 
-    // 🐶 Créé 'validationErrors' de type 'ValidationError[]'
+    // 🐶 Crée `validationErrors` de type `ValidationError[]`
     // 🤖 const validationErrors: ValidationError[] = ...
-    // 🐶 Utilise parsed.error.errors.map((err) =>  pour parcourir les erreurs
-    // 🐶 Utilise 🤖 `field: err.path[0] as keyof FormSchemaType` pour récuperer le champs
-    // 🐶 Utilise 🤖 `message: `zod server error ${err.message}` pour le message
+    // 🐶 Utilise `parsed.error.errors.map(err)` =>  pour parcourir les erreurs
+    // 🐶 Utilise 🤖 `field: err.path[0] as keyof FormSchemaType` pour récupérer le champs
+    // 🐶 Utilise 🤖 `message: zod server error ${err.message}` pour le message
 
     // 🐶 Retourne ensuite
     // 🤖

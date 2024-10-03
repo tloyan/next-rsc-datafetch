@@ -23,14 +23,14 @@ import {
 import React from 'react'
 import {CategoriesEnum, Product} from '@/lib/type'
 
-//🐶 remplace cet import par 'onSubmitAction'
+//🐶 Remplace cet import par `onSubmitAction`
 import {persistProduct} from '../actions'
 import {toast} from 'sonner'
 import {FormSchemaType, formSchema} from '../schema'
 
 export default function ProductForm({product}: {product?: Product}) {
   // 🐶 Utilise le Hook 'useActionState' avec 'onSubmitAction'
-  // et initilise le 'state' par defaut
+  // et initilise le `state` par défaut
   // {success:true}
   // 🤖 const [state, formAction] = useActionState
   const form = useForm<FormSchemaType>({
@@ -63,7 +63,7 @@ export default function ProductForm({product}: {product?: Product}) {
   )
 
   async function handleSubmitAction(values: FormSchemaType) {
-    // ⛏️ supprime tout ce code et remplace le par par un appel à formAction(formData)
+    // ⛏️ Supprime tout ce code et remplace le par un appel à `formAction(formData)`
     const isUpdate = values.id ? true : false
     try {
       await persistProduct(values)
@@ -72,34 +72,34 @@ export default function ProductForm({product}: {product?: Product}) {
       console.error(error)
       toast.error('Error while saving product')
     }
-    // 🐶 Creer une nouvelle instancde de FormData (la paramètre d'entrée de formAction)
+    // 🐶 Crée une nouvelle instance de `FormData` (le paramètre d'entrée de `formAction`)
     // 🤖 const formData = new FormData()
-    // 🐶 Ajoute les valeurs de 'values' à 'formData' en passant par 'append'
+    // 🐶 Ajoute les valeurs de `values` à `formData` en passant par `append`
     // 📑 https://developer.mozilla.org/en-US/docs/Web/API/FormData/append
-    // 🐶 Appelle 'formAction' avec 'formData'
+    // 🐶 Appelle `formAction` avec `formData`
   }
 
-  // 🐶 tu vas devoir maintenant gerer les erreurs retourner par le server action
-  // 🐶 Si le 'state.success' est vrai, affiche un toast 'Product saved'
-  // 🐶 Sinon, pour chaque erreur dans 'state.errors', utilise 'form.setError'
+  // 🐶 Tu vas devoir maintenant gérer les erreurs retournées par le server action
+  // 🐶 Si le `state.success` est vrai, affiche un `toast` `Product saved`
+  // 🐶 Si non, pour chaque erreur dans `state.errors`, utilise `form.setError`
   // pour afficher les erreurs dans le formulaire
-  // 🐶 Utilise 'state.message' pour afficher un toast d'erreur
-  // 🐶 pense a reset le formulaire en cas de succès
+  // 🐶 Utilise `state.message` pour afficher un `toast` d'erreur
+  // 🐶 Pense à reset le formulaire en cas de succès
   React.useEffect(() => {
-    const success = true // remplace true par 'state.success'
+    const success = true // Remplace true par `state.success`
     if (success) {
-      // 🐶affiche un toast 'Product saved'
-      // 🐶reset le formulaire
+      // 🐶Affiche un `toast` `Product saved`
+      // 🐶Reset le formulaire
     } else {
-      // 🐶 Indique a RHF les champs en errors
+      // 🐶 Indique à RHF les champs en errors
       // 🤖
       // for (const error of state?.errors ?? []) {
       //   form.setError(error.field, {type: 'manual', message: error.message})
       // }
-      // 🐶 affiche un toast d'erreur
+      // 🐶 Affiche un `toast` d'erreur
       //toast.error(state.message ?? 'Error')
     }
-    // 🐶 N'oublie pas les dependances
+    // 🐶 N'oublie pas les dépendances
   }, [form])
 
   return (
