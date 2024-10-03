@@ -3,6 +3,7 @@ import Link from 'next/link'
 import {PropsWithChildren} from 'react'
 
 import {ModeToggle} from '@/components/theme-toggle'
+import {moduleName} from '@/lib/constante'
 
 export const metadata: Metadata = {
   title: 'App',
@@ -61,7 +62,7 @@ export default function AppLayout({children}: PropsWithChildren) {
       <footer className="border-t">
         <div className="container flex h-14 items-center justify-center px-4 text-center sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl">
-            © {new Date().getFullYear()} Super SaaS . All rights reserved.{' '}
+            © {new Date().getFullYear()} {moduleName} . All rights reserved.{' '}
             <p className="animate-color-cycle text-sm">
               Rendu le {generateDate}
             </p>

@@ -1,10 +1,10 @@
 'use client'
 import {Post} from '@/lib/type'
-// ⛏️ supprime useEffect et useState nous n'en avons plus besoin
+// ⛏️ Supprime `useEffect` et `useState` nous n'en avons plus besoin
 import {useEffect, useState} from 'react'
-// 🐶 A la place importe 'use' from "react"
+// 🐶 À la place, importe `use` from "react"
 
-// 🐶 créé une fonction 'fetchPosts'
+// 🐶 Crée une fonction `fetchPosts`
 // 🤖
 // const fetchPosts = async () => {
 //   const response = await fetch('http://localhost:3000/exercises/api/posts')
@@ -13,10 +13,10 @@ import {useEffect, useState} from 'react'
 // }
 
 const Page = () => {
-  // ⛏️ supprime ce state
+  // ⛏️ Supprime ce state
   const [posts, setPosts] = useState<Post[]>([])
 
-  // ⛏️ supprime le useEffect
+  // ⛏️ Supprime le `useEffect`
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -32,9 +32,9 @@ const Page = () => {
     fetchPosts()
   }, [])
 
-  // 🐶 appelle la fonction fetchPosts() dans use() et affecte le resultat dans "posts"
+  // 🐶 Appelle la fonction `fetchPosts()` dans `use()` et affecte le résultat dans "posts"
   // 🐶 logue posts : console.log(posts)
-  // constate que nous sommes toujours en train de fetch les posts dans un composants clients
+  // Constate que nous sommes toujours en train de fetch les posts dans un composants clients
   return (
     <div className="mx-auto max-w-4xl p-6 text-lg">
       <h1 className="mb-4 text-center text-3xl font-bold"> Fetch Posts</h1>
