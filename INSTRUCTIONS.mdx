@@ -1,14 +1,14 @@
 # Optimistic UI
 
-### 💡 Comprendre les UI optimistes et le hook useOptimistic
+### 💡 Comprendre les UI optimistes et le hook `useOptimistic`
 
 ## 📝 Tes notes
 
-Detaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeur.com/course-notes-template)
+Détaille ce que tu as appris ici, sur une page [Notion](https://go.mikecodeur.com/course-notes-template)
 
 ## Comprendre
 
-Lorsque nous faisons des appels vers le serveur (comme dans le cas des server actions) Il peut y avoir un certains délais. Ce délais rend l’expérience utilisateur non fluide. Pour gérer cela on peut ajouter des `progress bars`, `spinner` ou tout autre éléments indiquant qu’un chargement est en cours. Mais cela reste encore pas optimisé pour l’expérience utilisateur. Il existe un technique :
+Lorsque nous faisons des appels vers le serveur (comme dans le cas des server actions), il peut y avoir un certain délai. Ce délai rend l’expérience utilisateur non fluide. Pour gérer cela, on peut ajouter des `progress bars`, `spinner` ou tout autre élément indiquant qu’un chargement est en cours. Mais cela reste encore pas optimisé pour l’expérience utilisateur. Il existe une technique :
 
 L'**Optimistic UI** (Interface Utilisateur Optimiste) est une technique de conception d'interfaces utilisateur où les changements d'état sont immédiatement reflétés dans l'interface, avant même que le serveur n'ait confirmé ces changements. Cette approche vise à améliorer l'expérience utilisateur en rendant l'application plus réactive et fluide, en réduisant la latence perçue.
 
@@ -17,10 +17,10 @@ L'**Optimistic UI** (Interface Utilisateur Optimiste) est une technique de conce
 1. **Action utilisateur** : Lorsqu'un utilisateur effectue une action (comme soumettre un formulaire ou cliquer sur un bouton), l'application met immédiatement à jour l'interface pour refléter cette action.
 2. **Requête au serveur** : Parallèlement, une requête est envoyée au serveur pour effectuer l'opération demandée.
 3. **Réponse du serveur** :
-   - **Succès** : Si la requête est réussie, l'interface reste telle quelle.
+   - **Succès** : Si la requête est réussie, l'interface reste telle qu'elle.
    - **Échec** : Si la requête échoue, l'application doit gérer l'erreur en restaurant l'état précédent ou en affichant un message d'erreur.
 
-### React à introduit un Hook pour gérer cela **`useOptimistic`**
+### `React` a introduit un Hook pour gérer cela **`useOptimistic`**
 
 ```tsx
 import { useOptimistic } from 'react';
@@ -36,11 +36,11 @@ function AppContainer() {
   );
 ```
 
-📑 Le liens vers la doc [https://react.dev/reference/react/useOptimistic](https://react.dev/reference/react/useOptimistic)
+📑 Le lien vers la doc [https://react.dev/reference/react/useOptimistic](https://react.dev/reference/react/useOptimistic)
 
 ## Exercice
 
-Dans la gestion coté backend des listes de taches il peut y avoir des ralentissement ou des erreurs (nous simulons cela avec la config de `sgbd.ts`)
+Dans la gestion côté backend des listes de tâches, il peut y avoir des ralentissements ou des erreurs (nous simulons cela avec la config de `sgbd.ts`).
 
 ```tsx
 const randomError = true
@@ -48,9 +48,9 @@ const slowConnexion = true
 const serverResponseTime = 2000
 ```
 
-👨‍✈️ Hugo le chef de projet te demande d’implémenter une approche _optimistic UI_ pour la gestion des taches pour que l’interface soit réactive et gère les cas d’erreurs.
+👨‍✈️ Hugo, le chef de projet, te demande d’implémenter une approche `*optimistic UI*` pour la gestion des tâches pour que l’interface soit réactive et gère les cas d’erreurs.
 
-Dans `todos-view` adapte le code en utilisant le hook `useOptimisic`.
+Dans `todos-view`, adapte le code en utilisant le hook `useOptimisic`.
 
 Fichiers
 
@@ -60,23 +60,23 @@ Fichiers
 
 ### 1. 🚀 API StartTransition
 
-Lorsque des actions longues sont exécutées l’UI est bloquante, c’est a dire que la mise à jour (render) n’est pas effectué tant que l’action longue n’est pas terminée. Il existe un Hook `useTransition` qui permet de gérer cela.
+Lorsque des actions longues sont exécutées, l’UI est bloquante, c’est a dire que la mise à jour (`render`) n’est pas effectuée tant que l’action longue n’est pas terminée. Il existe un Hook `useTransition` qui permet de gérer cela.
 
 - Exemple ici : [https://19.react.dev/reference/react/useTransition#examples](https://19.react.dev/reference/react/useTransition#examples)
 
 Il existe aussi l’API `startTransition`
 
-- 📑 documentation [https://19.react.dev/reference/react/startTransition](https://19.react.dev/reference/react/startTransition)
+- 📑 Documentation [https://19.react.dev/reference/react/startTransition](https://19.react.dev/reference/react/startTransition)
 
-Dans notre cas nous avons une action longue : l’appel au server action `await AddTodoAction(newTodo)`.
+Dans notre cas, nous avons une action longue : l’appel au server action `await AddTodoAction(newTodo)`.
 
-Et nous changeons un `state` avec `addOptimisticTodo(newTodo)`. Du coup nous avons un warning
+Et nous changeons un `state` avec `addOptimisticTodo(newTodo)`. Du coup nous avons un warning :
 
 ```tsx
 Warning: An optimistic state update occurred outside a transition or action. To fix, move the update to an action, or wrap with startTransition.
 ```
 
-👨‍✈️ Hugo le Chef de projet te demande de gérer correctement ce cas pour ne plus avoir de warning.
+👨‍✈️ Hugo, le Chef de projet, te demande de gérer correctement ce cas pour ne plus avoir de warning.
 
 **🐶 Wrap le `addOptimisticTodo(newTodo)` et l’appel au server action dans un `startTransition`**
 
@@ -86,7 +86,7 @@ Fichiers
 
 ### 2. 🚀 useOptimistic with optimistic values
 
-Dans cet exercice nous voulons gérer une mise à jour d’une tache (`isCompleted`) et nous souhaitons également avoir un indicateur de chargement (un léger effet animation sur le texte).
+Dans cet exercice, nous voulons gérer une mise à jour d’une tâche (`isCompleted`) et nous souhaitons également avoir un indicateur de chargement (un léger effet animation sur le texte).
 
 Nous avons une classe `tailwind` pour cela `animate-color-cycle` voir `tailwind.config.ts 'color-cycle’`
 
@@ -100,12 +100,12 @@ Nous avons une classe `tailwind` pour cela `animate-color-cycle` voir `tailwind.
 >
 ```
 
-Les valeurs `“optimitic”` dont nous aurons besoin sont
+Les valeurs `“optimitic”` dont nous aurons besoin sont :
 
 - `isCompleted`
 - `sending`
 
-De telle manière que nous puissions utiliser
+De telle manière que nous puissions utiliser :
 
 ```tsx
 const handleChange = async (isCompleted: boolean) => {
@@ -123,11 +123,11 @@ const handleChange = async (isCompleted: boolean) => {
   }
 ```
 
-Dans le cas précis nous n’utilisons par un Type `Todo` car nous avons un champs supplémentaire (`sending`) .
+Dans le cas précis, nous n’utilisons pas un type `Todo` car nous avons un champs supplémentaire (`sending`) .
 
-De plus contrairement à l’exemple précèdent ou `l’optimistic value` était un objet `Todo` à ajouter au state. Ici il s’agit de 2 propriété `{isCompleted, sending}`
+De plus, contrairement à l’exemple précèdent où `l’optimistic value` était un objet `Todo` à ajouter au state, ici il s’agit de 2 propriétés `{isCompleted, sending}`.
 
-Pour typer correctement le hook `useOptimistic<TypeDuState, TypeOptmisticValue>` tu peux utiliser ces 2 types dans le code
+Pour typer correctement le hook `useOptimistic<TypeDuState, TypeOptmisticValue>` tu peux utiliser ces 2 types dans le code.
 
 ```tsx
 type TodoOptimistic = Todo & {
@@ -141,16 +141,16 @@ type OptimisticFields = {isCompleted: boolean; sending: boolean} //TypeOptmistic
 
 🐶 Dans cet exercice tu vas devoir :
 
-1. Dans un premier temps créer et typer correctement le hook `useOptimistic` en utilisant les 2 types ci-dessus.
+1. Dans un premier temps, créer et typer correctement le hook `useOptimistic` en utilisant les 2 types ci-dessus :
 
 ```tsx
 const [optimisticTodo, updateOptimisticTodo] = useOptimistic<...>
 ```
 
-1. Appeler `updateOptimisticTodo({isCompleted, sending})` avant et après l’appel au server action
-2. Wrapper le tout dans `startTransition`
-3. Utiliser `optimisticTodo` partout (à la place de `todo`)
-4. Ajouter `'animate-color-cycle` sur le label
+1. Appeler `updateOptimisticTodo({isCompleted, sending})` avant et après l’appel au server action.
+2. Wrapper le tout dans `startTransition`.
+3. Utiliser `optimisticTodo` partout (à la place de `todo`).
+4. Ajouter `'animate-color-cycle` sur le label.
 
 Fichiers
 
@@ -170,4 +170,4 @@ Fichiers
 
 ## 🐜 Feedback
 
-Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=3.RSC%20Data%20fetch&entry.533578441=06%20Optimistic%20UI).
+Remplir le formulaire le [formulaire de FeedBack](https://go.mikecodeur.com/cours-next-avis?entry.1912869708=Next%20PRO&entry.1430994900=03.RSC%20Data%20fetch&entry.533578441=06%20Optimistic%20UI).
