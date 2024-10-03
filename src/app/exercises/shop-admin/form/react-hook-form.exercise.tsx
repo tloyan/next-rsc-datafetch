@@ -28,14 +28,14 @@ import {persistProduct as persistProductAction} from '../actions'
 import {toast} from 'sonner'
 import z from 'zod'
 
-// 🐶 Créé un shéma zod definissant les champs du formulaire
+// 🐶 Crée un schéma zod définissant les champs du formulaire
 export const formSchema = z.object({
   // id: // 🐶 string,
   // createdAt: // 🐶 string
-  // quantity: // 🐶 force la convertion en number avec `coerce`
-  // category: // 🐶 utilise 🤖 `z.nativeEnum`
-  // price: // 🐶 force la convertion en number avec coerce
-  // 🐶  defini title en string min 2 avec un message d'erreur custom
+  // quantity: // 🐶 Force la convertion en number avec `coerce`
+  // category: // 🐶 Utilise 🤖 `z.nativeEnum`
+  // price: // 🐶 Force la convertion en number avec `coerce`
+  // 🐶  Définis `title` en string min 2 avec un message d'erreur `custom`
   // 🤖
   // title: z.string().min(2, {
   //   message: 'Title must be at least 2 characters.',
@@ -48,9 +48,9 @@ export const formSchema = z.object({
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function ProductForm({product}: {product?: Product}) {
   const form = useForm<Product>({
-    // 🐶 Applique le ZodResolver
+    // 🐶 Applique le `ZodResolver`
     // resolver: zodResolver(formSchema),
-    // 🐶 defini les valeurs par default de Product
+    // 🐶 Définis les valeurs par défault de `Product`
     // defaultValues: {
     //   id: product?.id ?? '',
     //   createdAt: product?.createdAt ?? new Date().toISOString(),
@@ -62,7 +62,7 @@ export default function ProductForm({product}: {product?: Product}) {
     // },
   })
 
-  // 🐶 utilise 'useEffect' pour mettre en jour product en cas de nouveau prop product
+  // 🐶 Utilise `useEffect` pour mettre en jour `product` en cas de nouveau `prop product`
   // React.useEffect(() => {
   //   form.reset({
   //     id: product?.id ?? '',
@@ -81,18 +81,18 @@ export default function ProductForm({product}: {product?: Product}) {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async function onSubmit(values: Product) {
-    // 🐶 Appelle 'persistProductAction' le server action qui ADD/UPDATE un produit
+    // 🐶 Appelle `persistProductAction` le server action qui ADD/UPDATE un produit
     // const isUpdate = values.id ? true : false
     // persistProductAction(values)
     // toast(isUpdate ? 'Product updated' : 'Product added')
-    // 🐶 uitilise 'try' 'catch' pour gerer les erreurs
+    // 🐶 Uitilise `try` `catch` pour gérer les erreurs
   }
   return (
-    // 🐶 Utilise le composant Form pour englober le formulaire
-    // 🐶 Form, FormField, FormItem, FormControl, FormMessage sont des composants ShadCn pret à etre utiliser avec React Hook Form
+    // 🐶 Utilise le composant `Form` pour englober le formulaire
+    // 🐶 `Form`, `FormField`, `FormItem`, `FormControl` et `FormMessage` sont des composants `ShadCn` prêts à être utilisés avec `React Hook Form`
     // 📑 https://ui.shadcn.com/docs/components/form
     <Form {...form}>
-      {/*  🐶 Ajoute la soumission du <form>
+      {/*  🐶 Ajoute la soumission du `form`
            🤖 onSubmit={form.handleSubmit(onSubmit)} */}
       <form className="grid gap-4">
         <FormField
