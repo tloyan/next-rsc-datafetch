@@ -1,7 +1,7 @@
 import {Checkbox} from '@/components/ui/checkbox'
 import {cn} from '@/lib/utils'
 import {Todo} from '@/lib/type'
-import {updateTodo as updateTodoAction} from './actions'
+import {updateTodo as updateTodoAction} from './actions.bonus-4'
 import {toast} from 'sonner'
 
 export default function TodoItem({todo}: {todo: Todo}) {

@@ -1,6 +1,6 @@
 //export {default} from './todos-view.final'
 
-//export {default} from './todos-view.exercise'
+export {default} from './todos-view.exercise'
 
 //1. 🚀 Gérer les erreurs
-export {default} from './todos-view.bonus-1'
+//export {default} from './todos-view.bonus-1'
