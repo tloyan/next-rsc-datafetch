@@ -41,7 +41,7 @@ export default function AppLayout({children}: PropsWithChildren) {
               <div className="hidden items-center space-x-2 md:flex">
                 <Link
                   className="font-medium transition-colors hover:underline"
-                  href="/exercises/api/posts"
+                  href="/exercises"
                 >
                   API
                 </Link>
