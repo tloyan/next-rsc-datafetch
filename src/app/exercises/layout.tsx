@@ -24,6 +24,12 @@ export default function AppLayout({children}: PropsWithChildren) {
               >
                 <span>Home</span>
               </Link>
+              <Link
+                className="flex items-center space-x-2 font-bold"
+                href="/instructions"
+              >
+                <span>Instructions</span>
+              </Link>
               <div className="hidden items-center space-x-2 md:flex">
                 <Link
                   className="font-medium transition-colors hover:underline"
@@ -31,6 +37,14 @@ export default function AppLayout({children}: PropsWithChildren) {
                 >
                   Posts
                 </Link>
+                <div className="hidden items-center space-x-2 md:flex">
+                  <Link
+                    className="font-medium transition-colors hover:underline"
+                    href="/exercises"
+                  >
+                    API
+                  </Link>
+                </div>
                 <Link
                   className="font-medium transition-colors hover:underline"
                   href="/exercises/todos"
@@ -52,6 +66,7 @@ export default function AppLayout({children}: PropsWithChildren) {
               >
                 Posts
               </Link>
+
               <Link
                 className="flex items-center space-x-2 font-medium"
                 href="/exercises"
