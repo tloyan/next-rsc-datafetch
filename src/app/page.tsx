@@ -30,7 +30,7 @@ export default function Home() {
       </div>
 
       <div className="before:bg-gradient-radial after:bg-gradient-conic relative z-[-1] flex flex-col items-center justify-center from-sky-200 from-white via-blue-200 to-transparent before:absolute before:inset-0 before:rounded-full before:blur-2xl before:content-[''] after:absolute after:inset-0 after:-z-20 after:blur-2xl after:content-[''] dark:before:bg-gradient-to-br dark:before:from-transparent dark:before:to-blue-700 dark:before:opacity-10 dark:after:from-sky-900 dark:after:via-[#0141ff] dark:after:opacity-40 sm:before:w-[480px] sm:after:w-[240px] lg:before:h-[360px]">
-        <p className="z-10 mt-4 bg-gradient-to-r from-gray-500 to-gray-700 bg-clip-text text-6xl text-transparent dark:from-gray-200 dark:to-gray-500">
+        <p className="z-10 mt-4 bg-gradient-to-r from-gray-500 to-gray-700 bg-clip-text p-2 text-6xl leading-none text-transparent dark:from-gray-200 dark:to-gray-500">
           {moduleName}
         </p>
         <ImageTheme

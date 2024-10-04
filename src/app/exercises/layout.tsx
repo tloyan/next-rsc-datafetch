@@ -24,6 +24,12 @@ export default function AppLayout({children}: PropsWithChildren) {
               >
                 <span>Home</span>
               </Link>
+              <Link
+                className="flex items-center space-x-2 font-bold"
+                href="/instructions"
+              >
+                <span>Instructions</span>
+              </Link>
               <div className="hidden items-center space-x-2 md:flex">
                 <Link
                   className="font-medium transition-colors hover:underline"
