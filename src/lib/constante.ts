@@ -1,1 +1,1 @@
-export const moduleName = 'Next RSC-Data-Fetching-Cache'
+export const moduleName = 'RSC Data Fetching'
