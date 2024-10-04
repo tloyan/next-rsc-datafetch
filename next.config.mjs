@@ -18,11 +18,21 @@ const withMDX = createMDX({
 })
 
 const nextConfig = {
-  reactStrictMode: false,
-  logging: {
-    fetches: {
-      fullUrl: true,
-    },
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+        port: '',
+      },
+    ],
+  },
+  // experimental: {
+  //   ppr: true,
+  // },
+  experimental: {
+    taint: true,
   },
   pageExtensions: ['js', 'jsx', 'mdx', 'md', 'ts', 'tsx'],
   images: {

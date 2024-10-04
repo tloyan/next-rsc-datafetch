@@ -2,5 +2,5 @@
 
 export {default} from './page.exercise' // exercise
 
-//🚀 JSON-SERVER
+//1. 🚀 JSON-SERVER
 //export {default} from './page.bonus-1' // bonus-1

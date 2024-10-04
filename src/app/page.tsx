@@ -2,6 +2,7 @@ import ImageTheme from '@/components/image-theme'
 import {ModeToggle} from '@/components/theme-toggle'
 import {moduleName} from '@/lib/constante'
 
+import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Home() {
@@ -30,7 +31,7 @@ export default function Home() {
       </div>
 
       <div className="before:bg-gradient-radial after:bg-gradient-conic relative z-[-1] flex flex-col items-center justify-center from-sky-200 from-white via-blue-200 to-transparent before:absolute before:inset-0 before:rounded-full before:blur-2xl before:content-[''] after:absolute after:inset-0 after:-z-20 after:blur-2xl after:content-[''] dark:before:bg-gradient-to-br dark:before:from-transparent dark:before:to-blue-700 dark:before:opacity-10 dark:after:from-sky-900 dark:after:via-[#0141ff] dark:after:opacity-40 sm:before:w-[480px] sm:after:w-[240px] lg:before:h-[360px]">
-        <p className="z-10 mt-4 bg-gradient-to-r from-gray-500 to-gray-700 bg-clip-text p-2 text-6xl leading-none text-transparent dark:from-gray-200 dark:to-gray-500">
+        <p className="z-10 mt-4 bg-gradient-to-r from-gray-500 to-gray-700 bg-clip-text text-6xl text-transparent dark:from-gray-200 dark:to-gray-500">
           {moduleName}
         </p>
         <ImageTheme
@@ -57,7 +58,7 @@ export default function Home() {
             </span>
           </h2>
           <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Retrouve tous les details et les instructions ici.
+            Rappel fetch dans un composant React (client).
           </p>
         </Link>
         <Link
@@ -91,6 +92,38 @@ export default function Home() {
             Learn about Next.js in an interactive course with&nbsp;quizzes!
           </p>
         </Link>
+
+        {/* <Link
+          href="/exercises"
+          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+          rel="noopener noreferrer"
+        >
+          <h2 className={`mb-3 text-2xl font-semibold`}>
+            CGV
+            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+              -&gt;
+            </span>
+          </h2>
+          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+            Explore starter templates for Next.js.
+          </p>
+        </Link>
+
+        <Link
+          href="/exercises"
+          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+          rel="noopener noreferrer"
+        >
+          <h2 className={`mb-3 text-2xl font-semibold`}>
+            Final
+            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+              -&gt;
+            </span>
+          </h2>
+          <p className={`m-0 max-w-[30ch] text-balance text-sm opacity-50`}>
+            Instantly deploy your Next.js site to a shareable URL with Vercel.
+          </p>
+        </Link> */}
       </div>
     </main>
   )
