@@ -25,10 +25,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* 🐶 utilise `cn` pour merger 'fontSans.variable' et les propriétés tailwind
-          suivante : 'min-h-screen bg-background font-sans antialiased'
-          doc : https://ui.shadcn.com/docs/installation/next
-      */}
       <body className={fontSans.variable}>
         {/* 🐶 wrap {children} du theme provider  
         <ThemeProvider
