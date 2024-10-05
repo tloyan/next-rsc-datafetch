@@ -1,6 +1,6 @@
-export {default} from './page.final' // final
+//export {default} from './page.final' // final
 
-//export {default} from './page.exercise' // exercise
+export {default} from './page.exercise' // exercise
 
 //1. 🚀 JSON-SERVER
 //export {default} from './page.bonus-1' // bonus-1
