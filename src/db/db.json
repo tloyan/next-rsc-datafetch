@@ -44,42 +44,42 @@
     },
     {
       "id": 3,
-      "title": "tyty",
+      "title": "Apprendre les RSC",
       "isCompleted": false,
       "createdAt": "2024-05-27T07:39:22.859Z",
       "updadtedAt": "2024-05-27T07:39:20.850Z"
     },
     {
       "id": 4,
-      "title": "dfg",
+      "title": "Apprendre les Server Action",
       "isCompleted": false,
       "createdAt": "2024-05-27T08:06:38.454Z",
       "updadtedAt": "2024-05-27T08:06:36.439Z"
     },
     {
       "id": 5,
-      "title": "k",
+      "title": "Apprendre le cache",
       "isCompleted": false,
       "createdAt": "2024-05-27T08:06:57.493Z",
       "updadtedAt": "2024-05-27T08:06:55.486Z"
     },
     {
       "id": 6,
-      "title": "ghjghj",
+      "title": "Apprendre revalidate",
       "isCompleted": false,
       "createdAt": "2024-05-27T08:16:39.206Z",
       "updadtedAt": "2024-05-27T08:16:37.182Z"
     },
     {
       "id": 7,
-      "title": "ghjghjh",
+      "title": "Apprendre les regex",
       "isCompleted": false,
       "createdAt": "2024-05-27T08:16:44.774Z",
       "updadtedAt": "2024-05-27T08:16:42.767Z"
     },
     {
       "id": 8,
-      "title": "ghjghjh",
+      "title": "Apprendre les update",
       "isCompleted": false,
       "createdAt": "2024-05-27T08:16:47.973Z",
       "updadtedAt": "2024-05-27T08:16:45.964Z"
