@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -24,10 +24,10 @@
     "clsx": "^2.1.1",
     "lowdb": "^7.0.1",
     "lucide-react": "^0.368.0",
-    "next": "14.2.1",
+    "next": "15.0.2",
     "next-themes": "^0.3.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "19.0.0-rc-02c0e824-20241028",
+    "react-dom": "19.0.0-rc-02c0e824-20241028",
     "react-hook-form": "^7.53.0",
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.3.0",
@@ -37,14 +37,14 @@
   "devDependencies": {
     "@mikecodeur/course-app-cli": "1.0.23",
     "@types/node": "^20.12.7",
-    "@types/react": "^18.2.79",
-    "@types/react-dom": "^18.2.25",
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
     "autoprefixer": "^10.4.19",
     "concurrently": "^8.2.2",
     "eslint": "^8",
-    "eslint-config-next": "14.2.1",
+    "eslint-config-next": "15.0.2",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-github": "^4.10.2",
     "eslint-plugin-json-format": "^2.0.1",
@@ -57,5 +57,11 @@
     "prettier-plugin-tailwindcss": "^0.5.14",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.5"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "npm:types-react@19.0.0-rc.1",
+      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
+    }
   }
 }
