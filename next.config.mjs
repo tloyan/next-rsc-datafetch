@@ -28,25 +28,6 @@ const nextConfig = {
       },
     ],
   },
-  // experimental: {
-  //   ppr: true,
-  // },
-  experimental: {
-    taint: true,
-  },
-  pageExtensions: ['js', 'jsx', 'mdx', 'md', 'ts', 'tsx'],
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'via.placeholder.com',
-        port: '',
-      },
-    ],
-  },
-  // experimental: {
-  //   ppr: true,
-  // },
   experimental: {
     taint: true,
   },
