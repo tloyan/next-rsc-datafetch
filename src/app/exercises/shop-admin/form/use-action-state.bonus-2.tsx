@@ -10,12 +10,12 @@ import {
   Select,
 } from '@/components/ui/select'
 
-import React, {useRef} from 'react'
+import React, {useRef, useActionState} from 'react'
 import {CategoriesEnum, Product} from '@/lib/type'
 import {onSubmitAction} from '../actions'
 
 import {toast} from 'sonner'
-import {useFormState as useActionState, useFormStatus} from 'react-dom' //todo migrate React 19
+import {useFormStatus} from 'react-dom'
 import {Label} from '@/components/ui/label'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

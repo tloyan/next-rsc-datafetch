@@ -15,8 +15,8 @@ import {CategoriesEnum, Product} from '@/lib/type'
 // 🐶 Importe `onSubmitAction` notre action server
 //import {onSubmitAction} from '../actions'
 
-// 🐶 Importe `useActionState` notre `hook custom`
-//import {useFormState as useActionState} from 'react-dom' //todo migrate React 19
+// 🐶 Importe `useActionState`
+//import {useActionState} from 'react'
 import {Label} from '@/components/ui/label'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
