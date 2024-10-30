@@ -20,9 +20,8 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import React from 'react'
+import React, {startTransition, useActionState} from 'react'
 
-import {useFormState as useActionState} from 'react-dom'
 import {CategoriesEnum, Product} from '@/lib/type'
 
 import {onSubmitAction} from '../actions'
@@ -89,7 +88,7 @@ export default function ProductForm({product}: {product?: Product}) {
     for (const [key, value] of Object.entries(prod)) {
       formData.append(key, value as string | Blob)
     }
-    formAction(formData)
+    startTransition(() => formAction(formData))
   }
   return (
     <Form {...form}>

@@ -76,7 +76,7 @@ export default function ProductForm({product}: {product?: Product}) {
     // 🤖 const formData = new FormData()
     // 🐶 Ajoute les valeurs de `values` à `formData` en passant par `append`
     // 📑 https://developer.mozilla.org/en-US/docs/Web/API/FormData/append
-    // 🐶 Appelle `formAction` avec `formData`
+    // 🐶 Appelle `formAction` avec `formData` (pense a wraper dans startTransition(() => formAction(formData)))
   }
 
   // 🐶 Tu vas devoir maintenant gérer les erreurs retournées par le server action

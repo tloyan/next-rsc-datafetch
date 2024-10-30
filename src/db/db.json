@@ -15,7 +15,7 @@
       "quantity": 19,
       "category": "lighting",
       "createdAt": "2024-04-24T05:56:06.593Z",
-      "updadtedAt": "2024-06-04T06:15:49.332Z"
+      "updadtedAt": "2024-10-30T10:16:40.902Z"
     },
     {
       "id": "2",
@@ -24,107 +24,7 @@
       "quantity": 4,
       "category": "furniture",
       "createdAt": "2024-04-25T05:56:06.593Z",
-      "updadtedAt": "2024-06-04T06:15:49.332Z"
-    },
-    {
-      "id": "3",
-      "title": "qsd",
-      "price": 0,
-      "description": "qsd",
-      "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-06-04T06:19:43.147Z",
-      "updadtedAt": "2024-06-04T06:20:00.922Z"
-    },
-    {
-      "id": "4",
-      "title": "qsdqsd",
-      "price": 0,
-      "description": "qsdqsd",
-      "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-06-04T06:20:02.112Z",
-      "updadtedAt": "2024-06-04T06:20:11.318Z"
-    },
-    {
-      "id": "5",
-      "title": "dfg",
-      "price": 0,
-      "description": "dfg",
-      "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-06-04T06:26:44.581Z",
-      "updadtedAt": "2024-06-04T06:27:02.398Z"
-    },
-    {
-      "id": "6",
-      "title": "fghfg",
-      "price": 0,
-      "description": "fgh",
-      "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-06-04T06:28:14.216Z",
-      "updadtedAt": "2024-06-04T06:29:40.508Z"
-    },
-    {
-      "id": "7",
-      "title": "iphone 15",
-      "price": 0,
-      "description": "aaa",
-      "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-06-04T06:29:41.523Z",
-      "updadtedAt": "2024-06-04T06:44:14.459Z"
-    },
-    {
-      "id": "8",
-      "title": "iphone 15",
-      "price": 0,
-      "description": "qsd",
-      "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-06-04T06:44:32.289Z",
-      "updadtedAt": "2024-06-04T06:44:48.083Z"
-    },
-    {
-      "id": "9",
-      "title": "sdsds",
-      "price": 0,
-      "description": "qsd",
-      "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-06-04T06:49:53.428Z",
-      "updadtedAt": "2024-06-04T06:50:07.957Z"
-    },
-    {
-      "id": "10",
-      "title": "iphone 16",
-      "price": 0,
-      "description": "dqsdqsd",
-      "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-06-04T06:50:09.167Z",
-      "updadtedAt": "2024-06-04T06:50:26.395Z"
-    },
-    {
-      "id": "11",
-      "title": "sdfsdf",
-      "price": 0,
-      "description": "sdfsdf",
-      "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-06-04T08:51:47.772Z",
-      "updadtedAt": "2024-06-04T08:51:57.648Z"
-    },
-    {
-      "id": "12",
-      "title": "sdfsdfsdf",
-      "price": 0,
-      "description": "sdf",
-      "category": "default",
-      "quantity": 10,
-      "createdAt": "2024-06-04T08:56:53.367Z",
-      "updadtedAt": "2024-06-04T08:57:01.708Z"
+      "updadtedAt": "2024-10-30T10:16:40.902Z"
     }
   ],
   "todos": [
@@ -132,15 +32,15 @@
       "id": 1,
       "title": "Apprendre React",
       "isCompleted": true,
-      "createdAt": "2024-06-04T06:15:49.332Z",
-      "updadtedAt": "2024-06-04T06:15:49.332Z"
+      "createdAt": "2024-10-30T10:16:40.902Z",
+      "updadtedAt": "2024-10-30T10:16:40.902Z"
     },
     {
       "id": 2,
       "title": "Apprendre Next",
       "isCompleted": false,
-      "createdAt": "2024-06-04T06:15:49.332Z",
-      "updadtedAt": "2024-06-04T06:15:49.332Z"
+      "createdAt": "2024-10-30T10:16:40.902Z",
+      "updadtedAt": "2024-10-30T10:16:40.902Z"
     }
   ]
 }
