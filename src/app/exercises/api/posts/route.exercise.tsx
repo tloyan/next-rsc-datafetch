@@ -1,13 +1,14 @@
-// 🐶 Importe la fonction `getPosts` qui va récupérer les posts en BDD
-//import {getPosts} from '@/db/sgbd'
+import {getPosts} from '@/db/sgbd'
 
 export async function GET() {
-  // 🐶 Appelle la fonction `getPosts` pour récupérer les posts en BDD
+  try {
+    const req = await fetch('https://jsonplaceholder.typicode.com/posts')
+    const posts = await req.json()
 
-  // 🐶 Retourne les données en json dans la réponse http
-  // ⛏️ Supprime `[]` et remplace le par la `data`
-  return Response.json([])
-  // 🐶 Constate la présence des données ici:  http://localhost:3000/exercises/api/posts
-
-  // 🐶 N'oublie pas les exercices bonus
+    // const posts = await getPosts()
+    return Response.json(posts)
+  } catch (error) {
+    console.error('Error fetching posts:', error)
+    return Response.json({error: 'Error fetching posts'})
+  }
 }
