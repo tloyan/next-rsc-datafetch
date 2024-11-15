@@ -25,6 +25,16 @@
       "category": "furniture",
       "createdAt": "2024-04-25T05:56:06.593Z",
       "updadtedAt": "2024-10-30T10:06:58.759Z"
+    },
+    {
+      "id": "3",
+      "createdAt": "2024-11-15T11:54:32.717Z",
+      "quantity": 5,
+      "category": "default",
+      "price": 15,
+      "title": "Iphodess",
+      "description": "description de produit",
+      "updadtedAt": "2024-11-15T12:30:12.134Z"
     }
   ],
   "todos": [
