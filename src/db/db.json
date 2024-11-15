@@ -25,6 +25,46 @@
       "category": "furniture",
       "createdAt": "2024-04-25T05:56:06.593Z",
       "updadtedAt": "2024-10-30T10:16:40.902Z"
+    },
+    {
+      "id": "3",
+      "title": "Iphone 15",
+      "price": 8,
+      "description": "deadaeda",
+      "category": "furniture",
+      "quantity": 19,
+      "createdAt": "2024-11-15T18:35:03.751Z",
+      "updadtedAt": "2024-11-15T18:39:06.145Z"
+    },
+    {
+      "id": "4",
+      "title": "Iphodess",
+      "price": 14,
+      "description": "asdfasdf",
+      "category": "furniture",
+      "quantity": 14,
+      "createdAt": "2024-11-15T18:53:12.506Z",
+      "updadtedAt": "2024-11-15T19:00:36.322Z"
+    },
+    {
+      "id": "5",
+      "title": "Iphone 16",
+      "price": 12,
+      "description": "asdfasf",
+      "category": "default",
+      "quantity": 12,
+      "createdAt": "2024-11-15T21:17:12.210Z",
+      "updadtedAt": "2024-11-15T21:19:55.125Z"
+    },
+    {
+      "id": "6",
+      "createdAt": "2024-11-15T21:17:12.210Z",
+      "quantity": 13,
+      "category": "default",
+      "price": 12,
+      "title": "Iphone 16",
+      "description": "asdfasf",
+      "updadtedAt": "2024-11-15T21:29:03.332Z"
     }
   ],
   "todos": [
