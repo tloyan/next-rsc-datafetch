@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: "Page d'app",
 }
 
+export const revalidate = 3600
+
 export default function AppLayout({children}: PropsWithChildren) {
   const generateDate = new Date().toISOString()
   return (

@@ -1,12 +1,25 @@
 import {Checkbox} from '@/components/ui/checkbox'
 import {cn} from '@/lib/utils'
 import {Todo} from '@/lib/type'
+import {updateTodo as updateTodoAction} from './actions.exercise'
+import {toast} from 'sonner'
 
 export default function TodoItem({todo}: {todo: Todo}) {
-  // eslint-disable-next-line unicorn/consistent-function-scoping
   const handleChange = async (isCompleted: boolean) => {
-    console.log('isCompleted', isCompleted)
+    const pattern = '/^[A-Z][w -]{2,49}$/'
+    try {
+      await updateTodoAction(
+        {
+          ...todo,
+          isCompleted,
+        },
+        pattern
+      )
+    } catch (error) {
+      toast.error(`Failed to update todo.${error}`)
+    }
   }
+
   return (
     <>
       <div className="flex items-center gap-4" key={todo.id}>
